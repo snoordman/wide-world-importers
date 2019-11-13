@@ -23,10 +23,11 @@
 <body>
 
 <div class="header">
-    <img src="afbeeldingen/WWI-logo.png" height="45" width="125" alt="logo">
+    <img src="afbeeldingen/WWI-logo.png" class='logo' alt="Afbeelding">
+    <ul>
+        <li><a href="">Producten</a></li>
+    </ul>
 </div>
-
-
 
 </body>
 </html>

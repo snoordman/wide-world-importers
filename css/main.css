@@ -5,3 +5,13 @@ h1 {
 .header {
     alignment: right;
 }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.logo{
+    height: 45px;
+    width: 125px;
+}
