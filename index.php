@@ -12,6 +12,9 @@
     </head>
     <body>
         <h1>dit is een pagina !!!!!!</h1>
+
+    <a href="productpagina.php">klik hier voor productpagina</a>
+
     </body>
 </html>
 <?php
