@@ -1,14 +1,26 @@
-h1 {
-    color: blue;
+.menu {
+    background-color: #33E2FF;
+    margin-right: 5%;
+    margin-left: 5%;
 }
 
 .header {
-    alignment: right;
+    text-align: center;
 }
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+li {
+    display: inline;
+    padding: 8px;
+}
+
+a {
+    color: black;
 }
 
 .logo{
