@@ -13,9 +13,13 @@
 <body>
 
 <div class="header">
-    <img src="WWI-logo.png" height="45" width="125" alt="logo">
-</div>
+    <img src="WWI-logo.png" height="45" width="125" alt="logo"><br>
+    <ul>
+        <li><a href="">Producten</a></li>
+    </ul>
 
+
+</div>
 
 
 </body>
