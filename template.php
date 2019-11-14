@@ -29,14 +29,19 @@
                 <span class="titlewwikleur2">Importers</span>
                 <a href=""><img src="afbeeldingen/WWI-logo-ConvertImage.png" alt="Afbeelding"></a>
             </div>
-                <nav class="topnav">
-                    <ul>
-                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="browseproduct.php">Producten</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">FAQ</a></li>
-                    </ul>
-                </nav>
+            <nav class="topnav navbar navbar-expand-lg navbar-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="browseproduct.php">Producten</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">FAQ</a></li>
+                </ul>
+                </div>
+            </nav>
         </section>
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){

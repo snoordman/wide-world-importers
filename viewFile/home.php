@@ -14,7 +14,11 @@
     <input type="submit" value="Zoeken">
 </form>
 
+<<<<<<< HEAD
 <?php //displayProducts(); ?>
+=======
+<?php displayProducts(); ?>
+>>>>>>> 0b658ddd97d2f4f324b74bdce60c43df6a0bd9e9
 
 </body>
 </html>
