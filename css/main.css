@@ -1,22 +1,21 @@
 .hetmenu {
-    margin-left: 5%;
-    margin-right: 5%;
-    background-color: lightgray;
+    background-color: #ebebeb;
 }
 
 .hoofd {
-    margin-top: -10px;
     text-align: center;
 }
 
 .titlewwikleur1 {
-    font-size: 75px;
+    display: inline-block;
+    font-size: 4rem;
     color: #33BDFF;
     font-family: Verdana;
 }
 
 .titlewwikleur2 {
-    font-size: 75px;
+    display: inline-block;
+    font-size: 4rem;
     color: #7F96A1;
     font-family: Verdana;
 }
@@ -31,9 +30,8 @@
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 8px 10px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 1.2rem;
 }
 
 .topnav a:hover {
@@ -49,5 +47,4 @@
 
 .topnav li {
     display: inline;
-    padding: 8px;
 }

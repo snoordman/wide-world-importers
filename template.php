@@ -29,14 +29,14 @@
                 <span class="titlewwikleur2">Importers</span>
                 <a href=""><img src="afbeeldingen/WWI-logo-ConvertImage.png" alt="Afbeelding"></a>
             </div>
-            <div class="topnav">
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="browseproduct.php">Producten</a></li>
-                    <li><a href="contactpagina.php">Contact</a></li>
-                    <li><a href="">FAQ</a></li>
-                </ul>
-            </div>
+                <nav class="topnav">
+                    <ul>
+                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="browseproduct.php">Producten</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">FAQ</a></li>
+                    </ul>
+                </nav>
         </section>
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
