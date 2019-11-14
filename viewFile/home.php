@@ -9,12 +9,12 @@
 </head>
 <body>
 
-<form action="home.php" method="get">
+<form action="index.php" method="get">
     <input type="text" name="zoekopdracht">
     <input type="submit" value="Zoeken">
 </form>
 
-<?php displayProducts($products); ?>
+<?php //displayProducts(); ?>
 
 </body>
 </html>
