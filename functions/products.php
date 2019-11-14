@@ -33,6 +33,6 @@
 
     function displayProducts($products){
         foreach($products AS $naam){
-            print("Product: $naam<br>");
+            print("Product: $naam[0] <br>");
         }
     }

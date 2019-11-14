@@ -70,6 +70,7 @@
             ";
 
         $query = $conn->prepare($sql);
+        $query->execute();
 
         return $query->get_result()->fetch_all();
     }
