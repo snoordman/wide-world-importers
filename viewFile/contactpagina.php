@@ -1,13 +1,13 @@
-<!doctype html>
+<div>
+<h1>Contactformulier</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Contact</title>
+    Uw naam:
+    <br><input type="text" name="naam"><br>
+    Uw e-mail adres:
+    <br><input type="email" name="email"><br>
+    Uw vraag:
+    <br><textarea name="message" row="4" cols="22"></textarea>
 
 
 
-</head>
-<body>
-
-</body>
-</html>
+</div>

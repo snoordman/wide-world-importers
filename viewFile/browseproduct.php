@@ -11,7 +11,7 @@
             <option value=100>100</option>
         </select>
     </form>
-
+    <br><br><br>
     <form action="/action_page.php" id="Filters">
         <br>
         <select name="filter1" id="filter1">
@@ -22,6 +22,15 @@
             <option value=100>100</option>
         </select>
         <br/>
+        <br><br><br><br><br>
+            Prijs:(€)<br>
+            <input type="number" name="Prijs" value=""><br>
+            <input type="submit" value="Filter">
+            <p>Default range slider:</p>
+            <input type="range" min="1" max="100" value="50">
+
+
+
 
     </form>
 

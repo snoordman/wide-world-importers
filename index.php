@@ -7,7 +7,4 @@ include 'functions/products.php';
     displayProducts();
 
     require_once "template.php";
-
-
-
 ?>
