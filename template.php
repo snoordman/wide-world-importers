@@ -33,7 +33,7 @@
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="browseproduct.php">Producten</a></li>
-                    <li><a href="">Contact</a></li>
+                    <li><a href="contactpagina.php">Contact</a></li>
                     <li><a href="">FAQ</a></li>
                 </ul>
             </div>
