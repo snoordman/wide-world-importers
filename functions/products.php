@@ -23,3 +23,16 @@
             return "Geen resultaten";
         }
     }
+
+    function requestProducts(){
+        $connection = createConn();
+        $products = requestProducts($connection);
+        closeConn();
+        return $products;
+    }
+
+    function displayProducts($products){
+        foreach($products AS $naam){
+            print("Product: $naam<br>");
+        }
+    }

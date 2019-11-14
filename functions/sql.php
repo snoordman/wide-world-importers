@@ -68,3 +68,14 @@
 
         return $query->get_result()->fetch_all();
     }
+
+    function selectProducts(mysqli $conn){
+        $sql = "
+            SELECT StockItemName
+            FROM stockitems
+            ";
+
+        $query = $conn->prepare($sql);
+
+        return $query->get_result()->fetch_all();
+    }
