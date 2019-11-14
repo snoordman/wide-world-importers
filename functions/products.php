@@ -27,7 +27,7 @@
     function requestProducts(){
         $connection = createConn();
         $products = selectProducts($connection);
-        closeConn();
+        closeConn($connection);
         return $products;
     }
 

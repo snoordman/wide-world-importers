@@ -1,10 +1,4 @@
 <?php
-    function adder($arg1, $arg2)
-    {
-        return $arg1 + $arg2;
-    }
-
-
     function createConn(){
         $servername = "localhost";
         $username = "root";
