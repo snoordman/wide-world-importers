@@ -1,29 +1,53 @@
-.menu {
-    background-color: #33E2FF;
-    margin-right: 5%;
+.hetmenu {
     margin-left: 5%;
+    margin-right: 5%;
+    background-color: lightgray;
 }
 
-.header {
+.hoofd {
+    margin-top: -10px;
     text-align: center;
 }
 
-ul {
+.titlewwikleur1 {
+    font-size: 75px;
+    color: #33BDFF;
+    font-family: Verdana;
+}
+
+.titlewwikleur2 {
+    font-size: 75px;
+    color: #7F96A1;
+    font-family: Verdana;
+}
+
+.topnav {
+    background-color: #7F96A1;
+    overflow: hidden;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #33BDFF;
+    color: #7F96A1;
+}
+
+.topnav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-li {
+.topnav li {
     display: inline;
     padding: 8px;
-}
-
-a {
-    color: black;
-}
-
-.logo{
-    height: 45px;
-    width: 125px;
 }
