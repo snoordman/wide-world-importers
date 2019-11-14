@@ -28,12 +28,12 @@
         ");
 
         $query->execute();
-        $products = $query->get_result()->fetch_all();
+        $products = $query->get_result();
 
         $conn->close();
 
         if($products->num_rows > 0){
-            return $products;
+            return $products->fetch_all(MYSQLI_ASSOC);
         }else{
             return "Geen resultaten";
         }
