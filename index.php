@@ -7,7 +7,4 @@ include 'functions/products.php';
     $products = requestProducts();
 
     require_once "template.php";
-
-
-
 ?>

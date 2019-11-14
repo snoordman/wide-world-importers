@@ -1,13 +1,5 @@
-<!doctype html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Contact</title>
+<div>
+<h1>Contact</h1>
 
 
-
-</head>
-<body>
-
-</body>
-</html>
+</div>

@@ -19,7 +19,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <!--    bootstrap-->
 
-        <script src="main.js"></script>
+        <script src="javascript/main.js"></script>
     </head>
     <body>
         <section class="hetmenu">
@@ -40,7 +40,7 @@
         </section>
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
-                echo "<div class=container>";
+                echo "<div class='container'>";
                 require_once $viewFile;
                 echo "</div>";
             }
