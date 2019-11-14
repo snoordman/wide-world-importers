@@ -32,7 +32,7 @@
             <div class="topnav">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="">Producten</a></li>
+                    <li><a href="browseproduct.php">Producten</a></li>
                     <li><a href="">Contact</a></li>
                     <li><a href="">FAQ</a></li>
                 </ul>
@@ -40,7 +40,9 @@
         </section>
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
-                include_once $viewFile;
+                echo "<div class=container>";
+                require_once $viewFile;
+                echo "</div>";
             }
         ?>
     </body>
