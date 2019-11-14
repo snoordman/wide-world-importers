@@ -12,7 +12,7 @@
         </select>
     </form>
     <br>
-    <form action="/action_page.php" id="Filters">
+    <form action="/action_page.php" id="filters">
         <br>
         <select name="filter1" id="filter1">
             <option value=>Selecteer Categorie:</option>
@@ -24,14 +24,10 @@
         <br/>
         <br><br>
             Prijs:(€)<br>
-            <input type="number" name="Prijs" value=""><br>
-            <input type="submit" value="Filter" min=0>
-            <p>Default range slider:</p>
-            <input type="range" min="1" max="100" value="50">
-
-
-
-
+            <input type="text" name="price" value="" id="price"><br>
+            <input type="submit" value="Filter">
+            <p></p>
+            <input id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
 
     </form>
 
