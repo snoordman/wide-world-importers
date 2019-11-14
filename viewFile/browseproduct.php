@@ -1,18 +1,28 @@
 <!-- Alles met html -->
 
 <div>
-    <form action="/action_page.php" id="carform">
-        <input type="text" name="fname">
-        <br>
-        <select name="carlist" form="carform">
+    <br>
+    <form name="amountProductsForm" method="post">
+        <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
+            <option value=>Aantal per pagina:</option>
             <option value=10>10</option>
             <option value=25>25</option>
             <option value=50>50</option>
             <option value=100>100</option>
         </select>
-        <br/>
-        <input type="submit">
     </form>
 
-    <p>The drop-down list is outside the form element, but should still be a part of the form.</p>
+    <form action="/action_page.php" id="Filters">
+        <br>
+        <select name="filter1" id="filter1">
+            <option value=>Selecteer Categorie:</option>
+            <option value=>10</option>
+            <option value=25>25</option>
+            <option value=50>50</option>
+            <option value=100>100</option>
+        </select>
+        <br/>
+
+    </form>
+
 </div>
