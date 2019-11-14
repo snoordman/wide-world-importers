@@ -4,7 +4,7 @@ include 'functions/products.php';
 
     $viewFile = "viewFile/home.php";
 
-    displayProducts();
+//    displayProducts();
 
     require_once "template.php";
 ?>
