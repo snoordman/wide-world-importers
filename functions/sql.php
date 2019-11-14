@@ -15,27 +15,62 @@
         return $conn;
     }
 
-    function closeConn(mysqli $conn) {
-        $conn->close();
-    }
 
-    function getProducts(mysqli $conn){
-        $sql = "
+    // PRODUCTS //
+    function getProducts(){
+        $conn = createConn();
+
+        $query = $conn->prepare( "
             SELECT  si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
-        ";
-        $query = $conn->prepare($sql);
+        ");
 
-        return $query->get_result()->fetch_all();
+        $query->execute();
+        $products = $query->get_result()->fetch_all();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products;
+        }else{
+            return "Geen resultaten";
+        }
     }
 
-    function getProductByCategory(mysqli $conn, $stockGroupId){
+    function getProductBySearch($search){
+        $conn = createConn();
+
+        $search = "%".$search."%";
+
+        $query = $conn->prepare( "
+            SELECT  StockItemId, StockItemName
+            FROM    stockitems
+            WHERE   StockItemId = ?
+            OR      StockItemName LIKE ?
+            OR      SearchDetails LIKE ? 
+        ");
+
+        $query->bind_param("iss", $search, $search, $search);
+        $query->execute();
+        $products = $query->get_result()->fetch_all();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products;
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
+    function getProductByCategory($stockGroupId){
+        $conn = createConn();
         $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
         $types = str_repeat('i', count($stockGroupId));
 
-        $stmt = $conn->prepare("
+        $query = $conn->prepare("
             SELECT si.StockItemId, si.StockItemName
             FROM stockitems AS si
             WHERE si.StockItemId IN (
@@ -45,32 +80,35 @@
             )
         ");
 
-        $stmt->bind_param($types, ...$stockGroupId);
-        $stmt->execute();
+        $query->bind_param($types, ...$stockGroupId);
+        $query->execute();
+        $products = $query->get_result()->fetch_all();
 
-        return $stmt->get_result()->fetch_all();
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products;
+        }else{
+            return "Geen resultaten";
+        }
     }
 
-    function getCategories(mysqli $conn, $stockGroupId){
+
+    function getCategories(){
+        $conn = createConn();
         $sql = "
             SELECT stockGroupId, StockGroupName
             FROM stockgroups
         ";
 
         $query = $conn->prepare($sql);
-        $query->bind_param('i', $stockGroupId);
-
-        return $query->get_result()->fetch_all();
-    }
-
-    function selectProducts(mysqli $conn){
-        $sql = "
-            SELECT StockItemName
-            FROM stockitems
-            ";
-
-        $query = $conn->prepare($sql);
         $query->execute();
+        $categories = $query->get_result()->fetch_all();
+        $conn->close();
 
-        return $query->get_result()->fetch_all();
+        if($categories->num_rows > 0){
+            return $categories;
+        }else{
+            return "Geen resultaten";
+        }
     }
