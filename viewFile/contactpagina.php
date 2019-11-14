@@ -1,7 +1,7 @@
 
 
 
-<div>
+<div class="formulier">
 <h1>Contactformulier</h1>
 
     Uw naam:
