@@ -48,3 +48,24 @@
 .topnav li {
     display: inline;
 }
+.formuliernaam{
+display: inline-block;
+font-size: 35px;
+text-align: left;
+}
+.gegevensnaam{
+    display: inline-block;
+    text-align: right;
+    font-size: 35px;
+
+}
+
+
+.formulier{
+    width:600px;
+}
+
+
+.adres{
+    text-align: right;
+}
