@@ -32,7 +32,7 @@
     </div>
     <div class="topnav">
         <ul>
-            <li><a href="">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="">Producten</a></li>
             <li><a href="">Contact</a></li>
             <li><a href="">FAQ</a></li>
