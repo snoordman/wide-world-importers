@@ -1,6 +1,7 @@
 <!-- Alles met html -->
 
 <div>
+    Ons assortiment
     <br>
     <form name="amountProductsForm" method="post">
         <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
