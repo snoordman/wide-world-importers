@@ -46,10 +46,6 @@
         <div class="container">
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
-<<<<<<< HEAD
-                echo "<div class='container page'>";
-=======
->>>>>>> 9a38721d4fb47c3f2ae50190269d3caee12227aa
                 require_once $viewFile;
             }
         ?>
