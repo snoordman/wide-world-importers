@@ -16,7 +16,7 @@
     }
 
     // PRODUCTS //
-    function getProducts($amountResults){
+    function getProducts($amountResults = 10){
         $conn = createConn();
 
         $query = $conn->prepare( "
