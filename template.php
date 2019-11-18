@@ -45,7 +45,7 @@
         </section>
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
-                echo "<div class='container'>";
+                echo "<div class='container page'>";
                 require_once $viewFile;
                 echo "</div>";
             }

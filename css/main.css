@@ -57,26 +57,8 @@ text-align: left;
     display: inline-block;
     text-align: right;
     font-size: 35px;
-
 }
 
-
-.formulier{
-    width:400px;
-    text-align: left;
-
-
-
-
-}
-
-
-.adres{
-    text-align: right;
-
-}
-
-.KANKER!{
-  display: inline-block;
-    text-align: left;
+.page{
+    margin-top: 3%;
 }

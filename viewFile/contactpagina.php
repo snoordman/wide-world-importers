@@ -1,38 +1,36 @@
-
-
-    <div class="formuliernaam">
-        <h1>Contactformulier &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   </h1>
+<div class="contact">
+    <div class="row">
+        <div class="col-5">
+            <h1>Contactformulier</h1>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <h1>Onze bedrijfsgegevens</h1>
+        </div>
     </div>
-
-
-
-    <div class="gegevensnaam">
-<h1>Onze bedrijfsgegevens</h1>
-</div>
-
-<div class="KANKER!">
-
-
-    <div class="adres">
-
-        Adres<br>
-    Wide World Importers<br>
-    Donerkebapstraat 80<br>
-    8077TH Zwolle<br>
-    Tel: 038-4448392<br>
-    E-mail: info@WWI.nl<br>
-    KVK: 85739857398<br>
+    <div class="row">
+        <div class="col-5">
+            <form method="post" class="formulier">
+                <label for="naam">Uw naam:</label><br>
+                <input type="text" class="naam form-control" name="naam" placeholder="naam"><br>
+                Uw e-mail adres:
+                <br><input type="email" class="email form-control" name="email" placeholder="e-mail"><br>
+                Uw vraag:
+                <br><textarea name="message" rows="3" class="message form-control"></textarea><br>
+                <input type="submit" name="submit" class="submitButton" value="verzenden"><br>
+            </form>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            Adres<br>
+            Wide World Importers<br>
+            Donerkebapstraat 80<br>
+            8077TH Zwolle<br>
+            Tel: 038-4448392<br>
+            E-mail: info@WWI.nl<br>
+            KVK: 85739857398<br>
+        </div>
     </div>
-    <div class="formulier">
-        Uw naam:
-        <br><input type="text" class="formulier" name="naam"><br>
-        Uw e-mail adres:
-        <br><input type="email" class="formulier" name="email"><br>
-        Uw vraag:
-        <br><textarea name="message" row="4" class="formulier" cols="22"></textarea><br>
-        <input type="submit" value="verzenden"><br>
-    </div>
-
 </div>
 
 
