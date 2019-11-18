@@ -2,7 +2,12 @@
 require_once "functions/sql.php";
 require_once "functions/products.php";
 
-$products = getProducts();
+if(isset($_SESSION["hoi"])){
+    $amount = $_SESSION["hoi"];
+}else{
+    $amount = 10;
+}
+$products = getProducts($amount);
 
 $viewFile = "viewFile/browseproduct.php";
 
@@ -11,7 +16,7 @@ $viewFile = "viewFile/browseproduct.php";
 $price = minMaxPrice(getProducts());
 
 if(isset($_POST["amountProducts"])){
-    echo "";
+
 }
 
 require_once ("template.php");
