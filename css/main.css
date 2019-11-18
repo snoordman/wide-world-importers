@@ -62,10 +62,21 @@ text-align: left;
 
 
 .formulier{
-    width:600px;
+    width:400px;
+    text-align: left;
+
+
+
+
 }
 
 
 .adres{
     text-align: right;
+
+}
+
+.KANKER!{
+  display: inline-block;
+    text-align: left;
 }
