@@ -19,4 +19,7 @@ if(isset($_POST["amountProducts"])){
 
 }
 
+$cat = getCategories();
+var_dump($cat);
+
 require_once ("template.php");
