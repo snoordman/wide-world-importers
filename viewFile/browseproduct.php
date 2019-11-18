@@ -12,10 +12,10 @@
         </select>
     </form>
     <br>
-    <form action="/action_page.php" id="filters">
+    <form method="post" name="filters" id="filters">
         <br>
-        <select name="filter1" id="filter1">
-            <option value=>Selecteer Categorie:</option>
+        <label>Selecteer Categorie</label> <br/>
+        <select name="categorie" id="categorie">
             <option value=>10</option>
             <option value=25>25</option>
             <option value=50>50</option>
@@ -25,9 +25,12 @@
         <br><br>
             Prijs:(€)<br>
             <input type="text" name="price" value="" id="price"><br>
-            <input type="submit" value="Filter">
+
             <p></p>
             <input id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
+            <br/>
+            <input type="submit" value="Filter">
+
 
     </form>
 

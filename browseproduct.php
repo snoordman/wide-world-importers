@@ -14,7 +14,7 @@ $viewFile = "viewFile/browseproduct.php";
 // alles met php
 
 $price = minMaxPrice(getProducts());
-
+$
 if(isset($_POST["amountProducts"])){
 
 }
