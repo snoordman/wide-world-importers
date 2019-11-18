@@ -46,7 +46,43 @@
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
+            WHERE   si.StockItemId = ? 
         ");
+
+        $query->bind_param("i", $id);
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_assoc();
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
+    function getPhotosProduct($stockItemId){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT Photo
+            FROM stockItemPhotos sp
+            JOIN photos p ON sp.PhotoId = p.PhotoId
+            WHERE sp.StockItemId = ?
+        ");
+
+        $query->bind_param("i", $stockItemId);
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return "Geen resultaten";
+        }
     }
 
     function getProductBySearch($search){
