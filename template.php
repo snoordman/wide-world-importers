@@ -22,7 +22,7 @@
         <script src="javascript/main.js"></script>
     </head>
     <body>
-        <section class="hetmenu">
+        <div class="hetmenu">
             <div class="hoofd">
                 <a href=""><img src="afbeeldingen/WWI-logo.png" alt="Afbeelding"></a>
                 <span class="titlewwikleur1">Wide World </span>
@@ -42,14 +42,14 @@
                 </ul>
                 </div>
             </nav>
-        </section>
+        </div>
+        <div class="container">
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
-                echo "<div class='container'>";
                 require_once $viewFile;
-                echo "</div>";
             }
         ?>
+        </div>
     </body>
 </html>
 <?php

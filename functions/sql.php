@@ -15,9 +15,8 @@
         return $conn;
     }
 
-
     // PRODUCTS //
-    function getProducts(){
+    function getProducts($amountResults){
         $conn = createConn();
 
         $query = $conn->prepare( "
@@ -37,6 +36,17 @@
         }else{
             return "Geen resultaten";
         }
+    }
+
+    function getProductById($id){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand
+            FROM    stockitems AS si 
+            JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
+            JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
+        ");
     }
 
     function getProductBySearch($search){
@@ -92,7 +102,9 @@
             return "Geen resultaten";
         }
     }
+    // PRODUCTS //
 
+    // CATEGORIES //
     function getCategories(){
         $conn = createConn();
         $sql = "
@@ -111,3 +123,4 @@
             return "Geen resultaten";
         }
     }
+    // CATEGORIES //
