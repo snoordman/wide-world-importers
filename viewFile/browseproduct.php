@@ -41,6 +41,6 @@
        displayProducts();
        ?>
 </div>
-    
+
 
 </body>
