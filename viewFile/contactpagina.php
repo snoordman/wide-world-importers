@@ -12,11 +12,11 @@
         <div class="col-5">
             <br>
             <form method="post" class="formulier">
-                <label for="naam">Uw naam:</label><br>
+                <label for="naam"><b>Uw naam:</b></label><br>
                 <input type="text" class="naam form-control" name="naam" placeholder="naam"><br>
-                <label for="email">Uw e-mail adres:</label>
+                <label for="email"><b>Uw e-mail adres:</b></label>
                 <br><input type="email" class="email form-control" name="email" placeholder="e-mail"><br>
-                <label for="vraag">Uw vraag:</label>
+                <label for="vraag"><b>Uw vraag:</b></label>
                 <br><textarea name="message" rows="3" class="message form-control"></textarea><br>
                 <input type="submit" name="submit" class="submitButton" value="verzenden"><br>
             </form>
@@ -32,7 +32,8 @@
             Donerkebapstraat 80<br>
             8077TH Zwolle<br>
             Tel: 038-4448392<br>
-            E-mail: info@WWI.nl<br>
+            E-mail: info@WWI.nl
+
             KVK: 85739857398
             <br>
             <br>
