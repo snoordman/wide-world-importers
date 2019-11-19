@@ -1,5 +1,5 @@
 <!-- Alles met html -->
-
+<body>
 <div>
     Ons assortiment
     <br>
@@ -17,7 +17,7 @@
         <br>
         <label>Selecteer Categorie</label> <br/>
         <select name="categorie" id="categorie">
-            <option value=>10</option>
+            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
             <option value=25>25</option>
             <option value=50>50</option>
             <option value=100>100</option>
@@ -36,3 +36,8 @@
     </form>
 
 </div>
+
+<?php
+displayProducts();
+?>
+</body>
