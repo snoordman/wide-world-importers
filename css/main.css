@@ -90,3 +90,7 @@ text-align: left;
     height:75px;
     margin:10px;
 }
+
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
