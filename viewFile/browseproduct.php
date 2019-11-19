@@ -35,9 +35,11 @@
 
     </form>
 
-</div>
 
-<?php
-displayProducts();
-?>
+<div>
+    <?php
+       displayProducts();
+       ?>
+    </div>
+
 </body>
