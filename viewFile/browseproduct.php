@@ -15,10 +15,9 @@
 
     <br>
     <form name="amountProductsForm" method="post">
-        <label>Aantal:</label>
+        <label>Weergave op pagina:</label>
         <br>
         <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
-            <option value=>Aantal per pagina:</option>
             <option value=10>10</option>
             <option value=25>25</option>
             <option value=50>50</option>
@@ -26,7 +25,7 @@
         </select>
     </form>
 </div>
-
+<form>
     <br>
     <div class="col-4">
     <form method="post" name="filters" id="filters">
@@ -34,24 +33,29 @@
         <label>Categorie:</label> <br/>
         <select name="categorie" id="categorie">
             <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
-            <option value=25>25</option>
-            <option value=50>50</option>
-            <option value=100>100</option>
+            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
+            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
+            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
         </select>
     </div>
         <br/>
         <br><br>
+</form>
 
+    <form>
+<div class="col-10">
 
-
-        Prijs:(€)<br>
+    Prijs:(€)<br>
             <input type="text" name="price" value="" id="price"><br>
 
             <p></p>
             <input id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
             <br/>
-            <input type="submit" value="Filter">
-
+</div>
+<div class="col-12">
+    <input type="submit" value="Filter">
+</div>
+</div>
 
 
     </form>

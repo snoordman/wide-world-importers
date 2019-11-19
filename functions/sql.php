@@ -150,11 +150,14 @@
 
         $query = $conn->prepare($sql);
         $query->execute();
-        $categories = $query->get_result()->fetch_all();
+
+
+        $categories = $query->get_result();
+
         $conn->close();
 
         if($categories->num_rows > 0){
-            return $categories;
+            return $categories->fetch_all(MYSQLI_ASSOC);
         }else{
             return "Geen resultaten";
         }
