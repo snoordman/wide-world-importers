@@ -6,7 +6,7 @@
         $products = getProducts();
 
         foreach($products AS $naam){
-            print("Product: ".$naam["StockItemName"] . "<br>");
+            print($naam["StockItemName"] . "<br>");
         }
 
     }

@@ -10,12 +10,13 @@
     </div>
     <div class="row">
         <div class="col-5">
+            <br>
             <form method="post" class="formulier">
-                <label for="naam">Uw naam:</label><br>
+                <label for="naam"><b>Uw naam:</b></label><br>
                 <input type="text" class="naam form-control" name="naam" placeholder="naam"><br>
-                Uw e-mail adres:
+                <label for="email"><b>Uw e-mail adres:</b></label>
                 <br><input type="email" class="email form-control" name="email" placeholder="e-mail"><br>
-                Uw vraag:
+                <label for="vraag"><b>Uw vraag:</b></label>
                 <br><textarea name="message" rows="3" class="message form-control"></textarea><br>
                 <input type="submit" name="submit" class="submitButton" value="verzenden"><br>
             </form>
@@ -23,20 +24,40 @@
 
 
 
-
-
         <div class="col-2"></div>
         <div class="col-2">
+            <br>
             <b>Adres</b><br>
             Wide World Importers<br>
             Donerkebapstraat 80<br>
             8077TH Zwolle<br>
             Tel: 038-4448392<br>
-            E-mail: info@WWI.nl<br>
+            E-mail: info@WWI.nl
+
             KVK: 85739857398
+            <br>
+            <br>
+            <b>Social media</b>
+            <br>
+            <br>
+            <img src="foto1.jpg" class="instagram" alt="instagram">
+            <br>
+            <br>
+            <img src="foto2.png" class="facebook" alt="facebook">
+            <br>
+            <br>
+            <img src="foto3.jpg" class="linkedin" alt="linkedin">
         </div>
-        <div class="col-3"><div style="width: 100%"><iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&height=600&hl=nl&q=Stationspassage%205%2C%208017%20JR%20Zwolle+(U.yildiz%20doner%20company)&ie=UTF8&t=&z=16&iwloc=A&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.mapsdirections.info/nl/maak-een-google-map/">Maak een Google Map</a> van <a href="https://www.mapsdirections.info/nl/">Nederland Kaart</a></iframe></div><br /></div>
+        <div class="col-3">
+            <br>
+            <div style="width: 100%"><iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&height=600&hl=nl&q=Stationspassage%205%2C%208017%20JR%20Zwolle+(U.yildiz%20doner%20company)&ie=UTF8&t=&z=16&iwloc=A&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.mapsdirections.info/nl/maak-een-google-map/">Maak een Google Map</a> van <a href="https://www.mapsdirections.info/nl/">Nederland Kaart</a></iframe>
+            </div><br /></div>
     </div>
+
+
+
+
+
 </div>
 
 
