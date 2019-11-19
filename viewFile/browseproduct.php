@@ -40,6 +40,7 @@
     <?php
        displayProducts();
        ?>
-    </div>
+</div>
+    
 
 </body>
