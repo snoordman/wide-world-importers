@@ -35,16 +35,16 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                <ul>
+                <ul class="mr-auto navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="browseproduct.php">Producten</a></li>
                     <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
                 </ul>
-                    <form class="form-inline my-2 my-lg-0" method="get" action="index.php">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Zoeken..">
-                        <button class="searchbutton" type="submit">Zoek!</button>
-                    </form>
+                        <form class="form-inline my-2 my-lg-0" method="post" action="browseproduct.php">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Zoeken..">
+                            <button class="searchbutton" type="submit">Zoek!</button>
+                        </form>
                 </div>
             </nav>
         </div>

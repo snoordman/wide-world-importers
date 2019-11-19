@@ -9,23 +9,17 @@
 </head>
 <body>
 
-<form action="index.php" method="get">
-    <input type="text" name="zoekopdracht">
-    <input type="submit" value="Zoeken">
-</form>
-
-
 <?php
 //displayProducts();
-
-if(isset($_GET["zoekopdracht"]) != ""){
-    $resultaat = $_GET["zoekopdracht"];
-    if($resultaat == $products){
-        displayProducts();
-    }
-}
-
-?>
+//
+//if(isset($_GET["zoekopdracht"]) != ""){
+//    $resultaat = $_GET["zoekopdracht"];
+//    if($resultaat == $products){
+//        displayProducts();
+//    }
+//}
+//
+//?>
 
 
 </body>
