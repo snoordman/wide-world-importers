@@ -62,3 +62,20 @@ text-align: left;
 .page{
     margin-top: 3%;
 }
+
+.instagram{
+   width: 95px;
+    height: 95px;
+}
+
+.facebook{
+    width:70px;
+    height:70px;
+    margin:12px;
+}
+
+.linkedin{
+    width:75px;
+    height:75px;
+    margin:10px;
+}
