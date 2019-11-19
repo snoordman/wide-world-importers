@@ -40,10 +40,14 @@
                     <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
                 </ul>
+                    <form class="form-inline my-2 my-lg-0" method="get" action="index.php">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Zoeken..">
+                        <button class="searchbutton" type="submit">Zoek!</button>
+                    </form>
                 </div>
             </nav>
         </div>
-        <div class="container">
+        <div class="container page">
         <?php
             if (isset($viewFile) && file_exists($viewFile) ){
                 require_once $viewFile;
