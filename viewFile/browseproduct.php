@@ -1,5 +1,5 @@
 <!-- Alles met html -->
-
+<body>
 <div>
     Ons assortiment
     <br>
@@ -36,3 +36,8 @@
     </form>
 
 </div>
+
+<?php
+displayProducts();
+?>
+</body>
