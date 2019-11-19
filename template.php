@@ -38,7 +38,7 @@
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="browseproduct.php">Producten</a></li>
                     <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
                 </ul>
                 </div>
             </nav>
