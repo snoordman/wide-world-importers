@@ -8,7 +8,7 @@
 
 
 </div>
-<div class="row">
+<div class="row"></div>
 <div class="col-3">
 
 
@@ -27,15 +27,18 @@
 </div>
 <form>
     <br>
-    <div class="col-4">
+    <div class="col-6">
     <form method="post" name="filters" id="filters">
         <br>
         <label>Categorie:</label> <br/>
         <select name="categorie" id="categorie">
-            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
-            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
-            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
-            <option value='<?php echo $cat ?>'><?php echo $cat ?></option>
+<?php
+            for($i = 0; $i < count($categories); $i++){
+?>
+            <option value='<?php echo $categories[$i]["StockGroupId"]; ?>'><?php echo $categories[$i]["StockGroupName"]; ?></option>
+<?php
+            }
+?>
         </select>
     </div>
         <br/>

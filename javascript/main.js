@@ -3,6 +3,17 @@ function changeActive(item){
     item.addClass("active");
 }
 
+function setLimit(item, min = null, max = null){
+    itemValue = item.val();
+    if(max !== null && item.val() > max && itemValue !== ""){
+        console.log("WTF");
+        item.val(max);
+    }else if(min !== null && item.val() < min && itemValue !== ""){
+        console.log("WERK");
+        item.val(min)
+    }
+}
+
 $(function() {
 
     $("#range").on('propertychange input', function (e) {
@@ -13,11 +24,11 @@ $(function() {
     $("#price").change(function(){
         var value = this.value;
 
-        $("#range").val(this.value);
+        $("#range").val(value);
 
     });
 
-    $('#carouselExampleControls').on('slide.bs.carousel', function (e) {
-        // do something…
-    })
+    $("#addToCart").on("change input", function(){
+        setLimit($(this), 1);
+    });
 });

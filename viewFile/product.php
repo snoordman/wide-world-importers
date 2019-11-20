@@ -50,8 +50,33 @@
         </div>
         <div class="col-2"></div>
         <div class="col-6">
-            <h1><?php echo $product["StockItemName"] ?></h1>
-            <p>€ <?php echo $product["RecommendedRetailPrice"] ?></p>
+            <div class="jumbotron">
+                <div class="row">
+                    <h1><?php echo $product["StockItemName"] ?></h1>
+                </div>
+                <div class="row">
+                    Beschrijving:
+                    <?php
+                    if(isset($product["MarketingComments"])){
+                        echo $product["MarketingComments"];
+                    }else{
+                        echo "Niet aanwezig";
+                    }
+                    ?>
+                </div>
+                <div class="row">
+                    Prijs: € <?php echo $product["RecommendedRetailPrice"] ?>
+                </div>
+                <div class="row">
+                    Voorraad: <?php echo $product["QuantityOnHand"] ?>
+                </div>
+                <div class="row">
+                    <form method="post">
+                        Hoeveelheid:
+                        <input type="number" min="1" name="addToCart" id="addToCart">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
