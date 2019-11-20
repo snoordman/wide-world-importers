@@ -1,5 +1,5 @@
 <div class="login-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form action="index.php" method="post">
         <h1 class="text-center">Inloggen</h1>
         <div class="form-group">
             <input type="text" class="login-form-control" placeholder="E-mailadres" required="required">
@@ -13,9 +13,10 @@
         <div class="text-center">
             <a href="#">Wachtwoord vergeten?</a>
         </div>
+    </form>
+    <form>
         <div class="form-group">
-            <br><br>
-            <h4 class="text-center">Nog geen account?</h4>
+            <h3 class="text-center">Nog geen account?</h3>
             <button type="submit" class="loginbutton loginbutton-primary loginbutton-block">Registreer hier!</button>
         </div>
     </form>
