@@ -94,3 +94,14 @@ text-align: left;
 .navbar-light .navbar-nav .nav-link {
     color: #ffffff;
 }
+
+/*Chosen overwrite*/
+.chosen-container{
+    font-size: 16px;
+    display: block;
+}
+
+.chosen-container-single .chosen-single{
+    padding: .375rem .75rem;
+    height: calc(1.5em + .75rem + 2px);
+}

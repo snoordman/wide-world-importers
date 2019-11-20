@@ -31,4 +31,6 @@ $(function() {
     $("#addToCart").on("change input", function(){
         setLimit($(this), 1);
     });
+
+    $(".chosen").chosen();
 });
