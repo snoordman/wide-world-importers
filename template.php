@@ -31,10 +31,10 @@
     <body>
         <div class="hetmenu">
             <div class="hoofd">
-                <a href=""><img src="afbeeldingen/WWI-logo.png" alt="Afbeelding"></a>
+                <a href="index.php"><img src="afbeeldingen/WWI-logo.png" alt="Afbeelding"></a>
                 <span class="titlewwikleur1">Wide World </span>
                 <span class="titlewwikleur2">Importers</span>
-                <a href=""><img src="afbeeldingen/WWI-logo-ConvertImage.png" alt="Afbeelding"></a>
+                <a href="index.php"><img src="afbeeldingen/WWI-logo-ConvertImage.png" alt="Afbeelding"></a>
             </div>
             <nav class="topnav navbar navbar-expand-lg navbar-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
