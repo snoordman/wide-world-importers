@@ -40,13 +40,13 @@
             <b>Social media</b>
             <br>
             <br>
-            <img src="foto1.jpg" class="instagram" alt="instagram">
+            <img src="afbeeldingen/instagram.jpg" class="instagram" alt="instagram">
             <br>
             <br>
-            <img src="foto2.png" class="facebook" alt="facebook">
+            <img src="afbeeldingen/facebook.png" class="facebook" alt="facebook">
             <br>
             <br>
-            <img src="foto3.jpg" class="linkedin" alt="linkedin">
+            <img src="afbeeldingen/linkedin.jpg" class="linkedin" alt="linkedin">
         </div>
         <div class="col-3">
             <br>
