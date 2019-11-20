@@ -5,7 +5,7 @@
         <div class="col-2"><h1>Producten</h1></div>
         <div class="col-5"></div>
     </div>
-    <br/> 
+    <br/>
     <div class="row">
         <div class="col-4">
             <div class="row">
