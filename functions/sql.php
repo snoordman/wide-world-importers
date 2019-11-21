@@ -190,7 +190,7 @@
     }
     // CATEGORIES //
 
-    // DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
+// DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
     function fetchMostPopulairItems(){
         $conn = createConn();
 
