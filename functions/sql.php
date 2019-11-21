@@ -111,22 +111,51 @@
         }
     }
 
-    function getProductByCategory($stockGroupId){
+    function getProductByFilter($stockGroupId, $price = null){
         $conn = createConn();
         $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
         $types = str_repeat('i', count($stockGroupId));
+        $filters = [];
+        if($stockGroupId !== null){
+            $filters = $stockGroupId;
+        }
+        if($price !== null){
+            array_push($filters, $price);
+        }
 
-        $query = $conn->prepare("
-            SELECT si.StockItemId, si.StockItemName
-            FROM stockitems AS si
-            WHERE si.StockItemId IN (
+        $categoriesFilter = "";
+        if($stockGroupId !== null){
+            $categoriesFilter = "
+                WHERE si.StockItemId IN (
                 SELECT StockItemId
                 FROM stockitemstockgroups
                 WHERE StockGroupId IN ($clause) 
             )
+            ";
+        }
+
+        $priceFilter = "";
+        if($price !== null){
+            if($stockGroupId == null){
+                $priceFilter = "
+                    WHERE RecommendedRetailPrice <= ? 
+                ";
+            }else{
+                $priceFilter = " 
+                    AND RecommendedRetailPrice <= ?
+                ";
+            }
+            $types = $types . "s";
+        }
+
+        $query = $conn->prepare("
+            SELECT si.StockItemId, si.StockItemName
+            FROM stockitems AS si
+            $categoriesFilter
+            $priceFilter
         ");
 
-        $query->bind_param($types, ...$stockGroupId);
+        $query->bind_param($types, ...$filters);
         $query->execute();
         $products = $query->get_result();
 
@@ -143,15 +172,12 @@
     // CATEGORIES //
     function getCategories(){
         $conn = createConn();
-        $sql = "
+
+        $query = $conn->prepare("
             SELECT stockGroupId, StockGroupName
             FROM stockgroups
-        ";
-
-        $query = $conn->prepare($sql);
+        ");
         $query->execute();
-
-
         $categories = $query->get_result();
 
         $conn->close();

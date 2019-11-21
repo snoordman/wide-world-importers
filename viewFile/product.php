@@ -73,7 +73,7 @@
                 <div class="row">
                     <form method="post">
                         Hoeveelheid:
-                        <input type="number" min="1" name="addToCart" id="addToCart">
+                        <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct">
                     </form>
                 </div>
             </div>
