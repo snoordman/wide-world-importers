@@ -189,3 +189,40 @@
         }
     }
     // CATEGORIES //
+
+    // DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
+    function fetchMostPopulairItems(){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+                SELECT st.StockItemID, st.StockItemName, COUNT(*) AS meest_verkocht
+                FROM stockitems AS st
+                JOIN orderlines AS o ON st.StockItemID = o.StockItemID
+                GROUP BY o.StockItemID
+                ORDER BY meest_verkocht DESC LIMIT 3
+            ");
+//        HAVING COUNT(o.StockItemID) > 1117
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
+    function displayMostPopulairItems(){
+        $populairItems = fetchMostPopulairItems();
+
+        foreach($populairItems AS $naam){
+//            print("Productnummer: ".$naam["StockItemID"] . " | ");
+            print("Productnaam: ".$naam["StockItemName"]);
+//            print("Hoeveelheid verkocht: ".$naam["COUNT(*) AS meest_verkocht"]);
+            print("<br>");
+        }
+    }
+// DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
