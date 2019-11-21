@@ -6,9 +6,9 @@
         $products = getProducts();
 
         foreach($products AS $naam){
-            print($naam["StockItemName"] . "<br>");
+            print($naam["StockItemName"]. " ");
+            print($naam["RecommendedRetailPrice"] . "<br>");
         }
-
     }
 
     function minMaxPrice($products){

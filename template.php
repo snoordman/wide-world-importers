@@ -52,7 +52,7 @@
                             <button class="searchbutton" type="submit">Zoek!</button>
                         </form>
                     <li class="nav-item"><a class="nav-link" href="loginpagina.php"><i class="fas fa-sign-in-alt"></i></a></li>
-                    <li class="nav-item"><a class="nav-link" href=""><i class="fas fa-shopping-cart"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="shoppingcart.php"><i class="fas fa-shopping-cart"></i></a></li>
                 </div>
             </nav>
         </div>
