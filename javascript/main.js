@@ -28,7 +28,7 @@ $(function() {
 
     });
 
-    $("#addToCart").on("change input", function(){
+    $("#amountProduct").on("change input", function(){
         setLimit($(this), 1);
     });
 

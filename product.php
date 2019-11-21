@@ -1,6 +1,7 @@
 <?php
-    require_once ("functions/image.php");
     require_once ("functions/sql.php");
+    require_once ("functions/image.php");
+
     $viewFile = "viewFile/product.php";
 
     $productId = $_GET["product_id"];

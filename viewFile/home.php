@@ -9,18 +9,13 @@
 </head>
 <body>
 
-<?php
-//displayProducts();
-//
-//if(isset($_GET["zoekopdracht"]) != ""){
-//    $resultaat = $_GET["zoekopdracht"];
-//    if($resultaat == $products){
-//        displayProducts();
-//    }
-//}
-//
-//?>
+<h1>Onze meest populaire producten:</h1>
 
+<?php
+
+displayMostPopulairItems();
+
+?>
 
 </body>
 </html>
