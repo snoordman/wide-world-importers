@@ -49,7 +49,7 @@
                 </ul>
                         <form class="form-inline my-2 my-lg-0" method="post" action="browseproduct.php">
                             <input class="form-control mr-sm-2" type="search" placeholder="Zoeken..">
-                            <button class="searchbutton" type="submit">Zoek!</button>
+                            <button class="searchbutton" type="submit" name="button">Zoek!</button>
                         </form>
                     <li class="nav-item"><a class="nav-link" href="loginpagina.php"><i class="fas fa-sign-in-alt"></i></a></li>
                     <li class="nav-item"><a class="nav-link" href="shoppingcart.php"><i class="fas fa-shopping-cart"></i></a></li>

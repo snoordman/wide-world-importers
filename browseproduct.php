@@ -1,6 +1,7 @@
 <?php
 require_once "functions/sql.php";
 require_once "functions/products.php";
+$viewFile = "viewFile/browseproduct.php";
 
 if(isset($_SESSION["hoi"])){
     $amount = $_SESSION["hoi"];
@@ -9,19 +10,13 @@ if(isset($_SESSION["hoi"])){
 }
 $products = getProducts($amount);
 
-$viewFile = "viewFile/browseproduct.php";
-
-// alles met php
-
 $price = minMaxPrice(getProducts());
 
-if(isset($_POST["amountProducts"])){
-
+if(isset($_GET["amountProducts"])){
+    $products = getProductByFilter([4]);
 }
 
 $categories = getCategories();
 
 
 require_once ("template.php");
-
-

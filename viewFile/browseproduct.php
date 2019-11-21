@@ -41,7 +41,14 @@
         </div>
         <div class="col-8">
             <?php
-            displayProducts();
+            if(is_string($products)){
+                echo $products;
+            }else{
+                foreach($products AS $product){
+                    echo $product["StockItemName"] . "<br />";
+                }
+            }
+
             ?>
         </div>
     </div>
