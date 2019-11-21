@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-5">
             <br>
-            <form method="post" class="formulier">
+            <form action="contactpagina.php" method="post" class="formulier">
                 <label for="naam"><b>Uw naam:</b></label><br>
                 <input type="text" class="naam form-control" name="naam" placeholder="naam"><br>
                 <label for="email"><b>Uw e-mail adres:</b></label>
