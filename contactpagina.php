@@ -5,12 +5,12 @@ if(isset($_POST["submit"])){
     $email=$_POST["email"];
     $message=$_POST["message"];
 $to='eren-demirhan@live.nl';
-$subject='form submission';
+$subject='Form Submission';
 $message="Name:" . $naam. "\n" . "email:" . $email . "\n" . "heeft het volgende bericht gestuurd:" . "\n" . "\n" . $message;
 $headers="From " . $email;
 
 if(mail($to, $subject, $message, $headers)){
-echo "<h1>Mail is verzonden!" . $naam . ", U krijgt zo snel mogelijk te horen van ons</h1>" ;
+echo "<h1>Mail is verzonden!" . $naam . ", U krijgt zo snel mogelijk te horen van ons</h1>";
 
 } else {
   echo "Er is iets mis gegaan";
