@@ -29,9 +29,9 @@
             <br>
             <b>Adres</b><br>
             Wide World Importers<br>
-            Donerkebapstraat 80<br>
-            8077TH Zwolle<br>
-            Tel: 038-4448392<br>
+            Campus 2<br>
+            8017 CA Zwolle<br>
+            Tel: 088-4699911<br>
             E-mail: info@WWI.nl
 
             KVK: 85739857398
