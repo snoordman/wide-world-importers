@@ -9,8 +9,8 @@
     <div class="row">
         <div class="col-4">
             <div class="row">
-                <form name="amountProductsForm" method="post">
-                    <label>Weergave per pagina:</label>
+                <form method="get" name="pages">
+                    Aantal pagina's:
                     <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
                         <option value=10>10</option>
                         <option value=25>25</option>
@@ -19,31 +19,36 @@
                     </select>
                 </form>
             </div>
-            <br/>
+            <br />
             <div class="row">
-                <form method="post" name="filters" id="filters">
-                    <label>Categorie:</label> <br/>
-                    <select data-placeholder="" class="form-control chosen" name="categorie" id="categorie">
-                        <option value=""></option>
-                        <?php
-                        for($i = 0; $i < count($categories); $i++){
-                            ?>
-                            <option value='<?php echo $categories[$i]["StockGroupId"]; ?>'><?php echo $categories[$i]["StockGroupName"]; ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select><br>
-
+                <form method="get" name="filter">
+                    <div data-toggle="collapse" data-target="#categoriesCollapse"><i class="fas fa-arrow-down"></i> <b>Selecteer categorie</b></div>
+                    <div id="categoriesCollapse" class="collapse">
+<?php
+                    for($i = 0; $i < count($categories); $i++){
+?>
+                        <input type="checkbox" value='<?php echo $categories[$i]["StockGroupId"]; ?> '> <?php echo $categories[$i]["StockGroupName"]; ?><br/>
+<?php
+                }
+?>
+                    </div>
+                    <br/>
                     Prijs:(€) <input class="form-control" type="text" name="price" value="" id="price">
                     <input class="form-control" id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
-                    <br/>
                     <input type="submit" value="Filter">
                 </form>
             </div>
         </div>
         <div class="col-8">
             <?php
-            displayProducts();
+            if(is_string($products)){
+                echo $products;
+            }else{
+                foreach($products AS $product){
+                    echo $product["StockItemName"] . "<br />";
+                }
+            }
+
             ?>
         </div>
     </div>

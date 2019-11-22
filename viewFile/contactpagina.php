@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-5">
             <br>
-            <form method="post" class="formulier">
+            <form action="contactpagina.php" method="post" class="formulier">
                 <label for="naam"><b>Uw naam:</b></label><br>
                 <input type="text" class="naam form-control" name="naam" placeholder="naam"><br>
                 <label for="email"><b>Uw e-mail adres:</b></label>
@@ -50,8 +50,7 @@
         </div>
         <div class="col-3">
             <br>
-            <div style="width: 100%"><iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&height=600&hl=nl&q=Stationspassage%205%2C%208017%20JR%20Zwolle+(U.yildiz%20doner%20company)&ie=UTF8&t=&z=16&iwloc=A&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.mapsdirections.info/nl/maak-een-google-map/">Maak een Google Map</a> van <a href="https://www.mapsdirections.info/nl/">Nederland Kaart</a></iframe>
-            </div><br /></div>
+            <div style="width: 100%"><iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&height=600&hl=nl&q=Campus%202%2C%208017%20CA%20Zwolle+(Windesheim)&ie=UTF8&t=&z=14&iwloc=B&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.mapsdirections.info/nl/maak-een-google-map/">Maak een Google Map</a> van <a href="https://www.mapsdirections.info/nl/">Nederland Kaart</a></iframe></div><br />
     </div>
 
 
