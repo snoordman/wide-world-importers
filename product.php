@@ -1,5 +1,5 @@
 <?php
-    require_once ("functions/sql.php");
+    require_once ("functions/products.php");
     require_once ("functions/image.php");
 
     $viewFile = "viewFile/product.php";

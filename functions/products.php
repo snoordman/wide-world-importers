@@ -31,3 +31,11 @@
 
         return ["min" => $min, "max" => $max];
     }
+
+    function displayProduct($text, $field){
+        echo "
+            <div class='row'>
+                ". $text . $field . "
+            </div>
+        ";
+    }
