@@ -99,7 +99,7 @@
             OR      SearchDetails LIKE ? 
         ");
 
-        $query->bind_param("iss", $search, $search, $search);
+        $query->bind_param("sss", $search, $search, $search);
         $query->execute();
         $products = $query->get_result();
 

@@ -3,17 +3,20 @@ require_once "functions/sql.php";
 require_once "functions/products.php";
 $viewFile = "viewFile/browseproduct.php";
 
-if(isset($_SESSION["hoi"])){
-    $amount = $_SESSION["hoi"];
-}else{
-    $amount = 10;
-}
-$products = getProducts($amount);
+
+$products = getProducts();
 
 $price = minMaxPrice(getProducts());
 
-if(isset($_GET["amountProducts"])){
+
+
+if(isset($_GET["submitFilter"])){
     $products = getProductByFilter([4]);
+}else if(isset($_GET["search"])){
+    $search = $_GET["searchValue"];
+    if($search !== ""){
+        $products = getProductBySearch($search);
+    }
 }
 
 $categories = getCategories();
