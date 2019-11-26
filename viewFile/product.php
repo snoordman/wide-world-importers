@@ -54,26 +54,22 @@
                 <div class="row">
                     <h1><?php echo $product["StockItemName"] ?></h1>
                 </div>
-                <div class="row">
-                    Beschrijving:
-                    <?php
+                <?php
                     if(isset($product["MarketingComments"])){
-                        echo $product["MarketingComments"];
+                        displayProduct("Beschrijving: ", $product["MarketingComments"]);
                     }else{
-                        echo "Niet aanwezig";
+                        displayProduct("Beschrijving: ", "Niet aanwezig");
                     }
-                    ?>
-                </div>
-                <div class="row">
-                    Prijs: € <?php echo $product["RecommendedRetailPrice"] ?>
-                </div>
-                <div class="row">
-                    Voorraad: <?php echo $product["QuantityOnHand"] ?>
-                </div>
+
+                    displayProduct("Prijs: €", $product["RecommendedRetailPrice"]);
+                    displayProduct("Voorraad: ", $product["QuantityOnHand"]);
+                    if(isset($product[" "])){displayProduct("Groote: ", $product["Size"]);}
+                    if(isset($product["ColorName"])){displayProduct("Kleur: ", $product["ColorName"]);}
+                ?>
                 <div class="row">
                     <form method="post">
                         Hoeveelheid:
-                        <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct">
+                        <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct" pattern="\d+">
                     </form>
                 </div>
             </div>

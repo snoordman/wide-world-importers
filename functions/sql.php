@@ -42,10 +42,11 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand
+            SELECT  si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
+            LEFT JOIN    colors AS c on si.ColorId = c.ColorId
             WHERE   si.StockItemId = ? 
         ");
 
@@ -98,7 +99,7 @@
             OR      SearchDetails LIKE ? 
         ");
 
-        $query->bind_param("iss", $search, $search, $search);
+        $query->bind_param("sss", $search, $search, $search);
         $query->execute();
         $products = $query->get_result();
 

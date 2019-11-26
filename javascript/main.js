@@ -4,18 +4,18 @@ function changeActive(item){
 }
 
 function setLimit(item, min = null, max = null){
-    itemValue = item.val();
-    if(max !== null && item.val() > max && itemValue !== ""){
-        console.log("WTF");
+    var itemValue = item.val();
+    console.log(itemValue);
+    console.log(min);
+    console.log(max);
+    if(itemValue > max){
         item.val(max);
-    }else if(min !== null && item.val() < min && itemValue !== ""){
-        console.log("WERK");
-        item.val(min)
+    }else if(itemValue !== "" && min !== null && itemValue < min){
+        item.val(min);
     }
 }
 
 $(function() {
-
     $("#range").on('propertychange input', function (e) {
         console.log(this.value);
         $("#price").val(this.value);
@@ -28,8 +28,20 @@ $(function() {
 
     });
 
-    $("#amountProduct").on("change input", function(){
-        setLimit($(this), 1);
+
+    $("#amountProduct").on('change keypress', function(e){
+        //console.log($(this).val());
+        console.log(e.originalEvent);
+
+        var min = $(this)[0].min;
+        var max = $(this)[0].max;
+
+        if(min === undefined){min = null;}
+        if(max === undefined){max = null;}
+
+        if(!$.isNumeric(e.key) && e.key !== "Enter"){
+            e.preventDefault();
+        }
     });
 
     $(".chosen").chosen();
