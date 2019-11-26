@@ -201,7 +201,6 @@
                 GROUP BY o.StockItemID
                 ORDER BY meest_verkocht DESC LIMIT 3
             ");
-//        HAVING COUNT(o.StockItemID) > 1117
 
         $query->execute();
         $products = $query->get_result();
@@ -226,3 +225,5 @@
         }
     }
 // DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
+
+
