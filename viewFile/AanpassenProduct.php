@@ -1,3 +1,3 @@
 <?php
-    echo ($product["StockItemName"]."<BR>". $product["StockItemId"]);
+    echo ("Naam: ". $product["StockItemName"]."<BR>". "ItemID: ". $product["StockItemId"]. "<BR>". "Prijs: ". $product["RecommendedRetailPrice"]);
 ?>
