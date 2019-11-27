@@ -1,23 +1,25 @@
-<div class="login-form">
-    <form action="index.php" method="post">
+<div class="login-page">
+    <form method="post" class="login-form">
         <h1 class="text-center">Inloggen</h1>
         <div class="form-group">
-            <input type="text" class="login-form-control" placeholder="E-mailadres" required="required">
+            <label for="logonName">E-mail: </label>
+            <input id="logonName" type="text" class="form-control" placeholder="E-mailadres" name="logonName" required="required">
         </div>
         <div class="form-group">
-            <input type="password" class="login-form-control" placeholder="Wachtwoord" required="required">
+            <label for="password">Wachtwoord: </label>
+            <input id="password" type="password" class="form-control" placeholder="Wachtwoord" name="password" required="required">
         </div>
         <div class="form-group">
-            <button type="submit" class="loginbutton loginbutton-primary loginbutton-block">Inloggen</button>
+            <input id="submitLogin" type="submit" class="form-control btn-primary" value="Inloggen" name="submitLogin">
         </div>
-        <div class="text-center">
-            <a href="#">Wachtwoord vergeten?</a>
-        </div>
+<!--        <div class="text-center">-->
+<!--            <a href="#">Wachtwoord vergeten?</a>-->
+<!--        </div>-->
     </form>
-    <form>
+    <div class="login-form">
         <div class="form-group">
             <h3 class="text-center">Nog geen account?</h3>
-            <button type="submit" class="loginbutton loginbutton-primary loginbutton-block">Registreer hier!</button>
+            <a href="register.php"><button class="form-control btn-primary">Registreer hier!</button></a>
         </div>
-    </form>
+    </div>
 </div>

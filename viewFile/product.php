@@ -10,7 +10,7 @@
                     for ($i = 0; $i < count($photos); $i++) {
 ?>
                     <div class="carousel-item <?php if($i == 0){echo "active";} ?>">
-                        <img class="d-block w-100" src="data:image/jpeg;base64, <?php echo base64_encode($photos[$i]["Photo"]) ?>" alt="First slide">
+                        <img class="d-block w-100" src="data:image/jpeg;base64, <?php echo base64_encode($photos[$i]["Photo"]) ?>" alt="Slide <?php echo $i ?>">
                     </div>
 <?php
                     }
@@ -40,7 +40,7 @@
         <div id="carouselExampleControls" class="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="<?php echo $image ?>" alt="First slide">
+                    <img class="d-block w-100" src="<?php echo $image ?>" alt="Slide 1">
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
 
                     displayProduct("Prijs: €", $product["RecommendedRetailPrice"]);
                     displayProduct("Voorraad: ", $product["QuantityOnHand"]);
-                    if(isset($product[" "])){displayProduct("Groote: ", $product["Size"]);}
+                    if(isset($product["Size"])){displayProduct("Groote: ", $product["Size"]);}
                     if(isset($product["ColorName"])){displayProduct("Kleur: ", $product["ColorName"]);}
                 ?>
                 <div class="row">

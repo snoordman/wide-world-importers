@@ -35,7 +35,7 @@
     function displayProduct($text, $field){
         echo "
             <div class='row'>
-                ". $text . $field . "
+                ". $text . $field . "   
             </div>
         ";
     }

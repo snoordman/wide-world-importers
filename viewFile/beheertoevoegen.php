@@ -4,7 +4,7 @@
     </div>
     <div>
         <form action="beheertoevoegen.php" method="post"><br>
-            <p>StockItemID <input type="text" name="StockItemID"></p>
+            <p>StockItemID <input type="text" name="StockItemID"> Chapt autmatisch een hoger nummer in de database dus niet invullen</p>
             <p>StockItemName <input type="text" name="StockItemName"></p>
             <p>SupplierID <input type="text" name="SupplierID"></p>
             <p>ColorID <input type="text" name="ColorID"></p>
@@ -22,7 +22,7 @@
             <p>TypicalWeightPerUnit <input type="text" name="TypicalWeightPerUnit"></p>
             <p>MarketingComments <input type="text" name="MarketingComments"></p>
             <p>InternalComments <input type="text" name="InternalComments"></p>
-            <p>Photo <input type="text" name="Photo"></p>
+            <p>Photo <input type="text"  name="Photo"></p>
             <p>CustomFields <input type="text" name="CustomFields"></p>
             <p>Tags <input type="text" name="Tags"></p>
             <p>SearchDetails <input type="text" name="SearchDetails"></p>
@@ -37,6 +37,16 @@
 <?php
 
 require_once ("functions/products.php");
+
+$maxId = "
+    SELECT MAX(StockItemID) AS maxId 
+    FROM stockitems AS s
+    UNION ALL 
+    SELECT MAX(StockItemID) AS maxId  
+    FROM stockitems_archive AS sa
+    ORDER BY maxId DESC
+    LIMIT 1
+";
 
 if(isset($_POST['submit'])){
 
@@ -70,9 +80,9 @@ if(isset($_POST['submit'])){
 
     $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, Brand, `Size`, LeadTimeDays, QuantityPerOuter, 
         IsChillerStock, Barcode, TaxRate, UnitPrice, RecommendedRetailPrice, TypicalWeightPerUnit, MarketingComments, InternalComments, Photo, CustomFields, 
-        Tags, SearchDetails, LastEditedBy, ValidFrom, ValidTo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
+        Tags, SearchDetails, LastEditedBy, ValidFrom, ValidTo) VALUES (($maxId) + 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
 
-    $query->bind_param("isiiiissiiiiddddssbsssi", $stockitemid, $stockitemname, $supplierid, $colorid, $unitpackageid, $outerpackageid, $brand, $size, $leadtimedays, $quantityperouter, $ischillerstock, $barcode, $taxrate, $unitprice, $recommendedretailprice, $typicalweightperunit, $marketingcomments, $internalcomments, $photo, $customfields, $tags, $searchdetails, $lasteditedby);
+    $query->bind_param("siiiissiiiiddddssbsssi", $stockitemname, $supplierid, $colorid, $unitpackageid, $outerpackageid, $brand, $size, $leadtimedays, $quantityperouter, $ischillerstock, $barcode, $taxrate, $unitprice, $recommendedretailprice, $typicalweightperunit, $marketingcomments, $internalcomments, $photo, $customfields, $tags, $searchdetails, $lasteditedby);
 
     $query->execute();
 
