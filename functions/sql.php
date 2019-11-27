@@ -227,7 +227,7 @@
     }
 // DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
 
-<<<<<<< HEAD
+
 // USERS //
     function checkUserExists($fullName, $email){
         $conn = createConn();
@@ -288,6 +288,4 @@
         return $query->execute();
     }
 // USERS //
-=======
 
->>>>>>> c2c1f258c5b554f541383dee82458e57281bbdac
