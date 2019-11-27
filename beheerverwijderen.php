@@ -7,9 +7,17 @@ if(isset($_GET["submit"])){
 $StockItemID=$_GET["StockItemID"];
 
 $conn = createConn();
-$query= $conn ->prepare("SELECT * INTO stockitems_archive FROM stockitems WHERE StockItemID = ?");
+$query= $conn ->prepare("INSERT INTO stockitems_archive SELECT * FROM stockitems WHERE StockItemID= ?");
 $query->bind_param("i", $StockItemID);
 $query->execute();
+$conn->close();
+
+$conn = createConn();
+$query2= $conn ->prepare("DELETE FROM stockitems WHERE StockItemID = ?");
+$query2->bind_param("i", $StockItemID);
+$query2->execute();
+
+
 $conn->close();
 
 
