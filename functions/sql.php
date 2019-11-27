@@ -99,7 +99,7 @@
             OR      SearchDetails LIKE ? 
         ");
 
-        $query->bind_param("iss", $search, $search, $search);
+        $query->bind_param("sss", $search, $search, $search);
         $query->execute();
         $products = $query->get_result();
 
@@ -202,7 +202,6 @@
                 GROUP BY o.StockItemID
                 ORDER BY meest_verkocht DESC LIMIT 3
             ");
-//        HAVING COUNT(o.StockItemID) > 1117
 
         $query->execute();
         $products = $query->get_result();
@@ -227,3 +226,5 @@
         }
     }
 // DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
+
+
