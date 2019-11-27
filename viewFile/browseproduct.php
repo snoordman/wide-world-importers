@@ -45,7 +45,7 @@
                 echo $products;
             }else{
                 foreach($products AS $product){
-                    echo $product["StockItemName"] . "<br />". "<p><a href='AanpassenProduct.php' title='Dit product aanpassen.'>Aanpassen</a></p>";
+                    echo $product["StockItemName"] . "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
                 }
             }
 
