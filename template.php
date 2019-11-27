@@ -47,6 +47,8 @@
                     <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Beheer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">verwijderen</a></li>
+
                 </ul>
                         <form class="form-inline my-2 my-lg-0" method="get" action="browseproduct.php">
                             <input class="form-control mr-sm-2" type="search" name="searchValue" placeholder="Zoeken..">

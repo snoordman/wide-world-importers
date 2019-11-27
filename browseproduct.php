@@ -21,5 +21,4 @@ if(isset($_GET["submitFilter"])){
 
 $categories = getCategories();
 
-
 require_once ("template.php");
