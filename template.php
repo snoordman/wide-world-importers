@@ -46,10 +46,13 @@
                     <li class="nav-item"><a class="nav-link" href="browseproduct.php">Producten</a></li>
                     <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Beheer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">verwijderen</a></li>
+
                 </ul>
-                        <form class="form-inline my-2 my-lg-0" method="post" action="browseproduct.php">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Zoeken..">
-                            <button class="searchbutton" type="submit" name="button">Zoek!</button>
+                        <form class="form-inline my-2 my-lg-0" method="get" action="browseproduct.php">
+                            <input class="form-control mr-sm-2" type="search" name="searchValue" placeholder="Zoeken..">
+                            <input type="submit" class="searchbutton" value="Zoek!" name="search">
                         </form>
                     <li class="nav-item"><a class="nav-link" href="loginpagina.php"><i class="fas fa-sign-in-alt"></i></a></li>
                     <li class="nav-item"><a class="nav-link" href="shoppingcart.php"><i class="fas fa-shopping-cart"></i></a></li>

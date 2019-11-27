@@ -1,8 +1,8 @@
 <!-- Alles met html -->
 <div class="product">
     <div class="row">
-        <div class="col-5"></div>
-        <div class="col-2"><h1>Producten</h1></div>
+        <div class="col-4"></div>
+        <div class="col-3"><h1>Producten</h1></div>
         <div class="col-5"></div>
     </div>
     <br/>
@@ -35,7 +35,7 @@
                     <br/>
                     Prijs:(€) <input class="form-control" type="text" name="price" value="" id="price">
                     <input class="form-control" id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
-                    <input type="submit" value="Filter">
+                    <input type="submit" value="Filter" name="submitFilter">
                 </form>
             </div>
         </div>
@@ -45,11 +45,12 @@
                 echo $products;
             }else{
                 foreach($products AS $product){
-                    echo $product["StockItemName"] . "<br />";
+                    echo $product["StockItemName"] . "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
                 }
             }
 
             ?>
         </div>
+
     </div>
 </div>
