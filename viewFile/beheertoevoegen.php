@@ -91,3 +91,33 @@ if(isset($_POST['submit'])){
 }
 
 ?>
+
+
+
+
+<?php
+////Onderstaande haalt de leveranciers op uit de DB en zet deze in een dropdown menu
+//
+//require_once ("functions/products.php");
+//
+//$conn = createConn();
+//
+//$query = $conn->query("SELECT SupplierName FROM suppliers");
+//
+//
+//?>
+<!--<select name="suppliers">-->
+<!--    --><?php
+//    echo "Kies leverancier";
+//    while($rows = $query->fetch_assoc()){
+//        $supplier = $rows['SupplierName'];
+//        echo "<option value='$supplier'>$supplier</option>";
+//    }
+//    ?>
+<!--</select>-->
+<!---->
+<?php
+//
+//$conn->close();
+//
+//?>
