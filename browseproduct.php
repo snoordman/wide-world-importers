@@ -1,6 +1,5 @@
 <?php
-
-    require_once "functions/alerts.php";
+    require_once "config.php";
     require_once "functions/sql.php";
     require_once "functions/products.php";
 

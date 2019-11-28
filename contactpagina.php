@@ -1,5 +1,5 @@
 <?php
-    require_once "functions/alerts.php";
+    require_once "config.php";
     $viewFile = "viewFile/contactpagina.php";
 
     if(isset($_POST["submit"])){
