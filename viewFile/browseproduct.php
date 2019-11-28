@@ -25,15 +25,16 @@
                     <div data-toggle="collapse" data-target="#categoriesCollapse"><i class="fas fa-arrow-down"></i> <b>Selecteer categorie</b></div>
                     <div id="categoriesCollapse" class="collapse">
 <?php
-                    for($i = 0; $i < count($categories); $i++){
+                        for($i = 0; $i < count($categories); $i++){
 ?>
-                        <input type="checkbox" value='<?php echo $categories[$i]["StockGroupId"]; ?> '> <?php echo $categories[$i]["StockGroupName"]; ?><br/>
+                        <input type="checkbox" value='<?php echo $categories[$i]["StockGroupId"]; ?>' name="categories"> <?php echo $categories[$i]["StockGroupName"]; ?><br/>
 <?php
-                }
+                            }
 ?>
                     </div>
                     <br/>
-                    Prijs:(€) <input class="form-control" type="text" name="price" value="" id="price">
+                    Prijs:(€)
+                    <input class="form-control" type="text" name="price" value="" id="price">
                     <input class="form-control" id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
                     <input type="submit" value="Filter" name="submitFilter">
                 </form>
@@ -51,6 +52,5 @@
 
             ?>
         </div>
-
     </div>
 </div>

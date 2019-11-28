@@ -1,6 +1,6 @@
 <?php
-
-include 'functions/products.php';
+    require_once "config.php";
+    require_once 'functions/products.php';
 
     $viewFile = "viewFile/home.php";
 

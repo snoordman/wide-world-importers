@@ -1,28 +1,31 @@
 <?php
-$viewFile = "viewFile/loginpagina.php";
+    require_once "config.php";
+    $viewFile = "viewFile/loginpagina.php";
 
 
-if(isset($_POST["submitLogin"])){
-    $requiredFields = ["email" => "E-mail", "password" => "Wachtwoord"];
-    $errors = [];
-    foreach ($requiredFields as $field => $message){
-        if(!isset($_POST[$field]) || $_POST["password"] == ""){
-            array_push($errors, $message);
+    if(isset($_POST["submitLogin"])){
+        $requiredFields = ["logonName" => "E-mail", "password" => "Wachtwoord"];
+        $errorFields = [];
+        $errors = [];
+        foreach ($requiredFields as $field => $message){
+            if(!isset($_POST[$field]) || $_POST[$field] == ""){
+                array_push($errorFields, $message);
+            }
         }
-        if(count($errors) !== 0){
-
+        if(count($errorFields) !== 0){
+            $errorMessage = "U heeft de volgende velden niet ingevuld: ";
+            for($i = 0; $i < count($errorFields); $i++){
+                $errorMessage = $errorMessage . $errorFields[$i];
+                if($i !== count($errorFields) - 1){
+                    $errorMessage = $errorMessage . ", ";
+                }
+            }
+            $errors = [$errorMessage];
+        }else{
+            login($_POST["email"], $_POST["password"]);
         }
+
     }
-    if(!isset($_POST["email"]) || $_POST["password"] == ""){
-        array_push($requiredFields, "E-mail");
-    }else if(!isset($_POST["password"]) || $_POST["password"]){
-        array_push($requiredFields, "Wachtwoord");
-    }else{
-        if (!filter_var($f, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Invalid email format";
-        }
-    }
-}
 
-require_once "template.php";
+    require_once "template.php";
 ?>

@@ -54,14 +54,19 @@
                             <input class="form-control mr-sm-2" type="search" name="searchValue" placeholder="Zoeken..">
                             <input type="submit" class="searchbutton" value="Zoek!" name="search">
                         </form>
-                    <li class="nav-item"><a class="nav-link" href="loginpagina.php"><i class="fas fa-sign-in-alt"></i></a></li>
+<?php
+                    if(checkLoggedIn() == false) {
+                        echo '<li class="nav-item"><a class="nav-link" href="loginpagina.php"><i class="fas fa-sign-in-alt"></i></a></li>';
+                    }
+?>
                     <li class="nav-item"><a class="nav-link" href="shoppingcart.php"><i class="fas fa-shopping-cart"></i></a></li>
                 </div>
             </nav>
         </div>
         <div class="container page">
         <?php
-            if (isset($viewFile) && file_exists($viewFile) ){
+        alert_msg();
+        if (isset($viewFile) && file_exists($viewFile) ){
                 require_once $viewFile;
             }
         ?>
