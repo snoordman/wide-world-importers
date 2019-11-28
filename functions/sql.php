@@ -89,6 +89,7 @@
     function getProductBySearch($search){
         $conn = createConn();
 
+        $search1 = $search;
         $search = "%".$search."%";
 
         $query = $conn->prepare( "
@@ -99,7 +100,7 @@
             OR      SearchDetails LIKE ? 
         ");
 
-        $query->bind_param("sss", $search, $search, $search);
+        $query->bind_param("iss", $search1, $search, $search);
         $query->execute();
         $products = $query->get_result();
 
