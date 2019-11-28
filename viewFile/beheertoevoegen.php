@@ -93,6 +93,8 @@
 
 <?php
 
+//Met onderstaande query wordt de hoogste huidige StockItemID opgehaald uit de tabellen stockitems en stockitems_archive
+
 $maxId = "
     SELECT MAX(StockItemID) AS maxId 
     FROM stockitems AS s
@@ -102,6 +104,8 @@ $maxId = "
     ORDER BY maxId DESC
     LIMIT 1
 ";
+
+//Met onderstaande if-statement wordt gekeken of er op de 'Toevoegen' knop is gedrukt
 
 if(isset($_POST['submit'])){
 
@@ -132,6 +136,8 @@ if(isset($_POST['submit'])){
 //    $validto = $_POST['ValidTo'];
 
     $conn = createConn();
+
+    //Met onderstaande query worden de waardes die in de bovenstaande form door de gebruiker zijn ingevuld gepushd naar de database
 
     $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, Photo, LastEditedBy, ValidFrom, ValidTo) 
 		VALUES (($maxId) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
