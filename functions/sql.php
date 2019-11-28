@@ -315,7 +315,7 @@
 
         $conn->close();
 
-        if($result->num_rows == 0 && password_verify($password, $result->fetch_all()[0]["HashedPassword"])){
+        if($result->num_rows !== 0 && password_verify($password, $result->fetch_all(MYSQLI_ASSOC)[0]["HashedPassword"])){
             return $result->fetch_all(MYSQLI_ASSOC)[0];
         }else{
             return false;

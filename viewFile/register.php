@@ -10,7 +10,7 @@
             <input id="lastName" type="text" class="form-control" placeholder="Achternaam" name="lastName" required="required">
         </div>
         <div class="form-group">
-            <label for="email">Voornaam: </label>
+            <label for="email">Email: </label>
             <input id="email" type="text" class="form-control" placeholder="E-mailadres" name="email" required="required">
         </div>
         <div class="form-group">
@@ -45,4 +45,3 @@
         </div>
     </form>
 </div>
-<?php
