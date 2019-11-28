@@ -8,7 +8,7 @@ function alert_msg(){
         for($i = 0; $i < count($_SESSION["alertMsg"]["alert_type"]); $i++){
             echo"
 					<div class='container'>
-						<div class='alert ".$_SESSION["alertMsg"]["alert_type"][$i]." alert-dismissable fade in'> 
+						<div class='alert ".$_SESSION["alertMsg"]["alert_type"][$i]." alert-dismissable fade show'> 
 							<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
 							".$_SESSION["alertMsg"]["alert_message"][$i]."
 						</div>
@@ -33,4 +33,14 @@ function alert_msg_push($type, $alert){
         array_push($_SESSION["alertMsg"]["alert_type"], $type);
         array_push($_SESSION["alertMsg"]["alert_message"], $alert);
     }
+}
+
+function checkRequiredInput($message, $fields, $alertType){
+    for($i = 0; $i < count($fields); $i++){
+        $message = $message . $fields[$i];
+        if($i !== count($fields) - 1){
+            $message = $message . ", ";
+        }
+    }
+    alert_msg_push($alertType, $message);
 }

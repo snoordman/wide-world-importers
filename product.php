@@ -10,7 +10,4 @@
     $product = getProductById($productId);
     $photos = getPhotosProduct($productId);
 
-
-
-
     require_once ("template.php");

@@ -1,6 +1,6 @@
 <?php
     require_once "config.php";
-    require_once "functions/sql.php";
+    require_once "functions/login.php";
     $viewFile = "viewFile/register.php";
 
     if(isset($_POST["submitRegister"])){
@@ -17,16 +17,20 @@
             $permissions = $_POST["permissions"];
         }
 
-        if(checkUserExists($firstName . " " . $lastName, $email) == false){
-            $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions);
-            if($addUser == true){
-                $alertMessage = "Account succesvol aangemaakt";
-                header("location: index.php");
-                exit;
-            }else{
-                $alertMessage = "Er is iets mis gegaan, propbeer alstublieft opnieuw";
+        $requiredFields = ["firstName" => "Voornaam", "lastName" => "Achternaam", "email" => "E-mail", "password" => "Wachtwoord"];
+        $errorFields = [];
+        foreach ($requiredFields as $field => $message){
+            if(!isset($_POST[$field]) || $_POST[$field] == ""){
+                array_push($errorFields, $message);
             }
-        };
+        }
+        if(count($errorFields) !== 0){
+            $errorMessage = "U heeft de volgende velden niet ingevuld: ";
+            checkRequiredInput($errorMessage, $errorFields, "alert-danger");
+        }else{
+            register($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions);
+        }
+
     }
 
     require_once "template.php";
