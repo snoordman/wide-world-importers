@@ -11,7 +11,7 @@ $price = minMaxPrice(getProducts());
 
 
 if(isset($_GET["submitFilter"])){
-    $products = getProductByFilter([4]);
+    $products = getProductByFilter([getProductById(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)]);
 }else if(isset($_GET["search"])){
     $search = $_GET["searchValue"];
     if($search !== ""){

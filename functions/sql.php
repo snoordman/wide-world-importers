@@ -176,7 +176,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT stockGroupId, StockGroupName
+            SELECT StockGroupId, StockGroupName
             FROM stockgroups
         ");
         $query->execute();
