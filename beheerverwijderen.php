@@ -1,7 +1,7 @@
 <?php
     require_once "config.php";
     require_once "functions/products.php";
-    require_once "template.php";
+
     $viewFile = "viewFile/beheerverwijderen.php";
 
 
@@ -23,4 +23,5 @@
         $conn->close();
     }
 
+    require_once "template.php";
 ?>
