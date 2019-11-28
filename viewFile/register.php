@@ -30,7 +30,7 @@
             <input id="confirmPassword" type="password" class="form-control" placeholder="Bevestig wachtwoord" name="confirmPassword">
         </div>
         <?php
-        if(isset($_SESSION["admin"]) && $_SESSION["admin"] == true){
+        if(checkPermissions("isSystemUser")){
         ?>
         <div class="form-group">
             <input id="systemUser" type="checkbox" class="form-control" placeholder="is SystemUser" name="permissions">

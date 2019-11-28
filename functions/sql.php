@@ -229,21 +229,25 @@
 
 
 // USERS //
-    function checkUserExists($fullName, $email){
+    function checkUserExists($logonName){
         $conn = createConn();
 
         $query = $conn->prepare("
             SELECT  PersonId
             FROM    people
-            WHERE   EmailAddress = ?
+            WHERE   LogonName = ?
         ");
 
-        $query->bind_param("s", $email);
+        $query->bind_param("s", $logonName);
         $query->execute();
         $result = $query->get_result();
 
+        $conn->close();
+
         if($result->num_rows == 0){
             return false;
+        }else{
+            return true;
         }
     }
 
@@ -255,37 +259,66 @@
         $logonName = $email;
         $password = password_hash($password, PASSWORD_BCRYPT);
 
-        $isSystemUser = 0;
-        $isEmployee = 0;
-        $isSalesperson = 0;
+        if($password !== false){
+            $isSystemUser = 0;
+            $isEmployee = 0;
+            $isSalesperson = 0;
 
-        if($permissions !== null){
-            $isSystemUser = $permissions[0];
-            $isEmployee = $permissions[1];
-            $isSalesperson = $permissions[2];
+            if($permissions !== null){
+                $isSystemUser = $permissions[0];
+                $isEmployee = $permissions[1];
+                $isSalesperson = $permissions[2];
+            }
+
+            $maxId = "
+                SELECT max(PersonID) maxId 
+                FROM people p
+                UNION ALL 
+                SELECT max(PersonID) maxId 
+                FROM people_archive pa
+                ORDER BY maxId DESC
+                LIMIT 1
+            ";
+
+
+            $query = $conn->prepare("
+                INSERT INTO people(PersonId, FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, HashedPassword, IsSystemUser,
+                IsEmployee, IsSalesperson, PhoneNumber, FaxNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
+                VALUES(($maxId) + 1, ?, ?, ?, 1, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59')
+            ");
+
+            $query->bind_param("sssssssiiiss", $fullName, $firstName, $searchName, $logonName, $password, $isSystemUser, $isEmployee, $isSalesperson,
+                $phoneNumber, $faxNumber, $email, $userId);
+
+            $result = $query->execute();
+            $conn->close();
+
+            return $result;
+        }else{
+            return false;
         }
+    }
 
-        $maxId = "
-            SELECT max(PersonID) maxId 
-            FROM people p
-            UNION ALL 
-            SELECT max(PersonID) maxId 
-            FROM people_archive pa
-            ORDER BY maxId DESC
-            LIMIT 1
-        ";
-
+    function checkValidLogin($logonName, $password){
+        $conn = createConn();
 
         $query = $conn->prepare("
-        INSERT INTO people(PersonId, FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, HashedPassword, IsSystemUser,
-        IsEmployee, IsSalesperson, PhoneNumber, FaxNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
-        VALUES(($maxId) + 1, ?, ?, ?, 1, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59')
-    ");
+            SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
+            FROM    people
+            WHERE   LogonName = ?
+        ");
 
-        $query->bind_param("sssssssiiiss", $fullName, $firstName, $searchName, $logonName, $password, $isSystemUser, $isEmployee, $isSalesperson,
-            $phoneNumber, $faxNumber, $email, $userId);
+        $query->bind_param("s", $logonName);
+        $query->execute();
+        $result = $query->get_result();
 
-        return $query->execute();
+        $conn->close();
+
+        if($result->num_rows == 0 && password_verify($password, $result->fetch_all()[0]["HashedPassword"])){
+            return $result->fetch_all(MYSQLI_ASSOC)[0];
+        }else{
+            return false;
+        }
     }
 // USERS //
 

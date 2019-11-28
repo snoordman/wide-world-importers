@@ -17,7 +17,14 @@ if(isset($_POST["submitRegister"])){
     }
 
     if(checkUserExists($firstName . " " . $lastName, $email) == false){
-        var_dump(addUser($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions));
+        $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions);
+        if($addUser == true){
+            $alertMessage = "Account succesvol aangemaakt";
+            header("location: index.php");
+            exit;
+        }else{
+            $alertMessage = "Er is iets mis gegaan, propbeer alstublieft opnieuw";
+        }
     };
 }
 
