@@ -33,7 +33,7 @@
 ?>
                     </div>
                     <br/>
-                    Prijs:(€)
+                    Max Prijs:(€)
                     <input class="form-control" type="text" name="price" value="" id="price">
                     <input class="form-control" id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
                     <input type="submit" value="Filter" name="submitFilter">
