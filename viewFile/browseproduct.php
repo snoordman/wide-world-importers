@@ -27,7 +27,7 @@
 <?php
                         for($i = 0; $i < count($categories); $i++){
 ?>
-                        <input type="checkbox" value='<?php echo $categories[$i]["StockGroupId"]; ?>' name="categories"> <?php echo $categories[$i]["StockGroupName"]; ?><br/>
+                        <input type="checkbox" value='<?php echo $categories[$i]["StockGroupId"]; ?>' name="categories[]"> <?php echo $categories[$i]["StockGroupName"]; ?><br/>
 <?php
                             }
 ?>
@@ -49,7 +49,6 @@
                     echo $product["StockItemName"] . "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
                 }
             }
-
             ?>
         </div>
     </div>
