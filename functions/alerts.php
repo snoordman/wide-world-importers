@@ -7,13 +7,11 @@ function alert_msg(){
     if(isset($_SESSION["alertMsg"])){
         for($i = 0; $i < count($_SESSION["alertMsg"]["alert_type"]); $i++){
             echo"
-					<div class='container'>
-						<div class='alert ".$_SESSION["alertMsg"]["alert_type"][$i]." alert-dismissable fade show'> 
-							<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-							".$_SESSION["alertMsg"]["alert_message"][$i]."
-						</div>
-					</div>
-				";
+                <div class='alert ".$_SESSION["alertMsg"]["alert_type"][$i]." alert-dismissable fade show'> 
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    ".$_SESSION["alertMsg"]["alert_message"][$i]."
+                </div>
+            ";
         }
     }
     unset($_SESSION['alertMsg']);
