@@ -4,7 +4,7 @@
         <h1>Product toevoegen:</h1>
     </div>
     <div>
-        <form action="beheertoevoegen.php" method="post"><br>
+        <form action="beheertoevoegen.php" method="post" enctype="multipart/form-data"><br>
 <!--            <p>StockItemID <input type="text" name="StockItemID"></p>-->
             <p>StockItemName <input type="text" name="StockItemName"></p>
             <p>SupplierID <select name="suppliers">
@@ -79,7 +79,7 @@
 <!--            <p>TypicalWeightPerUnit <input type="text" name="TypicalWeightPerUnit"></p>-->
 <!--            <p>MarketingComments <input type="text" name="MarketingComments"></p>-->
 <!--            <p>InternalComments <input type="text" name="InternalComments"></p>-->
-            <p>Photo <input type="file" name="Photo" accept="image/*"><b><u>Werkt nog niet</u></b></p>
+            <p>Photo <input type="file" name="Photo"><b><u>Werkt nog niet</u></b></p>
 <!--            <p>CustomFields <input type="text" name="CustomFields"></p>-->
 <!--            <p>Tags <input type="text" name="Tags"></p>-->
 <!--            <p>SearchDetails <input type="text" name="SearchDetails"></p>-->
@@ -93,7 +93,7 @@
 
 <?php
 
-//Met onderstaande query wordt de hoogste huidige StockItemID opgehaald uit de tabellen stockitems en stockitems_archive
+//Met onderstaande query wordt de hoogste StockItemID opgehaald uit de tabellen stockitems en stockitems_archive
 
 $maxId = "
     SELECT MAX(StockItemID) AS maxId 
@@ -127,7 +127,6 @@ if(isset($_POST['submit'])){
 //    $typicalweightperunit = $_POST['TypicalWeightPerUnit'];
 //    $marketingcomments = $_POST['MarketingComments'];
 //    $internalcomments = $_POST['InternalComments'];
-    $photo = $_POST['Photo'];
 //    $customfields = $_POST['CustomFields'];
 //    $tags = $_POST['Tags'];
 //    $searchdetails = $_POST['SearchDetails'];
@@ -137,20 +136,49 @@ if(isset($_POST['submit'])){
 
     $conn = createConn();
 
-    $image = $_FILES['imagefile']['tmp_name'];
-    $image = base64_encode(file_get_contents(addslashes($image)));
+    //Met onderstaande query worden de waardes die in de bovenstaande form door de gebruiker zijn ingevuld gepushed naar de database
 
-    //Met onderstaande query worden de waardes die in de bovenstaande form door de gebruiker zijn ingevuld gepushd naar de database
+    $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, LastEditedBy, ValidFrom, ValidTo) 
+		VALUES (($maxId) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
 
-    $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, Photo, LastEditedBy, ValidFrom, ValidTo) 
-		VALUES (($maxId) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
-
-    $query->bind_param("sds", $stockitemname, $recommendedretailprice, $image);
+    $query->bind_param("sd", $stockitemname, $recommendedretailprice);
 
     $query->execute();
 
     $conn->close();
 
 }
+
+//Met onderstaande if-statement wordt er zodra er op de knop Toevoegen wordt gedrukt het image bestand als blob geupload in de tabel photos
+
+if (isset($_POST['submit'])) {
+
+    $photo = $_FILES['Photo']['tmp_name'];
+    $name = $_FILES['Photo']['name'];
+    $photo = base64_encode(file_get_contents(addslashes($photo)));
+
+    $conn = createConn();
+
+    $query = $conn->prepare("INSERT INTO photos (Photo, `name`) VALUES (?, ?)");
+
+    $query->bind_param("ss", $photo, $name);
+
+    $query->execute();
+
+    $conn->close();
+}
+
+//$maxStockItemId = "SELECT MAX(StockItemID)
+//                        FROM stockitems";
+//
+//$maxPhotoId = "SELECT MAX(PhotoId)
+//                    FROM photos";
+//
+//$query = $conn->prepare("INSERT INTO stockitemphotos (StockItemId, PhotoId)
+//                                    VALUES ($maxStockItemId, $maxPhotoId)");
+//
+//$query->bind_param(????);
+//
+//$query->execute();
 
 ?>
