@@ -95,7 +95,7 @@
 
 //Met onderstaande query wordt de hoogste StockItemID opgehaald uit de tabellen stockitems en stockitems_archive
 
-$maxId = "
+$maxIdStockItem = "
     SELECT MAX(StockItemID) AS maxId 
     FROM stockitems AS s
     UNION ALL 
@@ -105,9 +105,22 @@ $maxId = "
     LIMIT 1
 ";
 
+//Met onderstaande query wordt de hoogste PhotoId opgehaald uit de tabel photos
+
+if(!isset($_POST["photoId"])){
+    $maxIdPhoto = "
+        SELECT MAX(PhotoId) AS photoId 
+        FROM photos AS p
+        ORDER BY PhotoId DESC
+        LIMIT 1
+    ";
+}else{
+    $maxIdPhoto = $_POST["photoId"];
+}
+
 //Met onderstaande if-statement wordt gekeken of er op de 'Toevoegen' knop is gedrukt
 
-if(isset($_POST['submit'])){
+if(isset($_POST['submit'])) {
 
 //    $stockitemid = $_POST['StockItemID'];
     $stockitemname = $_POST['StockItemName'];
@@ -139,7 +152,7 @@ if(isset($_POST['submit'])){
     //Met onderstaande query worden de waardes die in de bovenstaande form door de gebruiker zijn ingevuld gepushed naar de database
 
     $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, LastEditedBy, ValidFrom, ValidTo) 
-		VALUES (($maxId) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
+		VALUES (($maxIdStockItem) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
 
     $query->bind_param("sd", $stockitemname, $recommendedretailprice);
 
@@ -147,38 +160,35 @@ if(isset($_POST['submit'])){
 
     $conn->close();
 
-}
 
 //Met onderstaande if-statement wordt er zodra er op de knop Toevoegen wordt gedrukt het image bestand als blob geupload in de tabel photos
 
-if (isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {
 
-    $photo = $_FILES['Photo']['tmp_name'];
-    $name = $_FILES['Photo']['name'];
-    $photo = base64_encode(file_get_contents(addslashes($photo)));
+        $photo = $_FILES['Photo']['tmp_name'];
+        $name = $_FILES['Photo']['name'];
+        $photo = base64_encode(file_get_contents(addslashes($photo)));
+
+        $conn = createConn();
+
+        $query = $conn->prepare("INSERT INTO photos (Photo, `name`) VALUES (?, ?)");
+
+        $query->bind_param("ss", $photo, $name);
+
+        $query->execute();
+
+        $conn->close();
+    }
+
+//Met onderstaande query wordt er in de koppeltabel stockitemphotos een link gelegd tussen de tabel stockitems en photos
 
     $conn = createConn();
 
-    $query = $conn->prepare("INSERT INTO photos (Photo, `name`) VALUES (?, ?)");
-
-    $query->bind_param("ss", $photo, $name);
+    $query = $conn->prepare("INSERT INTO stockitemphotos (StockItemId, PhotoId) VALUES (($maxIdStockItem), ($maxIdPhoto))");
 
     $query->execute();
 
     $conn->close();
 }
-
-//$maxStockItemId = "SELECT MAX(StockItemID)
-//                        FROM stockitems";
-//
-//$maxPhotoId = "SELECT MAX(PhotoId)
-//                    FROM photos";
-//
-//$query = $conn->prepare("INSERT INTO stockitemphotos (StockItemId, PhotoId)
-//                                    VALUES ($maxStockItemId, $maxPhotoId)");
-//
-//$query->bind_param(????);
-//
-//$query->execute();
 
 ?>
