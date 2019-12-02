@@ -14,6 +14,7 @@
 
     if(isset($_GET["submitFilter"])){
         $products = getProductByFilter($_GET["categories"]);
+
     }else if(isset($_GET["search"])){
         $search = $_GET["searchValue"];
         if($search !== ""){

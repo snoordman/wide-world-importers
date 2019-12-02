@@ -1,24 +1,35 @@
 <?php
     require_once "config.php";
     $viewFile = "viewFile/contactpagina.php";
-
+     $result="";
     if(isset($_POST["submit"])){
-        $naam=$_POST["naam"];
-        $email=$_POST["email"];
-        $message=$_POST["message"];
-        $to='eren-demirhan@live.nl';
-        $subject='Form Submission';
-        $message="Name:" . $naam. "\n" . "email:" . $email . "\n" . "heeft het volgende bericht gestuurd:" . "\n" . "\n" . $message;
-        $headers="From " . $email;
+        require 'phpmailer/PHPMailerAutoload.php';
+        $mail = new phpmailer;
+        $mail->Host='smtp.gmail.com';
+        $mail->Port='587';
+        $mail->SMTPAuth=true;
+        $mail->SMTPSecure='tls';
+        $mail->Username='testg0930@gmail.com';
+        $mail->Password='TestTest123';
+        $mail->setFrom($_POST['email']);
+        $mail->addAddress('eren-demirhan@live.nl');
+        $mail->addReplyTo($_POST['email']);
+        $mail->isHTML(true);
+        $mail->Subject='Form Submission: ' . $_POST['subject'];
+        $mail->Body='<h1 align=center>naam :' . $_POST['naam'] . '<br>Email: '.$_POST['email'].'<br
+        >Message: ' . $_POST['message'] . '</h1>';
+        if(!$mail->send()){
+         $result="Something went wrong. please try again.";
 
-        if(mail($to, $subject, $message, $headers)){
-            echo "<h1>Mail is verzonden!" . $naam . ", U krijgt zo snel mogelijk te horen van ons</h1>";
-        }else{
-            echo "Er is iets mis gegaan";
+        } else {
+            $result="Thanks" . $_POST['naam']."for contacting us. We get back to you soon";
+
         }
 
-    }
 
 
-    require_once "template.php";
-?>
+
+
+
+}
+require_once "template.php";
