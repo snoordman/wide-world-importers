@@ -15,7 +15,7 @@
         $conn->close();
 
         $conn = createConn();
-        $query2= $conn ->prepare("DELETE FROM stockitems WHERE StockItemID = ?");
+        $query2= $conn ->prepare("UPDATE stockitems SET Active=0 WHERE StockItemID= ?");
         $query2->bind_param("i", $StockItemID);
         $query2->execute();
 
