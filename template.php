@@ -31,10 +31,10 @@
     <body>
         <div class="hetmenu">
             <div class="hoofd">
-                <a href="index.php"><img src="afbeeldingen/WWI-logo.png" alt="Afbeelding"></a>
-                <span class="titlewwikleur1">Wide World </span>
-                <span class="titlewwikleur2">Importers</span>
-                <a href="index.php"><img src="afbeeldingen/WWI-logo-ConvertImage.png" alt="Afbeelding"></a>
+                <a href="index.php"><img src="afbeeldingen/WWI-logo-links.png" alt="Afbeelding"></a>
+                <span class="titlewwikleur1">Wide World</span>
+                <span class="titlewwikleur2">&nbsp;Importers</span>
+                <a href="index.php"><img src="afbeeldingen/WWI-logo-rechts.png" alt="Afbeelding"></a>
             </div>
             <nav class="topnav navbar navbar-expand-lg navbar-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,10 +56,14 @@
                         </form>
 <?php
                     if(checkLoggedIn() == false) {
-                        echo '<li class="nav-item"><a class="nav-link" href="loginpagina.php"><i class="fas fa-sign-in-alt"></i></a></li>';
+                        echo '
+                            <li class="nav-item"><a class="nav-link" href="loginpagina.php">Login <i class="fas fa-sign-in-alt"></i></a></li>
+                            <li class="nav-item"><a class="nav-link" href="register.php">Registreer <i class="fas fa-user-plus"></i></a></li>
+                        ';
+                    }else{
+                        echo '<li class="nav-item"><a class="nav-link" href="loginpagina.php?logout=true">Log uit <i class="fas fa-sign-out-alt"></i></a></li>';
                     }
 ?>
-                    <li class="nav-item"><a class="nav-link" href="shoppingcart.php"><i class="fas fa-shopping-cart"></i></a></li>
                 </div>
             </nav>
         </div>

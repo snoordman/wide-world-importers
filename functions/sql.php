@@ -20,7 +20,7 @@
         $conn = createConn();
 
         $query = $conn->prepare( "
-            SELECT  si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand
+            SELECT  DISTINCT si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
