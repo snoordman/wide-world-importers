@@ -24,7 +24,7 @@
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
-            WHERE   active = 1
+            WHERE   Active = 1
         ");
 
         $query->execute();
@@ -49,7 +49,7 @@
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
             LEFT JOIN    colors AS c on si.ColorId = c.ColorId
             WHERE   si.StockItemId = ? 
-            AND     active = 1
+            AND     Active = 1
         ");
 
         $query->bind_param("i", $id);
@@ -97,7 +97,7 @@
         $query = $conn->prepare( "
             SELECT  StockItemId, StockItemName
             FROM    stockitems
-            WHERE   active = 1
+            WHERE   Active = 1
             AND (
                 StockItemId = ?
                 OR      StockItemName LIKE ?
@@ -152,7 +152,7 @@
         $query = $conn->prepare("
             SELECT si.StockItemId, si.StockItemName
             FROM stockitems AS si
-            WHERE active = 1
+            WHERE Active = 1
             $categoriesFilter
             $priceFilter
         ");
@@ -200,7 +200,7 @@
                 SELECT st.StockItemID, st.StockItemName, COUNT(*) AS meest_verkocht
                 FROM stockitems AS st
                 JOIN orderlines AS o ON st.StockItemID = o.StockItemID
-                WHERE active = 1
+                WHERE Active = 1
                 GROUP BY o.StockItemID
                 ORDER BY meest_verkocht DESC LIMIT 3
             ");
