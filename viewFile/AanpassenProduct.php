@@ -1,7 +1,7 @@
 <div>
 <div> <H1>Aanpassen product</H1>   </div>
 <form action="aanpassenProduct.php" method="post"><br>
-    <p>StockItemName <input type="text" name="StockItemName" value="<?php echo $product["StockItemName"]; ?>"></p>
+    <p>StockItemName <input type="text" name="StockItemName" value="<?php echo htmlentities($product["StockItemName"]); ?>"></p>
     <p>SupplierID  <select name="SupplierID">  <?php
         //Onderstaande haalt de leveranciers op uit de DB en zet deze in een dropdown menu
         $conn = createConn();
@@ -17,7 +17,7 @@
                 $selected = "selected";
 
             }
-            echo "<option value='$supplierid' $selected>$supplierid. $suppliername</option>";
+            echo  "<option value='$supplierid' $selected>$supplierid. $suppliername</option>";
         }
         $conn->close();
         ?>
@@ -71,6 +71,7 @@
             $conn->close();
             ?>
         </select></p>
+
     </form>
 </div>
 
