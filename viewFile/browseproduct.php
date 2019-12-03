@@ -9,6 +9,8 @@
     <div class="row">
         <div class="col-4">
             <div class="row">
+                <div class="col-6"><h3>Filter</h3></div>
+                <div class = "col-5"></div>
                 <form method="get" name="pages">
                     Aantal per Pagina:
                     <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
