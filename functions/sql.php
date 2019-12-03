@@ -43,7 +43,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageId, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -249,7 +249,6 @@
         $fullName = $firstName . " " . $lastName;
         $searchName = $firstName . " " . $fullName;
         $logonName = $email;
-        $password = password_hash($password, PASSWORD_BCRYPT);
 
         $deliveryCityId = $deliveryLocation[0];
         $deliveryAddressLine1 = $deliveryLocation[1];
