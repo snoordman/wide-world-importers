@@ -28,7 +28,7 @@
             $errorMessage = "U heeft de volgende velden niet ingevuld: ";
             checkRequiredInput($errorMessage, $errorFields, "alert-danger");
         }else{
-            register($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions);
+            register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions);
         }
 
     }

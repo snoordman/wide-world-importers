@@ -18,10 +18,6 @@
             <input id="phoneNumber" type="text" class="form-control" placeholder="Telefoonnummer" name="phoneNumber">
         </div>
         <div class="form-group">
-            <label for="faxNumber">Fax nummer: </label>
-            <input id="faxNumber" type="text" class="form-control" placeholder="Faxnummer" name="faxNumber">
-        </div>
-        <div class="form-group">
             <label for="password">Wachtwoord: </label>
             <input id="password" type="password" class="form-control" placeholder="Wachtwoord" name="password">
         </div>

@@ -39,3 +39,18 @@
             </div>
         ";
     }
+
+    function displayMostPopulairItems(){
+        $populairItems = fetchMostPopulairItems();
+
+        if(is_array($populairItems)){
+            foreach($populairItems AS $naam){
+                //            print("Productnummer: ".$naam["StockItemID"] . " | ");
+                print("Productnaam: ".$naam["StockItemName"]);
+                //            print("Hoeveelheid verkocht: ".$naam["COUNT(*) AS meest_verkocht"]);
+                print("<br>");
+            }
+        }else{
+            echo $populairItems;
+        }
+    }
