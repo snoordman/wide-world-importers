@@ -24,4 +24,5 @@
 
     $categories = getCategories();
 
+
     require_once ("template.php");
