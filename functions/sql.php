@@ -43,7 +43,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.PackageTypeID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -300,8 +300,8 @@
                 VALUES(($maxIdCustomer), ?, ($maxIdPeople + 1), 9, ($maxIdPeople + 1), ?, ?, ?, '".date('Y-m-d H:i:s') . "', 0.000, ?, ?, ?, ?, ?, ?, ?);
             ");
 
-            $query->bind_param("sssssssiiisi
-                                      siiisssssssss
+            $query->bind_param("sssssssiisi
+                                      siiissssssi
            ",
                 $fullName, $firstName, $searchName, $logonName, $password, $isSystemUser, $isEmployee, $isSalesperson, $phoneNumber, $email, $userId,
                 $fullName, $deliveryMethod, $deliveryCityId, $postalCityId, $phoneNumber, $deliveryAddressLine2, $deliveryPostalCode, $postalAddressLine2, $postalPostalCode, $userId
@@ -340,3 +340,16 @@
     }
 // USERS //
 
+// LOCATION //
+$conn = createConn();
+
+$query = $conn->prepare("
+    SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
+    FROM    people
+    WHERE   LogonName = ?
+");
+function getCountries(){
+
+}
+
+// LOCATION //
