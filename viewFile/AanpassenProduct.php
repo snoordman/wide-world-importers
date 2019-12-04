@@ -71,7 +71,30 @@
             $conn->close();
             ?>
         </select></p>
+        <p>OuterPackageID <select name="outerpackagetypes">
+            <?php
+            //Onderstaande haalt de verpakkingen op uit de DB en zet deze in een dropdown menu
+            $conn = createConn();
 
+            $query = $conn->query("SELECT PackageTypeID, PackageTypeName FROM packagetypes");
+
+            while($rows = $query->fetch_assoc()){
+                $packagetypeidouter = $rows['PackageTypeID'];
+                $packagetypename = $rows['PackageTypeName'];
+                if ($packagetypeidouter == $product['OuterPackageID'])
+                {
+                    $selected = "selected";
+                }else
+                    {
+                        $selected = "";
+                    }
+                echo "<option value='$packagetypeidouter' $selected>$packagetypeidouter. $packagetypename</option>";
+            }
+            $conn->close();
+            ?>
+        </select></p>
+    <p>RecommendedRetailPrice <input type="text" name="RecommendedRetailPrice" value="<?php echo htmlentities($product["RecommendedRetailPrice"]); ?>"></p>
+    <input type="submit" value="Aanpassen" name="submit"><br><br>
     </form>
 </div>
 
