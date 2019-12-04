@@ -18,7 +18,10 @@
                 <br><input id="email" type="email" class="email form-control" name="email" placeholder="e-mail"><br>
                 <label for="vraag"><b>Uw vraag:</b></label>
                 <br><textarea id="vraag" name="message" rows="3" class="message form-control"></textarea><br>
-                <input type="submit" name="submit" class="submitButton" value="verzenden"><br>
+                <input type="submit" name="submit" class="submitButton" value="Verzenden"><br><br>
+                <div class="resultaatmail">
+                <h5><?php echo $result;  ?></h5>
+                </div>
             </form>
         </div>
 
