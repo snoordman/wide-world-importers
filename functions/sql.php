@@ -192,7 +192,7 @@
     }
     // CATEGORIES //
 
-// DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
+    // MOST POPULAR POPULAR PRODUCTS //
     function fetchMostPopulairItems(){
         $conn = createConn();
 
@@ -227,22 +227,9 @@
             return "Geen resultaten";
         }
     }
+    // MOST POPULAR POPULAR PRODUCTS //
 
-<<<<<<< HEAD
-    function displayMostPopulairItems(){
-        $populairItems = fetchMostPopulairItems();
-
-        foreach($populairItems AS $naam){
-            print("<a href='product.php?product_id=".$naam["StockItemID"]."' style='color:black' >".$naam["StockItemName"]."</a>");
-            print("<br>");
-        }
-    }
-=======
->>>>>>> 2122b636302a0709fc0078dfa2ccc5ea17d63524
-// DISPLAY MOST POPULAIR ITEMS ON HOME PAGE //
-
-
-// USERS //
+    // USERS //
     function checkUserExists($logonName){
         $conn = createConn();
 
@@ -360,22 +347,18 @@
             return false;
         }
     }
-<<<<<<< HEAD
-// USERS //
-=======
-// USERS //
+    // USERS //
 
-// LOCATION //
+    // LOCATION //
 
-function getCountries(){
-    $conn = createConn();
+    function getCountries(){
+        $conn = createConn();
 
-    $query = $conn->prepare("
-        SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
-        FROM    people
-        WHERE   LogonName = ?
-    ");
-}
+        $query = $conn->prepare("
+            SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
+            FROM    people
+            WHERE   LogonName = ?
+        ");
+    }
 
-// LOCATION //
->>>>>>> 2122b636302a0709fc0078dfa2ccc5ea17d63524
+    // LOCATION //

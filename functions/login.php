@@ -9,11 +9,12 @@ function validateValuesRegister($password, $email, $phoneNumber){
         alert_msg_push("alert-danger", "Ongeldig wachtwoord. Uw wachtwoord moet minimaal 6 karakters lang zijn, een hoofdletter en een kleine letter bevatten");
         $alert = true;
     }
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+    if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
         alert_msg_push("alert-danger", "Ongeldige E-mail. Voer alstublieft een geldig E-mail in");
         $alert = true;
     }
-    if(!preg_match($phoneNumber, "/(^(\+{1}\d{0,3}\s?)?((\d+)+(\-?\d+)+)$)|(^\-{1}$)/")){
+
+    if(!preg_match("/(^(\+{1}\d{0,3}\s?)?((\d+)+(\-?\d+)+)$)|(^\-{1}$)/", $phoneNumber)){
         alert_msg_push("alert-danger", "Ongeldige telefoonnummer. Voer alstublieft een geldig E-mail in");
         $alert = true;
     }
@@ -21,24 +22,22 @@ function validateValuesRegister($password, $email, $phoneNumber){
     return $alert;
 }
 
-function register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions){
-    if(!validateValuesRegister($password, $email, $phoneNumber)){
-        if(checkUserExists($email) == false){
-            $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions);
-            if($addUser == true){
-                $alertMessage = "Account succesvol aangemaakt";
-                alert_msg_push("alert-success", $alertMessage);
-                header("location: login.php");
-                exit;
-            }else{
-                $alertMessage = "Er is iets mis gegaan, propbeer alstublieft opnieuw";
-                alert_msg_push("alert-success", $alertMessage);
-            }
+function register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions, $deliveryMethod, $deliveryLocation){
+    if(checkUserExists($email) == false){
+        $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions, $deliveryMethod, $deliveryLocation);
+        if($addUser == true){
+            $alertMessage = "Account succesvol aangemaakt";
+            alert_msg_push("alert-success", $alertMessage);
+            header("location: login.php");
+            exit;
         }else{
-            $alertMessage = "E-mail is al in gebruik.";
-            alert_msg_push("alert-danger", $alertMessage);
-        };
-    }
+            $alertMessage = "Er is iets mis gegaan, propbeer alstublieft opnieuw";
+            alert_msg_push("alert-success", $alertMessage);
+        }
+    }else{
+        $alertMessage = "E-mail is al in gebruik.";
+        alert_msg_push("alert-danger", $alertMessage);
+    };
 
 }
 

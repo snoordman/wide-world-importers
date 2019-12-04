@@ -4,20 +4,11 @@
     $viewFile = "viewFile/register.php";
 
     if(isset($_POST["submitRegister"])){
-        $firstName = $_POST["firstName"];
-        $lastName = $_POST["lastName"];
-        $password = $_POST["password"];
-        $email = $_POST["email"];
-        $phoneNumber = $_POST["phoneNumber"];
-        $faxNumber = $_POST["faxNumber"];
-        $userId = 3255;
-        $permissions = null;
-
         if(isset($_POST["permissions"])){
             $permissions = $_POST["permissions"];
         }
 
-        $requiredFields = ["firstName" => "Voornaam", "lastName" => "Achternaam", "email" => "E-mail", "password" => "Wachtwoord"];
+        $requiredFields = ["firstName" => "Voornaam", "lastName" => "Achternaam", "email" => "E-mail", "password" => "Wachtwoord", "deliveryMethod", "deliveryCity", "deliveryCity" => "Stad", "deliveryAddress" => "adres", "deliveryPostalCode" => "Postcode"];
         $errorFields = [];
         foreach ($requiredFields as $field => $message){
             if(!isset($_POST[$field]) || $_POST[$field] == ""){
@@ -28,7 +19,22 @@
             $errorMessage = "U heeft de volgende velden niet ingevuld: ";
             checkRequiredInput($errorMessage, $errorFields, "alert-danger");
         }else{
-            register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions);
+            $firstName = $_POST["firstName"];
+            $lastName = $_POST["lastName"];
+            $password = $_POST["password"];
+            $email = $_POST["email"];
+            $phoneNumber = $_POST["phoneNumber"];
+            $userId = 3255;
+            $permissions = null;
+
+            // delivery location and postal location are currently the same
+            $deliveryMethod = $_POST["deliveryMethod"];
+            $deliveryLocation = [$_POST["deliveryCity"], $_POST["deliveryAdres"], $_POST["deliveryPostalCode"]];
+            
+            if(!validateValuesRegister($password, $email, $phoneNumber)) {
+                $password = password_hash($password, PASSWORD_BCRYPT);
+                register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions, $deliveryMethod, $deliveryLocation);
+            }
         }
 
     }
