@@ -196,6 +196,7 @@
     function fetchMostPopulairItems(){
         $conn = createConn();
 
+        //Met onderstaande query worden de VAAKST verkochte items gedisplayed
         $query = $conn->prepare("
                 SELECT st.StockItemID, st.StockItemName, COUNT(*) AS meest_verkocht
                 FROM stockitems AS st
@@ -203,6 +204,16 @@
                 GROUP BY o.StockItemID
                 ORDER BY meest_verkocht DESC LIMIT 3
             ");
+
+        //Met onderstaande query worden de MEEST verkochte items gedisplayed (LET OP: dit zijn dus de items waarvan de grootste hoeveelheid verkocht
+        //is. Echter duurt deze query veelste lang om steeds aan te roepen bij het laden van de pagina.
+//        $query = $conn->prepare("
+//                SELECT st.StockItemID, st.StockItemName, SUM(quantity) AS totaal_verkocht
+//                FROM stockitems AS st
+//                JOIN orderlines AS o ON st.StockItemID = o.StockItemID
+//                GROUP BY o.StockItemID
+//                ORDER BY totaal_verkocht DESC LIMIT 3
+//                ");
 
         $query->execute();
         $products = $query->get_result();
@@ -220,9 +231,7 @@
         $populairItems = fetchMostPopulairItems();
 
         foreach($populairItems AS $naam){
-//            print("Productnummer: ".$naam["StockItemID"] . " | ");
-            print("Productnaam: ".$naam["StockItemName"]);
-//            print("Hoeveelheid verkocht: ".$naam["COUNT(*) AS meest_verkocht"]);
+            print("<a href='product.php?product_id=".$naam["StockItemID"]."' style='color:black' >".$naam["StockItemName"]."</a>");
             print("<br>");
         }
     }
@@ -322,4 +331,3 @@
         }
     }
 // USERS //
-
