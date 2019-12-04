@@ -32,6 +32,7 @@
     }else{
         alert_msg_push("alert-warning", "U bent al ingelogd");
         header("location: index.php");
+        exit;
     }
 
     require_once "template.php";

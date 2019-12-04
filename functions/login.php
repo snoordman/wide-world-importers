@@ -21,10 +21,10 @@ function validateValuesRegister($password, $email, $phoneNumber){
     return $alert;
 }
 
-function register($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions){
+function register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions){
     if(!validateValuesRegister($password, $email, $phoneNumber)){
         if(checkUserExists($email) == false){
-            $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $faxNumber, $userId, $permissions);
+            $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $permissions);
             if($addUser == true){
                 $alertMessage = "Account succesvol aangemaakt";
                 alert_msg_push("alert-success", $alertMessage);

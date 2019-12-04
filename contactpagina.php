@@ -12,10 +12,9 @@
         $mail->Username='testg0930@gmail.com';
         $mail->Password='TestTest123';
         $mail->setFrom($_POST['email']);
-        $mail->addAddress('eren-demirhan@live.nl');
+        $mail->addAddress('erendemirhan66@gmail.com');
         $mail->addReplyTo($_POST['email']);
         $mail->isHTML(true);
-        $mail->Subject='Form Submission: ' . $_POST['subject'];
         $mail->Body='<h1 align=center>naam :' . $_POST['naam'] . '<br>Email: '.$_POST['email'].'<br
         >Message: ' . $_POST['message'] . '</h1>';
         if(!$mail->send()){

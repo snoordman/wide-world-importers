@@ -9,8 +9,10 @@
     <div class="row">
         <div class="col-4">
             <div class="row">
+                <div class="col-6"><h3>Filter</h3></div>
+                <div class = "col-5"></div>
                 <form method="get" name="pages">
-                    Aantal pagina's:
+                    Aantal per Pagina:
                     <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
                         <option value=10 name="limit10">10</option>
                         <option value=25>25</option>
