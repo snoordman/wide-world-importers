@@ -6,19 +6,22 @@
     <div>
         <form action="beheertoevoegen.php" method="post" enctype="multipart/form-data"><br>
 <!--            <p>StockItemID <input type="text" name="StockItemID"></p>-->
-            <p>StockItemName <input type="text" name="StockItemName"></p>
+            <p>StockItemName <input type="text" name="StockItemName" required></p>
             <p>SupplierID <select name="suppliers">
                     <?php
                     //Onderstaande haalt de leveranciers op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
 
-                    $query = $conn->query("SELECT SupplierID, SupplierName FROM suppliers ORDER BY SupplierID");
+                    $query = $conn->prepare("SELECT SupplierID, SupplierName FROM suppliers ORDER BY SupplierID");
+                    $query->execute();
+                    $query = $query->get_result();
 
                     while($rows = $query->fetch_assoc()){
                         $supplierid = $rows['SupplierID'];
                         $suppliername = $rows['SupplierName'];
                         echo "<option value='$supplierid'>$supplierid. $suppliername</option>";
                     }
+
                     $conn->close();
                     ?>
                 </select></p>
@@ -27,7 +30,9 @@
                     //Onderstaande haalt de kleuren op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
 
-                    $query = $conn->query("SELECT ColorID, ColorName FROM colors");
+                    $query = $conn->prepare("SELECT ColorID, ColorName FROM colors");
+                    $query->execute();
+                    $query = $query->get_result();
 
                     while($rows = $query->fetch_assoc()){
                         $colorid = $rows['ColorID'];
@@ -42,7 +47,9 @@
                     //Onderstaande haalt de verpakkingen op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
 
-                    $query = $conn->query("SELECT PackageTypeID, PackageTypeName FROM packagetypes");
+                    $query = $conn->prepare("SELECT PackageTypeID, PackageTypeName FROM packagetypes");
+                    $query->execute();
+                    $query = $query->get_result();
 
                     while($rows = $query->fetch_assoc()){
                         $packagetypeidunit = $rows['PackageTypeID'];
@@ -57,7 +64,9 @@
                     //Onderstaande haalt de verpakkingen op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
 
-                    $query = $conn->query("SELECT PackageTypeID, PackageTypeName FROM packagetypes");
+                    $query = $conn->prepare("SELECT PackageTypeID, PackageTypeName FROM packagetypes");
+                    $query->execute();
+                    $query = $query->get_result();
 
                     while($rows = $query->fetch_assoc()){
                         $packagetypeidouter = $rows['PackageTypeID'];
@@ -75,17 +84,18 @@
 <!--            <p>Barcode <input type="text" name="Barcode"></p>-->
 <!--            <p>TaxRate <input type="text" name="TaxRate"></p>-->
 <!--            <p>UnitPrice <input type="text" name="UnitPrice"></p>-->
-            <p>RecommendedRetailPrice <input type="text" name="RecommendedRetailPrice"></p>
+            <p>RecommendedRetailPrice <input type="text" name="RecommendedRetailPrice" required></p>
 <!--            <p>TypicalWeightPerUnit <input type="text" name="TypicalWeightPerUnit"></p>-->
 <!--            <p>MarketingComments <input type="text" name="MarketingComments"></p>-->
 <!--            <p>InternalComments <input type="text" name="InternalComments"></p>-->
-            <p>Photo <input type="file" name="Photo"><b><u>Werkt nog niet</u></b></p>
+            <p>Photo <input type="file" name="Photo"></p>
 <!--            <p>CustomFields <input type="text" name="CustomFields"></p>-->
 <!--            <p>Tags <input type="text" name="Tags"></p>-->
 <!--            <p>SearchDetails <input type="text" name="SearchDetails"></p>-->
 <!--            <p>LastEditedBy <input type="text" name="LastEditedBy"></p>-->
 <!--            <p>ValidFrom <input type="text" name="ValidFrom"></p>-->
 <!--            <p>ValidTo <input type="text" name="ValidTo"></p>-->
+<!--            <p>Active <input type="text" name="Active"></p>-->
             <input type="submit" value="Toevoegen" name="submit"><br><br>
         </form>
     </div>
@@ -146,13 +156,14 @@ if(isset($_POST['submit'])) {
 //    $lasteditedby = $_POST['LastEditedBy'];
 //    $validfrom = $_POST['ValidFrom'];
 //    $validto = $_POST['ValidTo'];
+//    $active = $_POST['Active'];
 
     $conn = createConn();
 
     //Met onderstaande query worden de waardes die in de bovenstaande form door de gebruiker zijn ingevuld gepushed naar de database
 
-    $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, LastEditedBy, ValidFrom, ValidTo) 
-		VALUES (($maxIdStockItem) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59')");
+    $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, LastEditedBy, ValidFrom, ValidTo, Active) 
+		VALUES (($maxIdStockItem) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59', 1)");
 
     $query->bind_param("sd", $stockitemname, $recommendedretailprice);
 

@@ -14,7 +14,7 @@
                 <form method="get" name="pages">
                     Aantal per Pagina:
                     <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
-                        <option value=10>10</option>
+                        <option value=10 name="limit10">10</option>
                         <option value=25>25</option>
                         <option value=50>50</option>
                         <option value=100>100</option>
@@ -48,7 +48,7 @@
                 echo $products;
             }else{
                 foreach($products AS $product){
-                    echo $product["StockItemName"] . "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
+                    echo "<a href='product.php?product_id=".$product["StockItemId"]."' style='color:black'>".$product["StockItemName"]."</a>". "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
                 }
             }
             ?>
