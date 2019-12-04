@@ -43,7 +43,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.PackageTypeID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -341,15 +341,15 @@
 // USERS //
 
 // LOCATION //
-$conn = createConn();
 
-$query = $conn->prepare("
-    SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
-    FROM    people
-    WHERE   LogonName = ?
-");
 function getCountries(){
+    $conn = createConn();
 
+    $query = $conn->prepare("
+        SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
+        FROM    people
+        WHERE   LogonName = ?
+    ");
 }
 
 // LOCATION //
