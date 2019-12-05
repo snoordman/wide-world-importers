@@ -401,6 +401,7 @@
             }
         }
     }
+    // ajax call
     if(isset($_GET["getProvinces"])){
         getProvincesByCountry($_GET["CountryID"], true);
     }
@@ -434,6 +435,7 @@
             }
         }
     }
+    // ajax call
     if(isset($_GET["getCities"])){
         getCitiesByProvince($_GET["ProvinceID"], true);
     }
