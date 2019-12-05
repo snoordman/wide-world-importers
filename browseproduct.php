@@ -16,14 +16,15 @@
         $categories = null;
         $priceFilter = null;
 
-        if(isset($_GET["categories"])) {
+        if(isset($_GET["categories"]) && $_GET["categories"] !== []) {
             $categories = $_GET["categories"];
         }
-        if(isset($_GET["price"])){
+        if(isset($_GET["price"]) && $_GET["price"] !== ""){
             $priceFilter = $_GET["price"];
         }
 
-        $products = getProductByFilter(null, null);
+        $products = getProductByFilter($categories, $priceFilter);
+
     }else if(isset($_GET["search"])){
         $search = $_GET["searchValue"];
         if($search !== ""){

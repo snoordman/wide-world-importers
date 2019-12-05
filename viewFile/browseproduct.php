@@ -15,9 +15,9 @@
                     Aantal per Pagina:
                     <select name="amountProducts" id="amountProducts" onchange="this.form.submit()">
                         <option value=10 name="limit10">10</option>
-                        <option value=25>25</option>
-                        <option value=50>50</option>
-                        <option value=100>100</option>
+                        <option value=25 name="limit25">25</option>
+                        <option value=50 name="limit50">50</option>
+                        <option value=100 name="limit100">100</option>
                     </select>
                 </form>
             </div>
