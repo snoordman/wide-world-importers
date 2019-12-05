@@ -45,10 +45,7 @@
 
         if(is_array($populairItems)){
             foreach($populairItems AS $naam){
-                //            print("Productnummer: ".$naam["StockItemID"] . " | ");
-                print("Productnaam: ".$naam["StockItemName"]);
-                //            print("Hoeveelheid verkocht: ".$naam["COUNT(*) AS meest_verkocht"]);
-                print("<br>");
+                echo ("<a href='product.php?product_id=".$naam["StockItemID"]."' style='color:black' >".$naam["StockItemName"]."</a><br>");
             }
         }else{
             echo $populairItems;
