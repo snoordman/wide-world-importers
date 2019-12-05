@@ -120,18 +120,15 @@
 
     function getProductByFilter($stockGroupId, $price = null){
         $conn = createConn();
-        $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
-        $types = str_repeat('i', count($stockGroupId));
         $filters = [];
-        if($stockGroupId !== null){
-            $filters = $stockGroupId;
-        }
-        if($price !== null){
-            array_push($filters, $price);
-        }
+        $types = "";
 
         $categoriesFilter = "";
         if($stockGroupId !== null){
+            $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
+            $types = str_repeat('i', count($stockGroupId));
+            $filters = $stockGroupId;
+
             $categoriesFilter = "
                 AND si.StockItemId IN (
                 SELECT StockItemId
@@ -143,6 +140,7 @@
 
         $priceFilter = "";
         if($price !== null){
+            array_push($filters, $price);
             $priceFilter = " 
                 AND RecommendedRetailPrice <= ?
             ";
@@ -157,7 +155,10 @@
             $priceFilter
         ");
 
-        $query->bind_param($types, ...$filters);
+        if(count($filters) !== 0){
+            $query->bind_param($types, ...$filters);
+        }
+
         $query->execute();
         $products = $query->get_result();
 

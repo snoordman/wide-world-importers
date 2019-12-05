@@ -13,8 +13,17 @@
 
 
     if(isset($_GET["submitFilter"])){
-        $products = getProductByFilter($_GET["categories"]);
+        $categories = null;
+        $priceFilter = null;
 
+        if(isset($_GET["categories"])) {
+            $categories = $_GET["categories"];
+        }
+        if(isset($_GET["price"])){
+            $priceFilter = $_GET["price"];
+        }
+
+        $products = getProductByFilter(null, null);
     }else if(isset($_GET["search"])){
         $search = $_GET["searchValue"];
         if($search !== ""){
