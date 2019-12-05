@@ -51,3 +51,18 @@
             echo $populairItems;
         }
     }
+
+//    function displayEditProducts($result, $product){
+//        while($rows = $result){
+//            $packagetypeidouter = $rows['PackageTypeID'];
+//            $packagetypename = $rows['PackageTypeName'];
+//            if ($packagetypeidouter == $product['OuterPackageID'])
+//            {
+//                $selected = "selected";
+//            }else
+//            {
+//                $selected = "";
+//            }
+//            echo "<option value='$packagetypeidouter' $selected>$packagetypeidouter. $packagetypename</option>";
+//        }
+//    }
