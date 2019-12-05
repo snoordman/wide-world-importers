@@ -1,4 +1,6 @@
-<?php require_once ("functions/products.php"); ?>
+<?php use function Sodium\add;
+
+require_once ("functions/products.php"); ?>
 <div>
     <div>
         <h1>Product toevoegen:</h1>
@@ -176,15 +178,17 @@ if(isset($_POST['submit'])) {
 
     if (isset($_POST['submit'])) {
 
-        $photo = $_FILES['Photo']['tmp_name'];
+        $photo = $_FILES["Photo"]['tmp_name'];
         $name = $_FILES['Photo']['name'];
-        $photo = base64_encode(file_get_contents(addslashes($photo)));
+        $photo = file_get_contents($photo);
 
         $conn = createConn();
 
         $query = $conn->prepare("INSERT INTO photos (Photo, `name`) VALUES (?, ?)");
 
-        $query->bind_param("ss", $photo, $name);
+        $null = NULL;
+        $query->bind_param("bs", $null, $name);
+        $query->send_long_data(0, $photo);
 
         $query->execute();
 

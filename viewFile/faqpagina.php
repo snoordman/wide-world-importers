@@ -11,19 +11,19 @@
             <b>Heb ik een account nodig om aankopen te doen?</b>
         </div>
         <div id="categoriesCollapse1" class="collapse">
-            Ja, het is nodig om een account te registeren.
+            Ja, het is nodig om een account te registeren voordat er aankopen gedaan kunnen worden.
         </div>
         <div data-toggle="collapse" data-target="#categoriesCollapse2"><i class="fas fa-arrow-down"></i>
-            <b>Kan ik gekochte producten retourneren</b>
+            <b>Kan ik gekochte producten retourneren?</b>
         </div>
         <div id="categoriesCollapse2" class="collapse">
-            Nee, helaas is het niet mogelijk om producten te retourneren aan WWI.
+            Ja, producten kunnen tot 100 dagen na de aanschafdatum geretourneerd worden aan WWI.
         </div>
         <div data-toggle="collapse" data-target="#categoriesCollapse3"><i class="fas fa-arrow-down"></i>
-            <b>Wat als mijn product beschadigd aankomt?</b>
+            <b>Wat als mijn bestelling beschadigd aankomt?</b>
         </div>
         <div id="categoriesCollapse3" class="collapse">
-            Helaas, jammer dan.
+            Als een bestelling beschadigd aankomt wordt deze zonder extra kosten vergoed.
         </div>
 </div>
 

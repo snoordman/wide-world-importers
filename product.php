@@ -12,9 +12,10 @@
         if(is_array($product)){
             $photos = getPhotosProduct($productId);
         }else{
-            alert_msg_push("alert-danger", "U heeft een ongeldig product geselecteerd");
-            header("location: browseproduct.php");
-            exit;
+            var_dump($product);
+            //alert_msg_push("alert-danger", "U heeft een ongeldig product geselecteerd");
+            //header("location: browseproduct.php");
+            //exit;
         }
 
     }else{
