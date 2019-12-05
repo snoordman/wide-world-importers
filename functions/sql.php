@@ -45,8 +45,8 @@
         $query = $conn->prepare("
             SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
-            JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
-            JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
+            LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
+            LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
             LEFT JOIN    colors AS c on si.ColorId = c.ColorId
             WHERE   si.StockItemId = ? 
             AND     Active = 1
@@ -120,18 +120,15 @@
 
     function getProductByFilter($stockGroupId, $price = null){
         $conn = createConn();
-        $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
-        $types = str_repeat('i', count($stockGroupId));
         $filters = [];
-        if($stockGroupId !== null){
-            $filters = $stockGroupId;
-        }
-        if($price !== null){
-            array_push($filters, $price);
-        }
+        $types = "";
 
         $categoriesFilter = "";
         if($stockGroupId !== null){
+            $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
+            $types = str_repeat('i', count($stockGroupId));
+            $filters = $stockGroupId;
+
             $categoriesFilter = "
                 AND si.StockItemId IN (
                 SELECT StockItemId
@@ -143,6 +140,7 @@
 
         $priceFilter = "";
         if($price !== null){
+            array_push($filters, $price);
             $priceFilter = " 
                 AND RecommendedRetailPrice <= ?
             ";
@@ -157,7 +155,10 @@
             $priceFilter
         ");
 
-        $query->bind_param($types, ...$filters);
+        if(count($filters) !== 0){
+            $query->bind_param($types, ...$filters);
+        }
+
         $query->execute();
         $products = $query->get_result();
 
@@ -350,15 +351,90 @@
     // USERS //
 
     // LOCATION //
-
     function getCountries(){
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
-            FROM    people
-            WHERE   LogonName = ?
+            SELECT  CountryID, CountryName
+            FROM    Countries
         ");
+
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows !== 0 ){
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return false;
+        }
     }
 
+    function getProvincesByCountry($countryId, $returnJson = false)
+    {
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  StateProvinceId, StateProvinceName
+            FROM    stateprovinces
+            WHERE   countryID = ?
+        ");
+
+        $query->bind_param("i", $countryId);
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows !== 0 ){
+            if($returnJson == true){
+                echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+            }else{
+                return $result->fetch_all(MYSQLI_ASSOC);
+            }
+        }else{
+            if($returnJson == true){
+                echo json_encode(array());
+            }else{
+                return false;
+            }
+        }
+    }
+    if(isset($_GET["getProvinces"])){
+        getProvincesByCountry($_GET["CountryID"], true);
+    }
+
+    function getCitiesByProvince($provinceId, $returnJson = false){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  CityID, CityName
+            FROM    cities
+            WHERE   StateProvinceID = ?
+        ");
+
+        $query->bind_param("i", $provinceId);
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows !== 0 ){
+            if($returnJson == true){
+                echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+            }else{
+                return $result->fetch_all(MYSQLI_ASSOC);
+            }
+        }else{
+            if($returnJson == true){
+                echo json_encode(array());
+            }else{
+                return false;
+            }
+        }
+    }
+    if(isset($_GET["getCities"])){
+        getCitiesByProvince($_GET["ProvinceID"], true);
+    }
     // LOCATION //
