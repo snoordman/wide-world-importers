@@ -3,6 +3,22 @@
     require_once "functions/login.php";
     $viewFile = "viewFile/register.php";
 
+    $provinces = [];
+    $cities = [];
+    $countries = getCountries();
+    if($countries !== false){
+        $provinces = getProvincesByCountry($countries[0]["CountryID"]);
+
+        if($provinces !== false){
+            $cities = getCitiesByProvince($provinces[0]["StateProvinceID"]);
+        }else{
+            $provinces = [];
+            $cities = [];
+        }
+    }else{
+        $countries = [];
+    }
+
     if(isset($_POST["submitRegister"])){
         if(isset($_POST["permissions"])){
             $permissions = $_POST["permissions"];

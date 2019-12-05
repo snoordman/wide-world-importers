@@ -15,7 +15,17 @@ function setLimit(item, min = null, max = null){
     }
 }
 
+function clearSelect(select){
+    select
+        .find('option')
+        .remove()
+        .end()
+    ;
+}
+
 $(function() {
+    $(".chosen").chosen();
+
     $("#range").on('propertychange input', function (e) {
         console.log(this.value);
         $("#price").val(this.value);
@@ -44,5 +54,53 @@ $(function() {
         }
     });
 
-    $(".chosen").chosen();
+    $("#country").change(function() {
+        console.log("hoi");
+        $.ajax({
+            type: "GET",
+            url: 'functions/products.php', //the script to call to get data
+            data: "CountryID=" + $("#country").val() + "&getProvinces=true", //you can insert url argumnets here to    pass to api.php
+            dataType: "json",
+            success: function (data) {
+                clearSelect($("#province"));
+                clearSelect($("#city"));
+                if (data.length !== 0) {
+                    console.log(data);
+                    for(var i = 0; i < data.length; i++){
+                        $("#province").append('<option value="' + data[i].StateProvinceId + '">' + data[i].StateProvinceName + '</option>');
+                    }
+                    $(".chosen").trigger("chosen:updated");
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+    });
+
+    $("#province").change(function() {
+        $.ajax({
+            type: "GET",
+            url: 'functions/products.php', //the script to call to get data
+            data: "ProvinceID=" + $("#province").val() + "&getCities=true", //you can insert url argumnets here to    pass to api.php
+            dataType: "json",
+            success: function (data) {
+                clearSelect($("#city"));
+                if (data.length !== 0) {
+                    console.log(data);
+                    for(var i = 0; i < data.length; i++){
+                        $("#city").append('<option value="' + data[i].CityID + '">' + data[i].CityName + '</option>');
+                    }
+                    $(".chosen").trigger("chosen:updated");
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+    });
+
 });

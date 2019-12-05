@@ -25,6 +25,43 @@
             <label for="confirmPassword">Besvestig Wachtwoord: </label>
             <input id="confirmPassword" type="password" class="form-control" placeholder="Bevestig wachtwoord" name="confirmPassword">
         </div>
+            <label for="countries">Land: </label>
+            <select name="country" id="country">
+                <?php
+                foreach ($countries as $country){
+                    echo "<option value='".htmlentities($country["CountryID"])."'>".htmlentities($country["CountryName"])."</option>";
+                }
+                ?>
+            </select>
+        <div class="form-group">
+            <label for="province">Provincie: </label>
+            <select name="province" id="province">
+                <?php
+                foreach ($provinces as $province){
+                    echo "<option value='".htmlentities($province["StateProvinceID"])."'>".htmlentities($province["StateProvinceName"])."</option>";
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="city">Stad: </label>
+            <select name="city" id="city">
+                <?php
+                foreach ($cities as $city){
+                    echo "<option value='".htmlentities($province["CityID"])."'>".htmlentities($province["CityName"])."</option>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="street">Straat: </label>
+            <input type="text" name="street" id="street" value="">
+        </div>
+        <div class="form-group">
+            <label for="zip">Postcoce: </label>
+            <input type="text" name="zip" id="zip" value="">
+        </div>
         <?php
         if(checkPermissions("isSystemUser")){
         ?>

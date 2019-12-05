@@ -350,15 +350,90 @@
     // USERS //
 
     // LOCATION //
-
     function getCountries(){
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
-            FROM    people
-            WHERE   LogonName = ?
+            SELECT  CountryID, CountryName
+            FROM    Countries
         ");
+
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows !== 0 ){
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return false;
+        }
     }
 
+    function getProvincesByCountry($countryId, $returnJson = false)
+    {
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  StateProvinceId, StateProvinceName
+            FROM    stateprovinces
+            WHERE   countryID = ?
+        ");
+
+        $query->bind_param("i", $countryId);
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows !== 0 ){
+            if($returnJson == true){
+                echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+            }else{
+                return $result->fetch_all(MYSQLI_ASSOC);
+            }
+        }else{
+            if($returnJson == true){
+                echo json_encode(array());
+            }else{
+                return false;
+            }
+        }
+    }
+    if(isset($_GET["getProvinces"])){
+        getProvincesByCountry($_GET["CountryID"], true);
+    }
+
+    function getCitiesByProvince($provinceId, $returnJson = false){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  CityID, CityName
+            FROM    cities
+            WHERE   StateProvinceID = ?
+        ");
+
+        $query->bind_param("i", $provinceId);
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows !== 0 ){
+            if($returnJson == true){
+                echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+            }else{
+                return $result->fetch_all(MYSQLI_ASSOC);
+            }
+        }else{
+            if($returnJson == true){
+                echo json_encode(array());
+            }else{
+                return false;
+            }
+        }
+    }
+    if(isset($_GET["getCities"])){
+        getCitiesByProvince($_GET["ProvinceID"], true);
+    }
     // LOCATION //
