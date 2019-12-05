@@ -189,6 +189,7 @@ if(isset($_POST['submit'])) {
         $query->execute();
 
         $conn->close();
+
     }
 
 //Met onderstaande query wordt er in de koppeltabel stockitemphotos een link gelegd tussen de tabel stockitems en photos

@@ -1,6 +1,5 @@
-<div>
 <div> <H1>Aanpassen product</H1>   </div>
-<form action="aanpassenProduct.php" method="post"><br>
+<form method="post"><br>
     <p>StockItemName <input type="text" name="StockItemName" value="<?php echo htmlentities($product["StockItemName"]); ?>"></p>
     <p>SupplierID  <select name="SupplierID">  <?php
         //Onderstaande haalt de leveranciers op uit de DB en zet deze in een dropdown menu
@@ -97,7 +96,3 @@
     <input type="submit" value="Aanpassen" name="submit"><br><br>
     </form>
 </div>
-
-
-
-

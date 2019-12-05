@@ -94,8 +94,8 @@
         $search1 = $search;
         $search = "%".$search."%";
 
-        $query = $conn->prepare( "
-            SELECT  StockItemId, StockItemName
+        $query = $conn->prepare(
+            "SELECT  StockItemId, StockItemName
             FROM    stockitems
             WHERE   Active = 1
             AND (
