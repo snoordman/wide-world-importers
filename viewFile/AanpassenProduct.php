@@ -1,4 +1,3 @@
-<div>
 <div> <H1>Aanpassen product</H1>   </div>
 <form action="aanpassenProduct.php" method="post"><br>
     <p>StockItemName <input type="text" name="StockItemName" value="<?php echo htmlentities($product["StockItemName"]); ?>"></p>
@@ -71,10 +70,5 @@
             $conn->close();
             ?>
         </select></p>
-
     </form>
 </div>
-
-
-
-

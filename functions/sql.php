@@ -45,8 +45,8 @@
         $query = $conn->prepare("
             SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
-            JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
-            JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
+            LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
+            LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
             LEFT JOIN    colors AS c on si.ColorId = c.ColorId
             WHERE   si.StockItemId = ? 
             AND     Active = 1
@@ -94,8 +94,8 @@
         $search1 = $search;
         $search = "%".$search."%";
 
-        $query = $conn->prepare( "
-            SELECT  StockItemId, StockItemName
+        $query = $conn->prepare(
+            "SELECT  StockItemId, StockItemName
             FROM    stockitems
             WHERE   Active = 1
             AND (
@@ -120,18 +120,15 @@
 
     function getProductByFilter($stockGroupId, $price = null){
         $conn = createConn();
-        $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
-        $types = str_repeat('i', count($stockGroupId));
         $filters = [];
-        if($stockGroupId !== null){
-            $filters = $stockGroupId;
-        }
-        if($price !== null){
-            array_push($filters, $price);
-        }
+        $types = "";
 
         $categoriesFilter = "";
         if($stockGroupId !== null){
+            $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
+            $types = str_repeat('i', count($stockGroupId));
+            $filters = $stockGroupId;
+
             $categoriesFilter = "
                 AND si.StockItemId IN (
                 SELECT StockItemId
@@ -143,6 +140,7 @@
 
         $priceFilter = "";
         if($price !== null){
+            array_push($filters, $price);
             $priceFilter = " 
                 AND RecommendedRetailPrice <= ?
             ";
@@ -157,7 +155,10 @@
             $priceFilter
         ");
 
-        $query->bind_param($types, ...$filters);
+        if(count($filters) !== 0){
+            $query->bind_param($types, ...$filters);
+        }
+
         $query->execute();
         $products = $query->get_result();
 
