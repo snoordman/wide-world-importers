@@ -43,7 +43,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.RecommendedRetailPrice, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.RecommendedRetailPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -261,70 +261,76 @@
         $logonName = $email;
 
         $deliveryCityId = $deliveryLocation[0];
-        $deliveryAddressLine2 = $deliveryLocation[2];
-        $deliveryPostalCode = $deliveryLocation[3];
+        $deliveryAddressLine2 = $deliveryLocation[1];
+        $deliveryPostalCode = $deliveryLocation[2];
 
         $postalCityId = $deliveryLocation[0];
         $postalAddressLine2 = $deliveryLocation[1];
         $postalPostalCode = $deliveryLocation[2];
 
-        if($password !== false){
-            $isSystemUser = 0;
-            $isEmployee = 0;
-            $isSalesperson = 0;
+        $isSystemUser = 0;
+        $isEmployee = 0;
+        $isSalesperson = 0;
 
-            if($permissions !== null){
-                $isSystemUser = $permissions[0];
-                $isEmployee = $permissions[1];
-                $isSalesperson = $permissions[2];
-            }
-
-            $maxIdCustomer = "
-                SELECT max(PersonId) maxId 
-                FROM people p
-                UNION ALL 
-                SELECT max(PersonId) maxId 
-                FROM people_archive pa
-                ORDER BY maxId DESC
-                LIMIT 1
-            ";
-
-            $maxIdPeople = "
-                SELECT max(CustomerId) maxId 
-                FROM customer c
-                UNION ALL 
-                SELECT max(CustomerId) maxId 
-                FROM customers_archive ca
-                ORDER BY maxId DESC
-                LIMIT 1
-            ";
-
-            $query = $conn->prepare("
-                INSERT INTO people(PersonId, FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, 
-                HashedPassword, IsSystemUser, IsEmployee, IsSalesperson, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
-                VALUES(($maxIdPeople) + 1, ?, ?, ?, 1, ?, 0, ?, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59');
-                
-                INSERT INTO customers(CustomerId, CustomerName, BillToCustomerId, CustomerCategoryId, PrimaryContactPersonId, DeliveryMethodId, 
-                DeliveryCityId, PostalCityId, AccountOpendDate, StandardDiscountPercentage, PhoneNumber, 
-                DeliveryAddressLine2, DeliveryPostalCode, DeliveryLocation, PostalAddressLine2, PostalPostalCode, LastEditedBy)
-                VALUES(($maxIdCustomer), ?, ($maxIdPeople + 1), 9, ($maxIdPeople + 1), ?, ?, ?, '".date('Y-m-d H:i:s') . "', 0.000, ?, ?, ?, ?, ?, ?, ?);
-            ");
-
-            $query->bind_param("sssssssiisi
-                                      siiissssssi
-           ",
-                $fullName, $firstName, $searchName, $logonName, $password, $isSystemUser, $isEmployee, $isSalesperson, $phoneNumber, $email, $userId,
-                $fullName, $deliveryMethod, $deliveryCityId, $postalCityId, $phoneNumber, $deliveryAddressLine2, $deliveryPostalCode, $postalAddressLine2, $postalPostalCode, $userId
-            );
-
-            $result = $query->execute();
-
-            $conn->close();
-
-            return $result;
-        }else{
-            return false;
+        if($permissions !== null){
+            $isSystemUser = $permissions[0];
+            $isEmployee = $permissions[1];
+            $isSalesperson = $permissions[2];
         }
+
+        $maxIdPeople = "
+            SELECT max(PersonId) maxId 
+            FROM people p
+            UNION ALL 
+            SELECT max(PersonId) maxId 
+            FROM people_archive pa
+            ORDER BY maxId DESC
+            LIMIT 1
+        ";
+
+        $maxIdCustomer = "
+            SELECT max(CustomerId) maxIdCustomer
+            FROM customers c
+            UNION ALL 
+            SELECT max(CustomerId) maxIdCustomer
+            FROM customers_archive ca
+            ORDER BY maxIdCustomer DESC
+            LIMIT 1
+        ";
+
+        $query = $conn->prepare("
+            INSERT INTO people(PersonID, FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, 
+            HashedPassword, IsSystemUser, IsEmployee, IsSalesperson, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
+            VALUES(($maxIdPeople) + 1, ?, ?, ?, 1, ?, 0, ?, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59');
+        ");
+
+        $query2 = $conn->prepare("
+            INSERT INTO customers(CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, 
+            DeliveryCityID, PostalCityID, AccountOpenedDate, StandardDiscountPercentage, PhoneNumber, 
+            DeliveryAddressLine2, DeliveryPostalCode, PostalAddressLine2, PostalPostalCode, LastEditedBy, ValidFrom, ValidTo)
+            VALUES(($maxIdCustomer) + 1, ?, ($maxIdCustomer) + 1, 9, ($maxIdPeople), ?, ?, ?, '".date('Y-m-d H:i:s') . "', 0.000, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59');
+        ");
+
+
+        $query->bind_param("sssssssiisi",
+            $fullName, $firstName, $searchName, $logonName, $password, $isSystemUser, $isEmployee, $isSalesperson, $phoneNumber, $email, $userId
+        );
+        $query2->bind_param("siiisssssi",
+            $fullName, $deliveryMethod, $deliveryCityId, $postalCityId, $phoneNumber, $deliveryAddressLine2, $deliveryPostalCode, $postalAddressLine2, $postalPostalCode, $userId
+        );
+
+        $result2 = false;
+        if($query && $query2){
+            $result1 = $query->execute();
+            if($result1 == true){
+                $result2 = $query2->execute();
+            }
+            var_dump($conn->error);
+        }
+
+        $conn->close();
+
+        return $result2;
     }
 
     function checkValidLogin($logonName, $password){
@@ -440,3 +446,26 @@
         getCitiesByProvince($_GET["ProvinceID"], true);
     }
     // LOCATION //
+
+    // DELIVERY METHODS //
+    function getDeliveryMethods(){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+                SELECT  DeliveryMethodID, DeliveryMethodName
+                FROM    deliverymethods
+
+            ");
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return false;
+        }
+    }
+    // DELIVERY METHODS //

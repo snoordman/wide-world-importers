@@ -26,7 +26,7 @@
             <input id="confirmPassword" type="password" class="form-control" placeholder="Bevestig wachtwoord" name="confirmPassword">
         </div>
             <label for="countries">Land: </label>
-            <select name="country" id="country">
+            <select name="country" data-placeholder="<?php  echo $countryPlaceHolder ?>" id="country" class="chosen">
                 <?php
                 foreach ($countries as $country){
                     echo "<option value='".htmlentities($country["CountryID"])."'>".htmlentities($country["CountryName"])."</option>";
@@ -35,7 +35,7 @@
             </select>
         <div class="form-group">
             <label for="province">Provincie: </label>
-            <select name="province" id="province">
+            <select data-placeholder="<?php echo $provincePlaceHolder ?>" name="province" id="province" class="chosen">
                 <?php
                 foreach ($provinces as $province){
                     echo "<option value='".htmlentities($province["StateProvinceID"])."'>".htmlentities($province["StateProvinceName"])."</option>";
@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             <label for="city">Stad: </label>
-            <select name="city" id="city">
+            <select name="city" data-placeholder="<?php echo $cityPlaceHolder ?>" id="city" class="chosen">
                 <?php
                 foreach ($cities as $city){
                     echo "<option value='".htmlentities($province["CityID"])."'>".htmlentities($province["CityName"])."</option>";
@@ -55,13 +55,23 @@
         </div>
 
         <div class="form-group">
-            <label for="street">Straat: </label>
-            <input type="text" name="street" id="street" value="">
+            <label for="address">Adres: </label>
+            <input type="text" class="form-control" name="address" id="address" value="">
         </div>
         <div class="form-group">
             <label for="zip">Postcoce: </label>
-            <input type="text" name="zip" id="zip" value="">
+            <input class="form-control" type="text" name="zip" id="zip" value="">
         </div>
+<!--        <div class="form-group">-->
+<!--            <label for="deliveryMethod">Bezorg methode: </label>-->
+<!--            <select name="deliveryMethod" data-placeholder="--><?php //echo $deliveryPlaceHolder ?><!--" id="deliveryMethod" class="chosen">-->
+<!--                --><?php
+//                foreach ($deliveryMethods as $deliveryMethod){
+//                    echo "<option value='".htmlentities($deliveryMethod["DeliveryMethodID"])."'>".htmlentities($deliveryMethod["DeliveryMethodName"])."</option>";
+//                }
+//                ?>
+<!--            </select>-->
+<!--        </div>-->
         <?php
         if(checkPermissions("isSystemUser")){
         ?>

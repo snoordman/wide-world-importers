@@ -17,7 +17,7 @@
             <b>Kan ik gekochte producten retourneren?</b>
         </div>
         <div id="categoriesCollapse2" class="collapse">
-            Ja, producten kunnen tot 100 dagen na de aanschafdatum geretourneerd worden aan WWI.
+            Ja, producten kunnen tot 14 dagen na ontvangst geretourneerd worden aan WWI.
         </div>
         <div data-toggle="collapse" data-target="#categoriesCollapse3"><i class="fas fa-arrow-down"></i>
             <b>Wat als mijn bestelling beschadigd aankomt?</b>

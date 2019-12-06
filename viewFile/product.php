@@ -63,8 +63,28 @@
 
                     displayProduct("Prijs: €", $product["RecommendedRetailPrice"]);
                     displayProduct("Voorraad: ", $product["QuantityOnHand"]);
-                    if(isset($product["Size"])){displayProduct("Groote: ", $product["Size"]);}
+                    if(isset($product["Size"]) && $product["Size"] !== ""){
+                        if(checkWeightProduct($product["Size"])){
+                            displayProduct("Groote: ", $product["Size"]);
+                            if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){
+                                $weight = $product["TypicalWeightPerUnit"];
+                                if($weight < 1){
+                                    $weight = $weight * 100;
+                                    displayProduct("Gewicht: ", $weight. "g");
+                                }else{
+                                    displayProduct("Gewicht: ", $weight. "kg");
+                                }
+                            }
+                        }else{
+                            displayProduct("Groote: ", $product["Size"]);
+                        }
+                    }else{
+                        if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){displayProduct("Gewicht: ", $product["TypicalWeightPerUnit"]. "kg");}
+                    }
+                    if(isset($product["Size"]) && $product["Size"] !== ""){displayProduct("Groote: ", $product["Size"]);}
                     if(isset($product["ColorName"])){displayProduct("Kleur: ", $product["ColorName"]);}
+                    if(isset($product["Brand"]) && $product["Brand"] !== ""){displayProduct("Merk: ", $product["Brand"]);}
+                    if(isset($product["Brand"]) && $product["Brand"] !== ""){displayProduct("Merk: ", $product["Brand"]);}
                 ?>
                 <div class="row">
                     <form method="post">

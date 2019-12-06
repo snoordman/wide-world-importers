@@ -24,7 +24,9 @@ function clearSelect(select){
 }
 
 $(function() {
-    $(".chosen").chosen();
+    $(".chosen").chosen({
+        width: "100%"
+    });
 
     $("#range").on('propertychange input', function (e) {
         console.log(this.value);
@@ -69,9 +71,13 @@ $(function() {
                     for(var i = 0; i < data.length; i++){
                         $("#province").append('<option value="' + data[i].StateProvinceId + '">' + data[i].StateProvinceName + '</option>');
                     }
-                    $(".chosen").trigger("chosen:updated");
+                    $("#province").attr("data-placeholder", "Selecteer een optie")
+                    $("#city").attr("data-placeholder", "Selecteer een optie")
+                }else{
+                    $("#province").attr("data-placeholder", "Geen opties beschikbaar")
+                    $("#city").attr("data-placeholder", "Geen opties beschikbaar")
                 }
-
+                $("#province").trigger("change");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -93,8 +99,11 @@ $(function() {
                     for(var i = 0; i < data.length; i++){
                         $("#city").append('<option value="' + data[i].CityID + '">' + data[i].CityName + '</option>');
                     }
-                    $(".chosen").trigger("chosen:updated");
+                    $("#city").attr("data-placeholder", "Selecteer een optie");
+                }else{
+                    $("#city").attr("data-placeholder", "Geen opties beschikbaar")
                 }
+                $(".chosen").trigger("chosen:updated");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);

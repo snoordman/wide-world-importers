@@ -40,6 +40,15 @@
         ";
     }
 
+    function checkWeightProduct($size){
+        $weightArray = ["g", "kg", "mg"];
+        if(in_array(substr($size, -1), $weightArray)){
+            return false;
+        }
+
+        return true;
+    }
+
     function displayMostPopulairItems(){
         $populairItems = fetchMostPopulairItems();
 
