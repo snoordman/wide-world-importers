@@ -2,7 +2,6 @@
 <form method="post"><br>
     <p>StockItemName <input type="text" name="StockItemName" value="<?php echo htmlentities($product["StockItemName"]); ?>"></p>
     <p>SupplierID  <select name="SupplierID">  <?php
-        //Onderstaande haalt de leveranciers op uit de DB en zet deze in een dropdown menu
         $conn = createConn();
 
         $query = $conn->query("SELECT SupplierID, SupplierName FROM suppliers ORDER BY SupplierID");
