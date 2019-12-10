@@ -91,7 +91,7 @@
             $conn->close();
             ?>
         </select></p>
-    <p>RecommendedRetailPrice <input type="text" name="RecommendedRetailPrice" value="<?php echo htmlentities($product["RecommendedRetailPrice"]); ?>"></p>
+    <p>Prijs per stuk: <input type="text" name="unitPrice" value="<?php echo htmlentities($product["UnitPrice"]); ?>"></p>
     <input type="submit" value="Aanpassen" name="submit"><br><br>
     </form>
 </div>

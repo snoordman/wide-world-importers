@@ -7,7 +7,7 @@
 
         foreach($products AS $naam){
             print($naam["StockItemName"]. " ");
-            print($naam["RecommendedRetailPrice"] . "<br>");
+            print($naam["UnitPrice"] . "<br>");
         }
     }
 
@@ -15,7 +15,7 @@
         $min = 0;
         $max = 0;
         for($i = 0; $i < count($products); $i++){
-            $price = $products[$i]["RecommendedRetailPrice"];
+            $price = $products[$i]["UnitPrice"];
             if($min == 0){
                 $min = $price;
             }else{
