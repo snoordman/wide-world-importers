@@ -24,8 +24,8 @@
             <br />
             <div class="row">
                 <form method="get" name="filter">
-                    <div data-toggle="collapse" data-target="#categoriesCollapse"><i class="fas fa-arrow-down"></i> <b>Selecteer categorie</b></div>
-                    <div id="categoriesCollapse" class="collapse">
+                    <div data-toggle="collapse" data-target="#categoriesCollapse" aria-expanded="true"><i class="fas fa-arrow-down"></i> <b>Selecteer categorie</b></div>
+                    <div id="categoriesCollapse" class="collapse show">
 <?php
                         for($i = 0; $i < count($categories); $i++){
 ?>
@@ -37,7 +37,7 @@
                     <br/>
                     Max Prijs:(€)
                     <input class="form-control" type="text" name="price" value="" id="price">
-                    <input class="form-control" id="range" type="range" step="0.01" min="<?php echo $price["min"] ?>" max="<?php echo $price["max"]; ?>" value="50">
+                    <input class="form-control" id="range" type="range" step="0.01" min="<?php echo $price["minPrice"] ?>" max="<?php echo $price["maxPrice"]; ?>" value="50">
                     <input type="submit" value="Filter" name="submitFilter">
                 </form>
             </div>
@@ -48,7 +48,21 @@
                 echo $products;
             }else{
                 foreach($products AS $product){
-                    echo "<a href='product.php?product_id=".$product["StockItemId"]."' style='color:black'>".$product["StockItemName"]."</a>". "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
+
+                    echo "
+                        <div class='row'>
+                            <div class='col-4'><a href='product.php?product_id=".$product["StockItemId"]."' style='color:black'>".$product["StockItemName"]."</a></div>
+                        </div>
+                    ";
+
+                    if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
+                        echo "
+                            <div class='row'>
+                                <div class='col-12'><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a></div>
+                            </div>
+                        ";
+                    }
+                    echo "<br />";
                 }
             }
             ?>

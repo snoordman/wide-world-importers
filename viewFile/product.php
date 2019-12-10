@@ -61,7 +61,7 @@
                         displayProduct("Beschrijving: ", "Niet aanwezig");
                     }
 
-                    displayProduct("Prijs: €", $product["RecommendedRetailPrice"]);
+                    displayProduct("Prijs: €", $product["UnitPrice"]);
                     displayProduct("Voorraad: ", $product["QuantityOnHand"]);
                     if(isset($product["Size"]) && $product["Size"] !== ""){
                         if(checkWeightProduct($product["Size"])){
@@ -87,9 +87,10 @@
                     if(isset($product["Brand"]) && $product["Brand"] !== ""){displayProduct("Merk: ", $product["Brand"]);}
                 ?>
                 <div class="row">
-                    <form method="post">
+                    <form method="POST">
                         Hoeveelheid:
-                        <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct" pattern="\d+">
+                        <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct" pattern="\d+" value="1">
+                        <input type="submit" name="submitProduct">
                     </form>
                 </div>
             </div>

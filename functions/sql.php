@@ -16,14 +16,13 @@
     }
 
     // PRODUCTS //
-    function getProducts($amountResults = 10){
+    function getProducts($amountResults = 10, $offset = 0){
         $conn = createConn();
 
         $query = $conn->prepare( "
-            SELECT  DISTINCT si.StockItemId, si.StockItemName, si.RecommendedRetailPrice, sh.QuantityOnHand
+            SELECT  si.StockItemId, si.StockItemName, si.UnitPrice, sh.QuantityOnHand
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
-            JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
             WHERE   Active = 1
         ");
 
@@ -39,11 +38,32 @@
         }
     }
 
+    function getMinMaxPrice(){
+        $conn = createConn();
+
+        $query = $conn->prepare( "
+                SELECT  min(unitPrice) minPrice, max(unitPrice) maxPrice
+                FROM    stockitems
+                WHERE   Active = 1
+            ");
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_assoc();
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
     function getProductById($id){
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.RecommendedRetailPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -142,7 +162,7 @@
         if($price !== null){
             array_push($filters, $price);
             $priceFilter = " 
-                AND RecommendedRetailPrice <= ?
+                AND UnitPrice <= ?
             ";
             $types = $types . "s";
         }
@@ -337,7 +357,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  PersonId, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
+            SELECT  PersonID, HashedPassword, IsSystemUser, IsEmployee, IsSalesPerson
             FROM    people
             WHERE   LogonName = ?
         ");
@@ -348,8 +368,9 @@
 
         $conn->close();
 
-        if($result->num_rows !== 0 && password_verify($password, $result->fetch_all(MYSQLI_ASSOC)[0]["HashedPassword"])){
-            return $result->fetch_all(MYSQLI_ASSOC)[0];
+        $account = $result->fetch_all(MYSQLI_ASSOC);
+        if($result->num_rows !== 0 && password_verify($password, $account[0]["HashedPassword"])){
+            return $account[0];
         }else{
             return false;
         }
