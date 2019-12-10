@@ -48,7 +48,12 @@
                 echo $products;
             }else{
                 foreach($products AS $product){
-                    echo "<a href='product.php?product_id=".$product["StockItemId"]."' style='color:black'>".$product["StockItemName"]."</a>". "<br />". "<p><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'  title='Dit product aanpassen.'>Aanpassen</a></p>";
+                    echo "<a href='product.php?product_id=".$product["StockItemId"]."' style='color:black'>".$product["StockItemName"]."</a>";
+
+                    if(checkPermissions("isSystemUser")) {
+                        echo "<a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a>";
+                    }
+                    echo "<br /> <br />";
                 }
             }
             ?>

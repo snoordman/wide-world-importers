@@ -6,7 +6,7 @@ function validateValuesRegister($password, $email, $phoneNumber){
     // source regex password
     // https://www.imtiazepu.com/password-validation/
     if(!preg_match("/.*^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/", $password)){
-        alert_msg_push("alert-danger", "Ongeldig wachtwoord. Uw wachtwoord moet minimaal 6 karakters lang zijn, een hoofdletter en een kleine letter bevatten");
+        alert_msg_push("alert-danger", "Ongeldig wachtwoord. Uw wachtwoord moet minimaal 6 karakters lang zijn, een hoofdletter, kleine letter en een cijfer bevatten");
         $alert = true;
     }
     if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
@@ -42,7 +42,8 @@ function register($firstName, $lastName, $password, $email, $phoneNumber, $userI
 }
 
 function login($email, $password){
-    if(false !== $login = checkValidLogin($email, $password)){
+    $login = checkValidLogin($email, $password);
+    if($login !== false){
         $_SESSION["loggedIn"] = true;
         $_SESSION["permissions"] = ["isSystemUser" => $login["IsSystemUser"], "isEmployee" => $login["IsEmployee"], "isSalesPerson" => $login["IsSalesPerson"]];
         $alertMessage = "U bent succesvol ingelogd";

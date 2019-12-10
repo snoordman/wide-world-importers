@@ -4,5 +4,7 @@
 
     $viewFile = "viewFile/home.php";
 
+    var_dump($_SESSION["shoppingCard"]);
+
     require_once "template.php";
 ?>

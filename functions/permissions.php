@@ -1,6 +1,6 @@
 <?php
     function checkPermissions($permissionRank){
-        if(checkLoggedIn() == true && isset($_SESSION[$permissionRank]) && $_SESSION[$permissionRank] == true){
+        if(checkLoggedIn() == true && isset($_SESSION["permissions"][$permissionRank]) && $_SESSION["permissions"][$permissionRank] == 1){
             return true;
         }else{
             return false;

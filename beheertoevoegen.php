@@ -2,5 +2,12 @@
     require_once "config.php";
     $viewFile = "viewFile/beheertoevoegen.php";
 
-    require_once "template.php";
+    if(checkPermissions("isSystemUser")){
+        require_once "template.php";
+    }else{
+        alert_msg_push("alert-danger", "U heeft geen rechten om deze pagina te bezoeken");
+        header("Location: index.php");
+        exit;
+    }
+
 ?>

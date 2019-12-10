@@ -1,32 +1,36 @@
 <div class="login-page">
     <form method="post" class="login-form">
         <h1 class="text-center">Registreer</h1>
+
+        <br />
+        <div class="form-group"><span class="red">*</span> = verplicht</div>
+
         <div class="form-group">
-            <label for="firstName">Voornaam: </label>
+            <span class="red">*</span> <label for="firstName">Voornaam: </label>
             <input id="firstName" type="text" class="form-control" placeholder="Voornaam" name="firstName" required="required">
         </div>
         <div class="form-group">
-            <label for="lastName">Achternaam: </label>
+            <span class="red">*</span> <label for="lastName">Achternaam: </label>
             <input id="lastName" type="text" class="form-control" placeholder="Achternaam" name="lastName" required="required">
         </div>
         <div class="form-group">
-            <label for="email">Email: </label>
+            <span class="red">*</span> <label for="email">Email: </label>
             <input id="email" type="text" class="form-control" placeholder="E-mailadres" name="email" required="required">
         </div>
         <div class="form-group">
-            <label for="phoneNumber">Telefoon nummer: </label>
+            <span class="red">*</span> <label for="phoneNumber">Telefoon nummer: </label>
             <input id="phoneNumber" type="text" class="form-control" placeholder="Telefoonnummer" name="phoneNumber">
         </div>
         <div class="form-group">
-            <label for="password">Wachtwoord: </label>
+            <span class="red">*</span> <label for="password">Wachtwoord: </label>
             <input id="password" type="password" class="form-control" placeholder="Wachtwoord" name="password">
         </div>
         <div class="form-group">
-            <label for="confirmPassword">Besvestig Wachtwoord: </label>
+            <span class="red">*</span> <label for="confirmPassword">Besvestig Wachtwoord: </label>
             <input id="confirmPassword" type="password" class="form-control" placeholder="Bevestig wachtwoord" name="confirmPassword">
         </div>
-            <label for="countries">Land: </label>
-            <select name="country" data-placeholder="<?php  echo $countryPlaceHolder ?>" id="country" class="chosen">
+            <span class="red">*</span> <label for="countries">Land: </label>
+            <select name="country" data-placeholder="<?php  echo $countryPlaceHolder ?>" id="country" class="chosen form-control">
                 <?php
                 foreach ($countries as $country){
                     echo "<option value='".htmlentities($country["CountryID"])."'>".htmlentities($country["CountryName"])."</option>";
@@ -34,7 +38,7 @@
                 ?>
             </select>
         <div class="form-group">
-            <label for="province">Provincie: </label>
+            <span class="red">*</span> <label for="province">Provincie: </label>
             <select data-placeholder="<?php echo $provincePlaceHolder ?>" name="province" id="province" class="chosen">
                 <?php
                 foreach ($provinces as $province){
@@ -44,7 +48,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="city">Stad: </label>
+            <span class="red">*</span> <label for="city">Stad: </label>
             <select name="city" data-placeholder="<?php echo $cityPlaceHolder ?>" id="city" class="chosen">
                 <?php
                 foreach ($cities as $city){
@@ -55,11 +59,11 @@
         </div>
 
         <div class="form-group">
-            <label for="address">Adres: </label>
+            <span class="red">*</span> <label for="address">Adres: </label>
             <input type="text" class="form-control" name="address" id="address" value="">
         </div>
         <div class="form-group">
-            <label for="zip">Postcoce: </label>
+            <span class="red">*</span> <label for="zip">Postcoce: </label>
             <input class="form-control" type="text" name="zip" id="zip" value="">
         </div>
 <!--        <div class="form-group">-->
