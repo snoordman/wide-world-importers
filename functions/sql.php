@@ -16,14 +16,13 @@
     }
 
     // PRODUCTS //
-    function getProducts($amountResults = 10){
+    function getProducts($amountResults = 10, $offset = 0){
         $conn = createConn();
 
         $query = $conn->prepare( "
-            SELECT  DISTINCT si.StockItemId, si.StockItemName, si.UnitPrice, sh.QuantityOnHand
+            SELECT  si.StockItemId, si.StockItemName, si.UnitPrice, sh.QuantityOnHand
             FROM    stockitems AS si 
             JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
-            JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
             WHERE   Active = 1
         ");
 
@@ -34,6 +33,27 @@
 
         if($products->num_rows > 0){
             return $products->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
+    function getMinMaxPrice(){
+        $conn = createConn();
+
+        $query = $conn->prepare( "
+                SELECT  min(unitPrice) minPrice, max(unitPrice) maxPrice
+                FROM    stockitems
+                WHERE   Active = 1
+            ");
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_assoc();
         }else{
             return "Geen resultaten";
         }

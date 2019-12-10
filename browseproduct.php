@@ -8,7 +8,7 @@
 
     $products = getProducts();
 
-    $price = minMaxPrice(getProducts());
+    $price = getMinMaxPrice();
 
     if(isset($_GET["submitFilter"])){
         $categories = null;
