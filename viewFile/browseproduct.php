@@ -24,8 +24,8 @@
             <br />
             <div class="row">
                 <form method="get" name="filter">
-                    <div data-toggle="collapse" data-target="#categoriesCollapse"><i class="fas fa-arrow-down"></i> <b>Selecteer categorie</b></div>
-                    <div id="categoriesCollapse" class="collapse">
+                    <div data-toggle="collapse" data-target="#categoriesCollapse" aria-expanded="true"><i class="fas fa-arrow-down"></i> <b>Selecteer categorie</b></div>
+                    <div id="categoriesCollapse" class="collapse show">
 <?php
                         for($i = 0; $i < count($categories); $i++){
 ?>
