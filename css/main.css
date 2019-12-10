@@ -128,3 +128,11 @@ text-align: left;
     border-color: #33BDFF;
 }
 
+.resultaat{
+    color: green;
+
+}
+
+.resultaatfail{
+  color: red;
+}
