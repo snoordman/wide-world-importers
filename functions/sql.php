@@ -202,7 +202,7 @@
         }
 
         $query = $conn->prepare("
-            SELECT si.StockItemId, si.StockItemName
+            SELECT si.StockItemId, si.StockItemName, si.UnitPrice
             FROM stockitems AS si
             WHERE Active = 1
             $categoriesFilter
