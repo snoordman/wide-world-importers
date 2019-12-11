@@ -131,3 +131,11 @@ text-align: left;
 .red{
     color: #ff0000;
 }
+
+.quantity-buttons{
+    width: 80%;
+}
+
+.input-number{
+    padding: 0;
+}

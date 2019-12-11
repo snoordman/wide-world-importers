@@ -5,6 +5,7 @@
 
     $viewFile = "viewFile/product.php";
     $product = [];
+    $photos = [];
     if(isset($_GET["product_id"])){
         $productId = $_GET["product_id"];
         $product = getProductById($productId);
@@ -17,8 +18,7 @@
                     if(isset($_SESSION["shoppingCart"][$productId])){
                         $_SESSION["shoppingCart"][$productId]["quantity"] += $quantity;
                     }else{
-                        $_SESSION["shoppingCart"][$productId] = ["packageTypeId" => $product["packageTypeId"], "quantity" => $quantity, "unitPrice" =>
-                            $product["UnitPrice"], "taxRate" => $product["TaxRate"], "time" => date('Y-m-d H:i:s')];
+                        $_SESSION["shoppingCart"][$productId] = ["quantity" => $quantity];
                     }
                     alert_msg_push("alert-success", "Succesvol toegevoegd");
                     header("Location: " . $_SERVER['REQUEST_URI']);

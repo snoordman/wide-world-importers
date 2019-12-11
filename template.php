@@ -44,7 +44,7 @@
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
 
 <?php
-                    if(checkPermissions("IsSystemUser")) {
+                    if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
 ?>
                     <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Toevoegen product</a></li>
                     <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">verwijderen</a></li>

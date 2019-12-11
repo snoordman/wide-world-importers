@@ -2,7 +2,7 @@
     require_once "config.php";
     require_once "functions/sql.php";
 
-    if(checkPermissions("isSystemUser")) {
+    if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
         if (isset($_POST['submit'])) {
             $StockItemName = $_POST['StockItemName'];
             $supplierid = $_POST['SupplierID'];

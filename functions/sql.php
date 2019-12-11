@@ -38,6 +38,30 @@
         }
     }
 
+    function getMultipleProducts($ids){
+        $conn = createConn();
+
+        $params = str_repeat("i", count($ids));
+        $query = $conn->prepare( "
+            SELECT  StockItemId, StockItemName, UnitPrice, UnitPackageID, TaxRate
+            FROM    stockitems
+            WHERE   Active = 1
+            AND     StockItemId IN (?)
+        ");
+
+        $query->bind_param($params, ...$ids);
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
     function getMinMaxPrice(){
         $conn = createConn();
 
@@ -85,14 +109,21 @@
         }
     }
 
-    function getPhotosProduct($stockItemId){
+    function getPhotosProduct($stockItemId, $onlyOne = false){
         $conn = createConn();
+
+        if($onlyOne == true){
+            $limit = " LIMIT 1";
+        }else{
+            $limit = "";
+        }
 
         $query = $conn->prepare("
             SELECT Photo
             FROM stockItemPhotos sp
             JOIN photos p ON sp.PhotoId = p.PhotoId
             WHERE sp.StockItemId = ?
+            $limit
         ");
 
         $query->bind_param("i", $stockItemId);

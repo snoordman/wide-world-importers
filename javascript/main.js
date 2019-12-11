@@ -23,6 +23,26 @@ function clearSelect(select){
     ;
 }
 
+function changeNumber(field, increase){
+    var currentVal = field.val();
+    console.log(
+        currentVal
+    );
+
+    if(isNaN(currentVal)){
+        field.val(1);
+    }else if(increase === true){
+        currentVal = Math.round(parseFloat(currentVal));
+        field.val(currentVal + 1);
+    }else{
+        currentVal = Math.round(parseFloat(currentVal));
+        field.val(currentVal - 1);
+    }
+
+    field.trigger("change");
+}
+
+
 $(function() {
     $(".chosen").chosen({
         width: "100%"
@@ -112,4 +132,24 @@ $(function() {
         });
     });
 
+    $("#minusQuantity").click(function (){
+        changeNumber($("#quantity"), false);
+    });
+
+    $("#plusQuantity").click(function (){
+        changeNumber($("#quantity"), true);
+    });
+
+    $("#quantity").change(function (){
+        var value = $(this).val();
+        if(isNaN(value)){
+            $(this).val(1);
+        }else{
+            $(this).val(
+                Math.round(parseFloat(value))
+            );
+        }
+        console.log(this.form);
+        this.form.submit();
+    });
 });

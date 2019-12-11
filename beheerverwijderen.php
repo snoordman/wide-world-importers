@@ -4,7 +4,7 @@
 
     $viewFile = "viewFile/beheerverwijderen.php";
 
-    if(checkPermissions("IsSystemUser")){
+    if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")){
         if(isset($_GET["submit"])){
             $StockItemID=$_GET["StockItemID"];
 
