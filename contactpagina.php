@@ -17,7 +17,7 @@ require_once "config.php";
         $mail->Port = 587;
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = "tls";
-        $mail->Username = "testg0930@gmail.com";
+        $mail->Username = "erendemirhan66@gmail.com";
         $mail->Password = "TestTest123";
 
         $mail->setFrom($_POST["email"], $_POST["naam"], $_POST["typevraag"]);

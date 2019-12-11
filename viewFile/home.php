@@ -4,4 +4,13 @@
 
 displayMostPopulairItems();
 
+
+
+
 ?>
+<footer id="footer">
+    <div class="wrapper">
+
+    </div>
+</footer>
+</div>

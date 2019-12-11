@@ -47,7 +47,7 @@
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
 ?>
                     <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Toevoegen product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">verwijderen</a></li>
+                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">Verwijderen</a></li>
 <?php
                     }
  ?>
@@ -76,7 +76,9 @@
                 require_once $viewFile;
             }
         ?>
-        </div>
+
+
+
     </body>
 </html>
 <?php
