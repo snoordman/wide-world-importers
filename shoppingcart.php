@@ -1,6 +1,7 @@
 <?php
     require_once "config.php";
     require_once "functions/sql.php";
+    require_once "functions/image.php";
     $viewFile = "viewFile/shoppingcart.php";
 
     $productsShoppingCart = [];
@@ -26,6 +27,7 @@
     
     if(isset($_SESSION["shoppingCart"])){
         $products = [];
+        $total = 0;
         if(count($_SESSION["shoppingCart"]) == 0){
             unset($_SESSION["shoppingCart"]);
         }else {
@@ -33,13 +35,18 @@
             if(!is_string($products)){
                 for($i = 0; $i < count($products); $i++){
                     $id = $products[$i]["StockItemId"];
+                    $products[$i]["subtoal"] = $products[$i]["UnitPrice"] ;
                     $products[$i]["quantity"] = $_SESSION["shoppingCart"][$id]["quantity"];
-                    $photo = getPhotosProduct($id, true)[0]["Photo"];
+                    $photo = getPhotosProduct($id, true);
                     if($photo !== "Geen resultaten"){
-                        $products[$i]["photo"] = $photo;
+                        $products[$i]["photo"] = $photo[0]["Photo"];
                     }else{
                         $products[$i]["photo"] = null;
                     }
+
+                    $subTotal = $products[$i]["UnitPrice"] * $products[$i]["quantity"];
+                    $products[$i]["subTotal"] = $subTotal;
+                    $total += $subTotal;
                 }
             }
         }

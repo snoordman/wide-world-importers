@@ -22,12 +22,14 @@
                         <div class='row'>
                             <div class='col-3'>
             ";
-            if($product["photo"] !== null){
-            echo "              <img class='img-fluid' src='data:image/jpeg;base64, " . base64_encode($product['photo']) . " ' />";
+            if(!($image = loadDefault($product['photo'], true))){
+                echo "             
+                                <img class='img-fluid' src='data:image/jpeg;base64, " . base64_encode($product["photo"]) . " ' />
+                ";
             }else{
-            echo "  
-                                <img class='img-fluid' src='afbeeldingen/no_image.jpg' alt='geen afbeelding aanwezig' />
-            ";
+                echo "  
+                                <img class='img-fluid' src='" . $image . "' alt='geen afbeelding aanwezig' />
+                ";
             }
             echo "
                             </div>
@@ -56,7 +58,7 @@
                         </div>
                     </div>
                     <div class='col-2'>
-                        <div class='subtotal'>" . number_format($product["UnitPrice"] * $product["quantity"], 2, ",", ".") . "</div>
+                        <div class='subtotal'>" . number_format($product["subTotal"], 2, ",", ".") . "</div>
                     </div>
                 </div>
             </form>

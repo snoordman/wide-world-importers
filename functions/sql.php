@@ -120,7 +120,7 @@
 
         $query = $conn->prepare("
             SELECT Photo
-            FROM stockItemPhotos sp
+            FROM stockitemphotos sp
             JOIN photos p ON sp.PhotoId = p.PhotoId
             WHERE sp.StockItemId = ?
             $limit

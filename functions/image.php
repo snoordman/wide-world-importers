@@ -5,7 +5,7 @@ function loadDefault($image, $single = false){
     $noImagePath = "no_image";
     $extension = ".jpg";
 
-    if($single == false && $image == null || is_string($image)){
+    if($single == true && $image == null || is_string($image)){
         return $rootPath . $noImagePath . $extension;
     }else{
         return false;
