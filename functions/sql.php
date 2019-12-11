@@ -149,7 +149,7 @@
         $search = "%".$search."%";
 
         $query = $conn->prepare(
-            "SELECT  StockItemId, StockItemName
+            "SELECT  StockItemId, StockItemName, UnitPrice
             FROM    stockitems
             WHERE   Active = 1
             AND (

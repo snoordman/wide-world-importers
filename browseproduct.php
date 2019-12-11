@@ -32,13 +32,15 @@
 
     $categories = getCategories();
 
-    for($i = 0; $i < count($products); $i++){
-        //$products[$i]["Image"] = getPhotosProduct($product["StockItemId"], true)[0]["Photo"];
-        $photo = getPhotosProduct($products[$i]["StockItemId"], true);
-        if($photo !== "Geen resultaten"){
-            $products[$i]["photo"] = $photo[0]["Photo"];
-        }else{
-            $products[$i]["photo"] = null;
+    if(!is_string($products)){
+        for($i = 0; $i < count($products); $i++){
+            //$products[$i]["Image"] = getPhotosProduct($product["StockItemId"], true)[0]["Photo"];
+            $photo = getPhotosProduct($products[$i]["StockItemId"], true);
+            if($photo !== "Geen resultaten"){
+                $products[$i]["photo"] = $photo[0]["Photo"];
+            }else{
+                $products[$i]["photo"] = null;
+            }
         }
     }
 
