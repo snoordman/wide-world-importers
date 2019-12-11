@@ -5,7 +5,7 @@
     $viewFile = "viewFile/shoppingcart.php";
 
     $productsShoppingCart = [];
-
+    
     if(isset($_POST["quantity"])){
         if(isset($_POST["id"])){
             $id = $_POST["id"];

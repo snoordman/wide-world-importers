@@ -41,15 +41,18 @@
     function getMultipleProducts($ids){
         $conn = createConn();
 
-        $params = str_repeat("i", count($ids));
+        $clause = implode(',', array_fill(0, count($ids), '?'));
+        $types = str_repeat('i', count($ids));
+        $filters = $ids;
+
         $query = $conn->prepare( "
             SELECT  StockItemId, StockItemName, UnitPrice, UnitPackageID, TaxRate
             FROM    stockitems
             WHERE   Active = 1
-            AND     StockItemId IN (?)
+            AND     StockItemId IN ($clause)
         ");
 
-        $query->bind_param($params, ...$ids);
+        $query->bind_param($types, ...$filters);
         $query->execute();
         $products = $query->get_result();
 

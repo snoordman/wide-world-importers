@@ -22,6 +22,7 @@
                         <div class='row'>
                             <div class='col-3'>
             ";
+
             if(!($image = loadDefault($product['photo'], true))){
                 echo "             
                                 <img class='img-fluid' src='data:image/jpeg;base64, " . base64_encode($product["photo"]) . " ' />
