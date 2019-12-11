@@ -32,6 +32,20 @@
                         <input type="checkbox" value='<?php echo $categories[$i]["StockGroupId"]; ?>' name="categories[]"> <?php echo $categories[$i]["StockGroupName"]; ?><br/>
 <?php
                             }
+
+//Retrieve image from database and display it on html webpage
+//function displayImageFromDatabase(){
+//    $conn = createconn();
+//    $sqlselectimageFromDb = "SELECT * FROM photos ";
+//    $dataFromDb = mysqli_query($conn, $sqlselectimageFromDb);
+//    while ($row = mysqli_fetch_assoc($dataFromDb)) {
+//        echo '<img src="data:image;base64,'. base64_encode($row['Photo']) . '" />';
+//    }
+//    $conn->close();
+//}
+//
+//displayImageFromDatabase();
+
 ?>
                     </div>
                     <br/>
@@ -47,23 +61,48 @@
             if(is_string($products)){
                 echo $products;
             }else{
+                echo "<div class='row'>";
                 foreach($products AS $product){
-
-                    echo "
-                        <div class='row'>
-                            <div class='col-4'><a href='product.php?product_id=".$product["StockItemId"]."' style='color:black'>".$product["StockItemName"]."</a></div>
-                        </div>
+                    echo " 
+							<div class='col-4'>
+								<div class='row'>
+								<a href='product.php?product_id=" . $product["StockItemId"] . "' style='color:black'>
+									<div class='col-12'>
+                    ";
+                    if(!($image = loadDefault($product['photo'], true))){
+                        echo "             
+                                        <img class='img-fluid' src='data:image/jpeg;base64, " . base64_encode($product["photo"]) . " ' />
+                        ";
+                    }else{
+                        echo "  
+                                        <img class='img-fluid' src='" . $image . "' alt='geen afbeelding aanwezig' />
+                        ";
+                    }
+		            echo "
+									</div>
+								</div>
+								<div class='row'>
+									<div class='col-12'>
+									". $product["StockItemName"] ."
+									</div>
+								</div>
+								<div class='row'>
+									<div class='col-12'>
+										". "€". number_format($product["UnitPrice"], 2, ',', '.') ."
+									 </div>
+							    </a>
+								</div>
+								<br>
+							</div>
                     ";
 
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
                         echo "
-                            <div class='row'>
-                                <div class='col-12'><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a></div>
-                            </div>
+                                <div class='col-2'><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a></div>
                         ";
                     }
-                    echo "<br />";
                 }
+                echo "</div>";
             }
             ?>
         </div>

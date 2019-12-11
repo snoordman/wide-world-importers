@@ -2,7 +2,7 @@
     require_once "config.php";
     require_once "functions/sql.php";
     require_once "functions/products.php";
-
+    require_once "functions/image.php";
     $viewFile = "viewFile/browseproduct.php";
 
 
@@ -32,5 +32,14 @@
 
     $categories = getCategories();
 
+    for($i = 0; $i < count($products); $i++){
+        //$products[$i]["Image"] = getPhotosProduct($product["StockItemId"], true)[0]["Photo"];
+        $photo = getPhotosProduct($products[$i]["StockItemId"], true);
+        if($photo !== "Geen resultaten"){
+            $products[$i]["photo"] = $photo[0]["Photo"];
+        }else{
+            $products[$i]["photo"] = null;
+        }
+    }
 
     require_once ("template.php");
