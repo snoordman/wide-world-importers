@@ -128,6 +128,15 @@ text-align: left;
     border-color: #33BDFF;
 }
 
+.resultaat{
+    color: green;
+
+}
+
+.resultaatfail {
+    color: red;
+}
+
 .red{
     color: #ff0000;
 }
@@ -139,3 +148,6 @@ text-align: left;
 .input-number{
     padding: 0;
 }
+
+
+

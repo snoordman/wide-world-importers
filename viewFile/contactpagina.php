@@ -16,11 +16,20 @@
                 <input id="naam" type="text" class="naam form-control" name="naam" placeholder="naam"><br>
                 <label for="email"><b>Uw e-mail adres:</b></label>
                 <br><input id="email" type="email" class="email form-control" name="email" placeholder="e-mail"><br>
+                <label for="Type vraag"><b>Type vraag:</b></label><br>
+                <select name="typevraag" id="typevraag" class="typevraag form-control" onchange="this.form.submit()">
+                    <option value="Vraag product" name="Vraag product>">Vraag product</option>
+                    <option value="Klacht" name="Klacht">Klacht</option>
+                    <option value="Opmerking product" name="Opmerking product">Opmerking product</option>
+                </select><br>
                 <label for="vraag"><b>Uw vraag:</b></label>
                 <br><textarea id="vraag" name="message" rows="3" class="message form-control"></textarea><br>
                 <input type="submit" name="submit" class="submitButton" value="Verzenden"><br><br>
-                <div class="resultaatmail">
+                <div class="resultaat">
                 <h5><?php echo $result;  ?></h5>
+                </div>
+                <div class="resultaatfail">
+                    <h5><?php echo $resultfail; ?></h5>
                 </div>
             </form>
         </div>
