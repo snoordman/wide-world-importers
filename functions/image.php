@@ -1,11 +1,11 @@
 <?php
 
-function loadDefault($image){
+function loadDefault($image, $single = false){
     $rootPath = "afbeeldingen/";
     $noImagePath = "no_image";
     $extension = ".jpg";
 
-    if(is_string($image)){
+    if($single == false && $image == null || is_string($image)){
         return $rootPath . $noImagePath . $extension;
     }else{
         return false;
