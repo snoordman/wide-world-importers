@@ -149,7 +149,7 @@
         $search = "%".$search."%";
 
         $query = $conn->prepare(
-            "SELECT  StockItemId, StockItemName
+            "SELECT  StockItemId, StockItemName, UnitPrice
             FROM    stockitems
             WHERE   Active = 1
             AND (
@@ -202,7 +202,7 @@
         }
 
         $query = $conn->prepare("
-            SELECT si.StockItemId, si.StockItemName
+            SELECT si.StockItemId, si.StockItemName, si.UnitPrice
             FROM stockitems AS si
             WHERE Active = 1
             $categoriesFilter
