@@ -5,6 +5,11 @@
 </head>
 <body>
     <h1>Frequently Asked Questions</h1><br>
+    <div>
+
+        <img src="afbeeldingen/Fag.png" alt="FAQ" style="width:240px;height:240px;">
+
+    </div>
 <div>
     <form name="faq">
         <div data-toggle="collapse" data-target="#categoriesCollapse1"><i class="fas fa-arrow-down"></i>
@@ -25,6 +30,8 @@
         <div id="categoriesCollapse3" class="collapse">
             Als een bestelling beschadigd aankomt wordt deze zonder extra kosten vergoed.
         </div>
+    </form>
+
 </div>
 
 </body>

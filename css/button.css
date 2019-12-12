@@ -1,0 +1,10 @@
+#submit {
+    color: #fff;
+    font-size: 100;
+    width: 135px;
+    height: 60px;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: #0c0 url(image) 0 0 no-repeat;
+}
