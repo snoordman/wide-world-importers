@@ -22,9 +22,13 @@
         $query = $conn->prepare( "
             SELECT  si.StockItemId, si.StockItemName, si.UnitPrice, sh.QuantityOnHand
             FROM    stockitems AS si 
-            JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
+            LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             WHERE   Active = 1
+            LIMIT   ?
+            OFFSET  ?
         ");
+
+        $query->bind_param("ii", $amountResults, $offset);
 
         $query->execute();
         $products = $query->get_result();
@@ -149,13 +153,15 @@
         $search = "%".$search."%";
 
         $query = $conn->prepare(
-            "SELECT  StockItemId, StockItemName, UnitPrice
-            FROM    stockitems
+            "
+            SELECT  si.StockItemId, si.StockItemName, si.UnitPrice, sh.QuantityOnHand
+            FROM    stockitems AS si 
+            LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             WHERE   Active = 1
             AND (
-                StockItemId = ?
-                OR      StockItemName LIKE ?
-                OR      SearchDetails LIKE ? 
+                si.StockItemId = ?
+                OR      si.StockItemName LIKE ?
+                OR      si.SearchDetails LIKE ? 
             )
         ");
 
@@ -307,8 +313,11 @@
         }
     }
 
+
     function addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $deliveryMethod, $deliveryLocation, $permissions = null){
         $conn = createConn();
+
+        $conn->autocommit(FALSE);
 
         $fullName = $firstName . " " . $lastName;
         $searchName = $firstName . " " . $fullName;
@@ -352,6 +361,20 @@
             LIMIT 1
         ";
 
+        $customerCategory = $conn->prepare("
+            SELECT  CustomerCategoryID
+            FROM    customercategories
+            WHERE   CustomerCategoryName = 'customer'
+        ");
+
+        $customerCategory->execute();
+        $customerCategory = $customerCategory->get_result();
+        if($customerCategory->num_rows > 0){
+            $customerCategory = $customerCategory->fetch_assoc()["CustomerCategoryID"];
+        }else{
+            $customerCategory = null;
+        }
+
         $query = $conn->prepare("
             INSERT INTO people(PersonID, FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, 
             HashedPassword, IsSystemUser, IsEmployee, IsSalesperson, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
@@ -362,7 +385,7 @@
             INSERT INTO customers(CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, 
             DeliveryCityID, PostalCityID, AccountOpenedDate, StandardDiscountPercentage, PhoneNumber, 
             DeliveryAddressLine2, DeliveryPostalCode, PostalAddressLine2, PostalPostalCode, LastEditedBy, ValidFrom, ValidTo)
-            VALUES(($maxIdCustomer) + 1, ?, ($maxIdCustomer) + 1, 9, ($maxIdPeople), ?, ?, ?, '".date('Y-m-d H:i:s') . "', 0.000, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59');
+            VALUES(($maxIdCustomer) + 1, ?, ($maxIdCustomer) + 1, $customerCategory , ($maxIdPeople), ?, ?, ?, '".date('Y-m-d H:i:s') . "', 0.000, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59');
         ");
 
 
@@ -373,18 +396,20 @@
             $fullName, $deliveryMethod, $deliveryCityId, $postalCityId, $phoneNumber, $deliveryAddressLine2, $deliveryPostalCode, $postalAddressLine2, $postalPostalCode, $userId
         );
 
-        $result2 = false;
-        if($query && $query2){
-            $result1 = $query->execute();
-            if($result1 == true){
-                $result2 = $query2->execute();
-            }
-            var_dump($conn->error);
+        $result1 = $query->execute();
+        $result2 = $query2->execute();
+
+        if($result2 == true && $result2 == true){
+            $conn->commit();
         }
 
         $conn->close();
 
-        return $result2;
+        if($result1 == false){
+            return $result1;
+        }else{
+            return $result2;
+        }
     }
 
     function checkValidLogin($logonName, $password){
@@ -524,3 +549,51 @@
         }
     }
     // DELIVERY METHODS //
+
+    // customers //
+    function getCustomerId($peopleId){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  CustomerID
+            FROM    customers
+            WHERE   PrimaryContactPersonID = ?
+        ");
+
+        $query->bind_param("i", $peopleId);
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_assoc()["CustomerID"];
+        }else{
+            return false;
+        }
+    }
+    // customers //
+
+
+    // ORDERS //
+    function insertOrder($productId){
+        $conn = createConn();
+        $peopleId = $_SESSION["account"]["id"];
+        $customerId = getCustomerId($peopleId);
+        $product = getProductById($productId);
+
+        $getMaxOrderId = "
+            SELECT  MAX(OrderID) 
+            FROM    orders
+        ";
+
+        $query = $conn->prepare("
+            INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
+            ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
+            VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $product['LeadTimeDays'] . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )
+        ");
+
+        //$query->bind_param("i", );
+    }
+    // ORDERS //
