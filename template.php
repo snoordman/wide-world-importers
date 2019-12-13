@@ -47,7 +47,7 @@
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
 ?>
                     <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Toevoegen product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">Verwijderen</a></li>
+                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">Verwijderen product</a></li>
 <?php
                     }
  ?>
