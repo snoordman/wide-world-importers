@@ -79,11 +79,18 @@
         <?php
         if(checkPermissions("isSystemUser")){
         ?>
-        <div class="form-group">
-            <input id="systemUser" type="checkbox" class="form-control" placeholder="is SystemUser" name="permissions">
-            <input id="employee" type="checkbox" class="form-control" placeholder="is Employee" name="permissions">
-            <input id="salesPerson" type="checkbox" class="form-control" placeholder="is SalesPerson" name="permissions">
-        </div>
+            <div class="form-group">
+                </span> <label for="zip">is SystemUser: </label>
+                <input id="systemUser" type="checkbox" class="form-control" name="permissions">
+            </div>
+            <div class="form-group">
+                </span> <label for="zip">is SalesPerson: </label>
+                <input id="systemUser" type="checkbox" class="form-control" name="permissions">
+            </div>
+            <div class="form-group">
+                </span> <label for="zip">is Employee: </label>
+                <input id="systemUser" type="checkbox" class="form-control" name="permissions">
+            </div>
         <?php
         }
         ?>

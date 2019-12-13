@@ -3,16 +3,16 @@
     require_once "functions/login.php";
     $viewFile = "viewFile/register.php";
 
-    if(checkLoggedIn() == true && checkPermissions("IsSystemUser") == false) {
-        $provinces = [];
-        $cities = [];
+    $countryPlaceHolder = "";
+    $provincePlaceHolder = "";
+    $cityPlaceHolder = "";
+    $deliveryPlaceHodler = "";
+    $countries = false;
+    $provinces = [];
+    $cities = [];
+    if(checkLoggedIn() == false || checkPermissions("isSystemUser") == true) {
+
         $countries = getCountries();
-
-        $countryPlaceHolder = "";
-        $provincePlaceHolder = "";
-        $cityPlaceHolder = "";
-        $deliveryPlaceHodler = "";
-
         //    $deliveryMethods = getDeliveryMethods();
         //    if($deliveryMethods !== false){
         //        $deliveryPlaceHodler = "Geen opties beschikbaar";
@@ -77,4 +77,6 @@
         }
 
         require_once "template.php";
+    }else{
+        header("location: index.php");
     }

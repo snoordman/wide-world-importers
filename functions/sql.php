@@ -577,18 +577,43 @@
 
 
     // ORDERS //
+    function getMaxExpectedDelivery($products){
+        $conn = createConn();
+
+        $clause = implode(',', array_fill(0, count($products), '?'));
+        $types = str_repeat('i', count($products));
+        $filters = $products;
+
+        $query = $conn->prepare( "
+            SELECT  max(lea)
+            FROM    stockitems
+            WHERE   Active = 1
+            AND     StockItemId IN ($clause)
+        ");
+
+        $query->bind_param($types, ...$filters);
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return "Geen resultaten";
+        }
+    }
     function insertOrder($productId){
         $conn = createConn();
         $peopleId = $_SESSION["account"]["id"];
         $customerId = getCustomerId($peopleId);
-        $product = getProductById($productId);
 
         $getMaxOrderId = "
                 SELECT  MAX(OrderID) 
                 FROM    orders
             ";
 
-        $query = $conn->prepare("
+        $query1 = $conn->prepare("
                 INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
                 ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
                 VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $product['LeadTimeDays'] . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )

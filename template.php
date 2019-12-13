@@ -64,6 +64,9 @@
                         ';
                     }else{
                         echo '<li class="nav-item"><a class="nav-link" href="loginpagina.php?logout=true">Log uit <i class="fas fa-sign-out-alt"></i></a></li>';
+                        if(checkPermissions("isSystemUser")){
+                            echo '<li class="nav-item"><a class="nav-link" href="register.php">Registreer <i class="fas fa-user-plus"></i></a></li>';
+                        }
                     }
 ?>
                 </div>
