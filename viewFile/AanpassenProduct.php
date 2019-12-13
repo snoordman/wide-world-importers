@@ -92,6 +92,6 @@
             ?>
         </select></p>
     <p>Prijs per stuk: <input type="text" name="unitPrice" value="<?php echo htmlentities($product["UnitPrice"]); ?>"></p>
-    <input type="submit" value="Aanpassen" name="submit"><br><br>
+    <input type="submit" class="btn btn-warning" value="Aanpassen" name="submit" id="submit"><br><br>
     </form>
 </div>
