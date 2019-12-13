@@ -61,6 +61,20 @@
         }
     }
 
+    //Sum that calculates the actual discount percentage
+    function amountSaved(){
+        $product = getPriceForDiscount();
+
+        $recommendedRetailPrice = $product["RecommendedRetailPrice"];
+        $unitPrice = $product["UnitPrice"];
+
+        $priceDeduction = 100 / $recommendedRetailPrice * $unitPrice;
+        $actualAmountSaved = 100 - $priceDeduction;
+
+        return round($actualAmountSaved, 0)."%";
+    }
+    //Sum that calculates the actual discount percentage
+
 //    function displayEditProducts($result, $product){
 //        while($rows = $result){
 //            $packagetypeidouter = $rows['PackageTypeID'];

@@ -154,3 +154,10 @@ text-align: left;
     -webkit-appearance: none;
 }
 
+.addbutton {
+    background-color: #33BDFF;
+    font-size: 24px;
+    width: 250px;
+    border-radius: 8px;
+    text-align: center;
+}
