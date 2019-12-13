@@ -6,8 +6,8 @@
 
     <div>
         <form action="beheerverwijderen.php" method="get">
-            StockItemID:<br><input type="text" class="StockItemID" name="StockItemID"><br>
-            <br><input type="submit" name="submit" value="Verwijderen">
+            StockItemName: <input type="text" class="StockItemName" name="StockItemName"><br>
+            <br><input type="submit" class="btn-primary" name="submit" value="Verwijderen">
 
         </form>
 

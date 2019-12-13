@@ -6,11 +6,11 @@
 
     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")){
         if(isset($_GET["submit"])){
-            $StockItemID=$_GET["StockItemID"];
+            $StockItemName=$_GET["StockItemName"];
 
             $conn = createConn();
-            $query= $conn ->prepare("UPDATE stockitems SET Active=0 WHERE StockItemID= ?");
-            $query->bind_param("i", $StockItemID);
+            $query= $conn ->prepare("UPDATE stockitems SET Active=0 WHERE StockItemName= ?");
+            $query->bind_param("s", $StockItemName);
             $query->execute();
 
             $conn->close();
