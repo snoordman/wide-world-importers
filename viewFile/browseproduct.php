@@ -61,13 +61,15 @@
             if(is_string($products)){
                 echo $products;
             }else{
-                echo "<div class='row'>";
+                echo "
+                    <div class='row'>
+                ";
                 foreach($products AS $product){
                     echo " 
-							<div class='col-4'>
-								<div class='row'>
-								<a href='product.php?product_id=" . $product["StockItemId"] . "' style='color:black'>
-									<div class='col-12'>
+                        <div class='col-4'>
+                            <a href='product.php?product_id=" . $product["StockItemId"] . "' style='color:black'>
+                                <div class='row'>
+                                    <div class='col-12'>
                     ";
                     if(!($image = loadDefault($product['photo'], true))){
                         echo "             
@@ -79,30 +81,34 @@
                         ";
                     }
 		            echo "
-									</div>
-								</div>
-								<div class='row'>
-									<div class='col-12'>
-									". $product["StockItemName"] ."
-									</div>
-								</div>
-								<div class='row'>
-									<div class='col-12'>
-										". "€". number_format($product["UnitPrice"], 2, ',', '.') ."
-									 </div>
-							    </a>
-								</div>
-								<br>
-							</div>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-12'>
+                                        ". $product["StockItemName"] ."
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-5'>
+                                        €". number_format($product["UnitPrice"], 2, ',', '.') ."
+                                    </div>
+                                </div>
+                            </a>
                     ";
-
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
                         echo "
-                                <div class='col-2'><a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a></div>
+                            <a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a>
                         ";
                     }
+                    echo "
+                            <br />
+                            <br />
+                        </div>
+                    ";
                 }
-                echo "</div>";
+                echo "
+                    </div>
+                ";
             }
             ?>
         </div>
