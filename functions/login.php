@@ -14,7 +14,9 @@ function validateValuesRegister($password, $email, $phoneNumber){
         $alert = true;
     }
 
-    if(!preg_match("/(^(\+{1}\d{0,3}\s?)?((\d+)+(\-?\d+)+)$)|(^\-{1}$)/", $phoneNumber)){
+    // source regex password
+    // https://regexr.com/3aevr
+    if(!preg_match("/^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$/", $phoneNumber)){
         alert_msg_push("alert-danger", "Ongeldige telefoonnummer. Voer alstublieft een geldig E-mail in");
         $alert = true;
     }
@@ -46,6 +48,7 @@ function login($email, $password){
     if($login !== false){
         $_SESSION["loggedIn"] = true;
         $_SESSION["permissions"] = ["isSystemUser" => $login["IsSystemUser"], "isEmployee" => $login["IsEmployee"], "isSalesPerson" => $login["IsSalesPerson"]];
+        $_SESSION["account"] = ["id" => "PersonID", "name" => $login["PreferredName"], "loginName" => $login["LogonName"]];
         $alertMessage = "U bent succesvol ingelogd";
         alert_msg_push("alert-success", $alertMessage);
         header("Location: index.php");
