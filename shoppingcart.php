@@ -5,7 +5,7 @@
     $viewFile = "viewFile/shoppingcart.php";
 
     $productsShoppingCart = [];
-    
+
     if(isset($_POST["quantity"])){
         if(isset($_POST["id"])){
             $id = $_POST["id"];
@@ -24,7 +24,19 @@
             alert_msg_push("alert-danger", "Er is iets mis gegaan, probeer alsublieft opnieuw");
         }
     }
-    
+    if(isset($_POST["deleteItem"])){
+        if(isset($_POST["itemId"])) {
+            $id = $_POST["itemId"];
+            if (isset($_SESSION["shoppingCart"][$id])){
+                unset($_SESSION["shoppingCart"][$id]);
+            } else {
+                alert_msg_push("alert-danger", "Er is iets mis gegaan, probeer alsublieft opnieuw");
+            }
+        }else{
+            alert_msg_push("alert-danger", "Er is iets mis gegaan, probeer alsublieft opnieuw");
+        }
+    }
+
     if(isset($_SESSION["shoppingCart"])){
         $products = [];
         $total = 0;
@@ -53,13 +65,6 @@
     }
 
     // remove product from shopping cart
-    if(isset($_GET["removeProduct"]) && $_GET["removeProduct"] == true && isset($_GET["shoppingCartItem"])){
-        if(isset($_SESSION["shoppingCart"][$_GET["shoppingCartItem"]])){
-            unset($_SESSION["shoppingCart"][$_GET["shoppingCartItem"]]);
-        }else{
-            alert_msg_push("alert-warning", "Product zit niet in de winkelwagen");
-        }
-    }
 
     // remove 1 item for product in shopping cart
     // if picked quantity is 1 remove product from shopping cart

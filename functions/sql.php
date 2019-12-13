@@ -94,7 +94,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.RecommendedRetailPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -532,10 +532,10 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-                SELECT  DeliveryMethodID, DeliveryMethodName
-                FROM    deliverymethods
-
-            ");
+                    SELECT  DeliveryMethodID, DeliveryMethodName
+                    FROM    deliverymethods
+    
+                ");
 
         $query->execute();
         $products = $query->get_result();
@@ -555,10 +555,10 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  CustomerID
-            FROM    customers
-            WHERE   PrimaryContactPersonID = ?
-        ");
+                SELECT  CustomerID
+                FROM    customers
+                WHERE   PrimaryContactPersonID = ?
+            ");
 
         $query->bind_param("i", $peopleId);
 
@@ -584,16 +584,41 @@
         $product = getProductById($productId);
 
         $getMaxOrderId = "
-            SELECT  MAX(OrderID) 
-            FROM    orders
-        ";
+                SELECT  MAX(OrderID) 
+                FROM    orders
+            ";
 
         $query = $conn->prepare("
-            INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
-            ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
-            VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $product['LeadTimeDays'] . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )
-        ");
+                INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
+                ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
+                VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $product['LeadTimeDays'] . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )
+            ");
 
         //$query->bind_param("i", );
     }
     // ORDERS //
+
+
+    //Fetch the stockitem prices from the database
+    function getPriceForDiscount(){
+        $conn = createConn();
+
+        $query = $conn->prepare( "
+                SELECT  StockItemId, UnitPrice, RecommendedRetailPrice
+                FROM    stockitems
+        ");
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_assoc();
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
+
+

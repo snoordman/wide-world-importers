@@ -132,15 +132,7 @@ $(function() {
         });
     });
 
-    $("#minusQuantity").click(function (){
-        changeNumber($("#quantity"), false);
-    });
-
-    $("#plusQuantity").click(function (){
-        changeNumber($("#quantity"), true);
-    });
-
-    $("#quantity").change(function (){
+    $(".quantity").change(function (){
         var value = $(this).val();
         if(isNaN(value)){
             $(this).val(1);
