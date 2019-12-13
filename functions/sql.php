@@ -90,7 +90,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.RecommendedRetailPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
@@ -524,3 +524,25 @@
         }
     }
     // DELIVERY METHODS //
+
+    //Fetch the stockitem prices from the database
+    function getPriceForDiscount(){
+        $conn = createConn();
+
+        $query = $conn->prepare( "
+                SELECT  StockItemId, UnitPrice, RecommendedRetailPrice
+                FROM    stockitems
+            ");
+
+        $query->execute();
+        $products = $query->get_result();
+
+        $conn->close();
+
+        if($products->num_rows > 0){
+            return $products->fetch_assoc();
+        }else{
+            return "Geen resultaten";
+        }
+    }
+    //Fetch the stockitem prices from the database
