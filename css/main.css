@@ -161,3 +161,18 @@ text-align: left;
     border-radius: 8px;
     text-align: center;
 }
+
+.footer{
+    background-color: #7F96A1 ;
+    color:white;
+    height: 400px;
+    width: 1600px;
+    position: relative;
+
+}
+
+.footer .footer-bottom {
+height: 50px;
+position: absolute;
+
+}

@@ -96,7 +96,7 @@
 <!--            <p>ValidFrom <input type="text" name="ValidFrom"></p>-->
 <!--            <p>ValidTo <input type="text" name="ValidTo"></p>-->
 <!--            <p>Active <input type="text" name="Active"></p>-->
-            <input type="submit" value="Toevoegen" name="submit"><br><br>
+            <input type="submit" value="Toevoegen" name="submit" class="btn-primary"><br><br>
         </form>
     </div>
 </div>
