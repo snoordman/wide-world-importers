@@ -79,31 +79,22 @@
                 require_once $viewFile;
             }
         ?>
+        </div>
 
+        <footer class="footer">
+            <div class="row">
+                <div class="col-4">
+                </div>
+                <div class="col-4">
+                </div>
             </div>
-
-<!--footer-->
-<div class="footer">
-<!--content-->
-    <div class="footer-content">
-<div class="footer-section Adres"></div>
-    <div class="footer-section Openingstijden"></div>
-    <div class="footer-section Social media"></div>
-    </div>
-<!--bottom-->
-    <div class="footer-bottom">
-    &copy; 2019 WideWorldImporters - Alle rechten voorbehouden
-    </div>
-
-
-</div>
-
-
-
-
-
-
+            <br />
+            <div class="row">
+                <div class="col-12">
+                    2019 WideWorldImporters - Alle rechten voorbehouden
+                </div>
+            </div>
+        </footer>
     </body>
-
 </html>
 <?php

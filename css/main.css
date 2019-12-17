@@ -162,17 +162,35 @@ text-align: left;
     text-align: center;
 }
 
-.footer{
-    background-color: #7F96A1 ;
-    color:white;
-    height: 400px;
-    width: 1600px;
-    position: relative;
-
+html {
+    height: 100%;
+    box-sizing: border-box;
 }
 
-.footer .footer-bottom {
-height: 50px;
-position: absolute;
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
 
+body {
+    position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+    min-height: 100%;
+}
+
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: left;
+}
+
+.shoppingCart{
+    background-color: #fffae5;
+    padding: 2rem 1rem;
 }
