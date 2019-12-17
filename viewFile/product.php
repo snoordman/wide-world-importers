@@ -1,4 +1,7 @@
 <div class="row">
+        <h1><?php echo $product["StockItemName"] ?></h1>
+</div>
+<div class="row">
     <div class="col-4">
 <?php
     if(!($image = loadDefault($photos))){
@@ -42,23 +45,32 @@
                 <img class="d-block w-100" src="<?php echo $image ?>" alt="Slide 1">
             </div>
         </div>
-    </div>
+    </div><br>
 <?php
 }
 ?>
+        <div class="row">
+                <?php
+                if(!isset($product["MarketingComments"]) || $product["MarketingComments"] == NULL){
+                    displayProduct("Beschrijving: ", "Geen productbeschrijving beschikbaar");
+                } else {
+                    displayProduct("Beschrijving: ", $product["MarketingComments"]);
+                }
+                ?>
+        </div>
     </div>
     <div class="col-2"></div>
     <div class="col-6">
         <div class="jumbotron">
-            <div class="row">
-                <h1><?php echo $product["StockItemName"] ?></h1>
-            </div>
+<!--            <div class="row">-->
+<!--                <h1>--><?php //echo $product["StockItemName"] ?><!--</h1>-->
+<!--            </div>-->
             <?php
-                if(isset($product["MarketingComments"])){
-                    displayProduct("Beschrijving: ", $product["MarketingComments"]);
-                }else{
-                    displayProduct("Beschrijving: ", "Geen productbeschrijving beschikbaar");
-                }
+//                if(!isset($product["MarketingComments"]) || $product["MarketingComments"] == NULL){
+//                    displayProduct("Beschrijving: ", "Geen productbeschrijving beschikbaar");
+//                } else {
+//                    displayProduct("Beschrijving: ", $product["MarketingComments"]);
+//                }
 
                 displayProduct("Adviesprijs:&nbsp<strike>€", $product["RecommendedRetailPrice"] . "</strike>");
                 displayProduct("Onze prijs: €", $product["UnitPrice"]);
@@ -81,9 +93,12 @@
                 }
 
                 echo "<div class='row'><b>Productspecificaties:</b></div>";
-                if(isset($product["Size"]) && $product["Size"] !== ""){
+
+                if($product["TypicalWeightPerUnit"] == 0.000 || $product["TypicalWeightPerUnit"] == NULL){
+                    echo "";
+                } elseif(isset($product["Size"]) && $product["Size"] !== ""){
                     if(checkWeightProduct($product["Size"])){
-                        displayProduct("Groote: ", $product["Size"]);
+                        displayProduct("Grootte: ", $product["Size"]);
                         if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){
                             $weight = $product["TypicalWeightPerUnit"];
                             if($weight < 1){
@@ -94,7 +109,7 @@
                             }
                         }
                     }else{
-                        displayProduct("Groote: ", $product["Size"]);
+                        displayProduct("Grootte: ", $product["Size"]);
                     }
                 }else{
                     if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){displayProduct("Gewicht: ", $product["TypicalWeightPerUnit"]. "kg");}
@@ -110,10 +125,9 @@
                     <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct" pattern="\d+" value="1">
                     <input type="submit" name="submitProduct" class="addbutton" value="Toevoegen">
                 </form>
-                <br><br><h10 class="red">LET OP: Bestellingen zijn exclusief 3,95 verzendkosten</h10>
             </div>
             <div class="row">
-                <h10><?php
+                <h10><br><?php
                     $randomPeople = rand(1,10);
                     if($randomPeople == 1){
                         echo "Momenteel is $randomPeople persoon dit product aan het bekijken!";
@@ -122,7 +136,9 @@
                     }
                     ?></h10>
             </div>
-
+            <div class="row">
+                <h10 class="red"><br>LET OP: Bestellingen zijn exclusief 3,95 verzendkosten</h10>
+            </div>
         </div>
     </div>
 </div>

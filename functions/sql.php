@@ -94,7 +94,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.RecommendedRetailPrice, si.TypicalWeightPerUnit, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
+            SELECT  si.StockItemId, si.StockItemName, si.SupplierID, si.ColorID, si.UnitPackageID, si.OuterPackageID, si.UnitPrice, si.RecommendedRetailPrice, si.TypicalWeightPerUnit, si.MarketingComments, sh.QuantityOnHand, c.ColorName, si.Size, isChillerStock, Brand, LeadTimeDays
             FROM    stockitems AS si 
             LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             LEFT JOIN    stockitemstockgroups AS sisg ON sisg.StockItemID = si.StockItemID
