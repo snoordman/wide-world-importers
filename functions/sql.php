@@ -585,7 +585,7 @@
         $filters = $products;
 
         $query = $conn->prepare( "
-            SELECT  max(lea)
+            SELECT  max(LeadTimeDays)
             FROM    stockitems
             WHERE   Active = 1
             AND     StockItemId IN ($clause)
@@ -598,27 +598,57 @@
         $conn->close();
 
         if($products->num_rows > 0){
-            return $products->fetch_all(MYSQLI_ASSOC);
+            return $products->fetch_all(MYSQLI_ASSOC)[0];
         }else{
-            return "Geen resultaten";
+            return null;
         }
     }
-    function insertOrder($productId){
+
+    function insertOrder($products){
         $conn = createConn();
+        $conn->autocommit(FALSE);
         $peopleId = $_SESSION["account"]["id"];
         $customerId = getCustomerId($peopleId);
 
+        $productIds = array_keys($products);
+
+        $deliveryTime = getMaxExpectedDelivery($productIds);
+
         $getMaxOrderId = "
-                SELECT  MAX(OrderID) 
-                FROM    orders
-            ";
+            SELECT  MAX(OrderID) 
+            FROM    orders
+        ";
+
+        $getMaxOrderLineId = "
+            SELECT MAX(OrderLineID
+            FROM orderlines
+        ";
 
         $query1 = $conn->prepare("
-                INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
-                ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
-                VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $product['LeadTimeDays'] . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )
-            ");
+            INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
+            ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
+            VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $deliveryTime . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )
+        ");
+        $query1->execute();
 
+        $success = $query1;
+        foreach ($products as $product){
+            if($success == true){
+                $queryProduct = $conn->prepare("
+                INSERT INTO orderlines
+                VALUES(($getMaxOrderLineId) + 1, " . $product['descripion'] . " , " . $product["packageTypeId"] . " , " . $product["quantity"] .
+                    " , " . $product["unitPrice"] . " , " . $products["taxRate"] . " , NULL , " . $product["PickedCompletedWhen"] .
+                    " , " . $product["LastEditedBy"] . " , " . date('Y-m-d H:i:s')
+                );
+                $queryProduct->execute();
+                $success = $queryProduct;
+            }else{
+                break;
+            }
+        }
+        if($success == true){
+            $conn->commit();
+        }
         //$query->bind_param("i", );
     }
     // ORDERS //
@@ -644,6 +674,3 @@
             return "Geen resultaten";
         }
     }
-
-
-
