@@ -91,7 +91,8 @@
             $conn->close();
             ?>
         </select></p>
-    <p>Prijs per stuk: <input type="text" name="unitPrice" value="<?php echo htmlentities($product["UnitPrice"]); ?>"></p>
+    <p>Prijs per stuk: Recommended <input type="text" name="recommendedRetailPrice" value="<?php echo $product["RecommendedRetailPrice"]; ?>"></p>
+    <p>Prijs per stuk: Unit <input type="text" name="unitPrice" value="<?php echo htmlentities($product["UnitPrice"]); ?>"></p>
     <input type="submit" class="btn btn-warning" value="Aanpassen" name="submit" id="submit"><br><br>
     </form>
 </div>

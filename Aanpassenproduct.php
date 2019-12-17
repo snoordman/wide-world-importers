@@ -10,17 +10,17 @@
             $packagetypeidunit = $_POST['unitpackagetypes'];
             $packagetypeidouter = $_POST['outerpackagetypes'];
             $unitPrice = $_POST['unitPrice'];
-
+            $recommendedRetailPrice = $_POST['recommendedRetailPrice'];
             $aanpassenID = $_GET["id"];
 
             $conn = createConn();
             $query = $conn->prepare("
                     UPDATE stockitems 
-                    SET StockItemName = ?, SupplierID = ?, ColorID = ?, UnitPackageID = ?, OuterPackageID = ?, RecommendedRetailPrice = ?
+                    SET StockItemName = ?, SupplierID = ?, ColorID = ?, UnitPackageID = ?, OuterPackageID = ?, RecommendedRetailPrice = ?, UnitPrice = ?
                     WHERE StockItemID = ?
                 ");
 
-            $query->bind_param("sssssss", $StockItemName, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, $unitPrice, $aanpassenID);
+            $query->bind_param("ssssssss", $StockItemName, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter,  $recommendedRetailPrice, $unitPrice, $aanpassenID);
             $query->execute();
 
             $conn->close();
