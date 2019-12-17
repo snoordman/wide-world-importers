@@ -229,27 +229,27 @@
         }else{
             return "Geen resultaten";
         }
-    }
+
     // PRODUCTS //
 
-    // CATEGORIES //
-    function getCategories(){
-        $conn = createConn();
 
-        $query = $conn->prepare("
+    }    // CATEGORIES //
+function getCategories(){
+    $conn = createConn();
+
+    $query = $conn->prepare("
             SELECT StockGroupId, StockGroupName
             FROM stockgroups
         ");
-        $query->execute();
-        $categories = $query->get_result();
+    $query->execute();
+    $categories = $query->get_result();
 
-        $conn->close();
+    $conn->close();
 
-        if($categories->num_rows > 0){
-            return $categories->fetch_all(MYSQLI_ASSOC);
-        }else{
-            return "Geen resultaten";
-        }
+    if($categories->num_rows > 0){
+        return $categories->fetch_all(MYSQLI_ASSOC);
+    }else{
+        return "Geen resultaten";
     }
     // CATEGORIES //
 
@@ -674,3 +674,23 @@
             return "Geen resultaten";
         }
     }
+}    // Pagination //
+    function getAmountProducts(){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT Count(StockItemID) as StockItemID
+            FROM stockitems
+        ");
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows > 0){
+            return $result->fetch_assoc()["StockItemID"];
+        }else{
+            return false;
+        }
+    }
+
