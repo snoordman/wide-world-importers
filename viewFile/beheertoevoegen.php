@@ -5,8 +5,8 @@
     <div>
         <form action="beheertoevoegen.php" method="post" enctype="multipart/form-data"><br>
 <!--            <p>StockItemID <input type="text" name="StockItemID"></p>-->
-            <p>StockItemName <input type="text" name="StockItemName" required></p>
-            <p>SupplierID <select name="suppliers">
+            <p>Productnaam <input type="text" name="StockItemName" required></p>
+            <p>Leverancier <select name="suppliers">
                     <?php
                     //Onderstaande haalt de leveranciers op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
@@ -24,7 +24,7 @@
                     $conn->close();
                     ?>
                 </select></p>
-            <p>ColorID <select name="colors">
+            <p>Kleur <select name="colors">
                     <?php
                     //Onderstaande haalt de kleuren op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
@@ -41,7 +41,7 @@
                     $conn->close();
                     ?>
                 </select></p>
-            <p>UnitPackageID <select name="unitpackagetypes">
+            <p>Verpakking (product) <select name="unitpackagetypes">
                     <?php
                     //Onderstaande haalt de verpakkingen op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
@@ -58,7 +58,7 @@
                     $conn->close();
                     ?>
                 </select></p>
-            <p>OuterPackageID <select name="outerpackagetypes">
+            <p>Verpakking (versturen)<select name="outerpackagetypes">
                     <?php
                     //Onderstaande haalt de verpakkingen op uit de DB en zet deze in een dropdown menu
                     $conn = createConn();
@@ -82,12 +82,13 @@
 <!--            <p>IsChillerStock <input type="text" name="IsChillerStock"></p>-->
 <!--            <p>Barcode <input type="text" name="Barcode"></p>-->
 <!--            <p>TaxRate <input type="text" name="TaxRate"></p>-->
-<!--            <p>UnitPrice <input type="text" name="UnitPrice"></p>-->
-            <p>RecommendedRetailPrice <input type="text" name="RecommendedRetailPrice" required></p>
+            <p>Onze prijs <input type="text" name="UnitPrice" required></p>
+            <p>Adviesprijs <input type="text" name="RecommendedRetailPrice" required></p>
+            <p>Voorraad <input type="text" name="QuantityOnHand"></p>
 <!--            <p>TypicalWeightPerUnit <input type="text" name="TypicalWeightPerUnit"></p>-->
-<!--            <p>MarketingComments <input type="text" name="MarketingComments"></p>-->
+            <p>Productbeschrijving <textarea rows="2" name="MarketingComments"></textarea></p>
 <!--            <p>InternalComments <input type="text" name="InternalComments"></p>-->
-            <p>Photo <input type="file" name="Photo"></p>
+            <p>Afbeelding <input type="file" name="Photo"></p>
 <!--            <p>CustomFields <input type="text" name="CustomFields"></p>-->
 <!--            <p>Tags <input type="text" name="Tags"></p>-->
 <!--            <p>SearchDetails <input type="text" name="SearchDetails"></p>-->

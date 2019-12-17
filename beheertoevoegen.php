@@ -34,10 +34,11 @@
             //    $ischillerstock = $_POST['IsChillerStock'];
             //    $barcode = $_POST['Barcode'];
             //    $taxrate = $_POST['TaxRate'];
-            //    $unitprice = $_POST['UnitPrice'];
+            $unitprice = $_POST['UnitPrice'];
             $recommendedretailprice = $_POST['RecommendedRetailPrice'];
+            $quantityonhand = $_POST["QuantityOnHand"];
             //    $typicalweightperunit = $_POST['TypicalWeightPerUnit'];
-            //    $marketingcomments = $_POST['MarketingComments'];
+            $marketingcomments = $_POST['MarketingComments'];
             //    $internalcomments = $_POST['InternalComments'];
             //    $customfields = $_POST['CustomFields'];
             //    $tags = $_POST['Tags'];
@@ -51,12 +52,21 @@
 
             //Met onderstaande query worden de waardes die in de bovenstaande form door de gebruiker zijn ingevuld gepushed naar de database
 
-            $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, RecommendedRetailPrice, LastEditedBy, ValidFrom, ValidTo, Active) 
-		    VALUES (($maxIdStockItem) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59', 1)");
+            $query = $conn->prepare("INSERT INTO stockitems (StockItemID, StockItemName, SupplierID, ColorID, UnitPackageID, OuterPackageID, UnitPrice, RecommendedRetailPrice, MarketingComments, LastEditedBy, ValidFrom, ValidTo, Active) 
+		    VALUES (($maxIdStockItem) + 1, ?, $supplierid, $colorid, $packagetypeidunit, $packagetypeidouter, ?, ?, ?, 1, '" . date('Y-m-d H:i:s') . "' , '9999-12-31 23:59:59', 1)");
 
-            $query->bind_param("sd", $stockitemname, $recommendedretailprice);
+            $query->bind_param("sdds", $stockitemname, $unitprice, $recommendedretailprice, $marketingcomments);
 
             $query->execute();
+
+            //Met onderstaande query wordt de voorraad toegevoegd in de stockitemholdings tabel
+
+            $query4 = $conn->prepare("INSERT INTO stockitemholdings (StockItemID, QuantityOnHand, LastEditedBy, LastEditedWhen)
+                                            VALUES (($maxIdStockItem), ?, 3, '" . date('Y-m-d H:i:s') . "')");
+
+            $query4->bind_param("i", $quantityonhand);
+
+            $query4->execute();
 
             //Met onderstaande if-statement wordt er zodra er op de knop Toevoegen wordt gedrukt het image bestand als blob geupload in de tabel photos
             if(isset($_FILES["Photo"]) && $_FILES["Photo"]["error"] == 0) {

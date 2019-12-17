@@ -63,7 +63,7 @@
 
     //Sum that calculates the actual discount percentage
     function amountSaved(){
-        $product = getPriceForDiscount();
+        $product = getProductById($_GET["product_id"]);
 
         $recommendedRetailPrice = $product["RecommendedRetailPrice"];
         $unitPrice = $product["UnitPrice"];
@@ -72,6 +72,7 @@
         $actualAmountSaved = 100 - $priceDeduction;
 
         return round($actualAmountSaved, 0)."%";
+//        return "$actualAmountSaved%";
     }
     //Sum that calculates the actual discount percentage
 
