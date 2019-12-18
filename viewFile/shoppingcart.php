@@ -43,17 +43,17 @@
                 <div class='col-3'>
                     <div class='row'>
                         <div class='col-md-8 col-xs-8 col-sm-6'>
-                            <form method='post' name='changeQuantity" . $product["StockItemId"] . "'>
+                            <form method='post' name='changeQuantity" . $product["StockItemID"] . "'>
                                 <div class='input-group quantity-buttons'>
                                     <span class='input-group-btn'>
-                                        <button id='minusQuantity".$product["StockItemId"]."' onclick='changeNumber($(\"#quantity".$product["StockItemId"]."\"), false)' type='button' class='btn btn-danger'>
+                                        <button id='minusQuantity".$product["StockItemID"]."' onclick='changeNumber($(\"#quantity".$product["StockItemID"]."\"), false)' type='button' class='btn btn-danger'>
                                             <i class='fas fa-minus'></i>
                                         </button>
                                     </span>
-                                        <input type='hidden' value='".$product["StockItemId"] . "' name='id' />
-                                        <input type='number' id='quantity".$product["StockItemId"]."' name='quantity' class='form-control input-number text-center quantity' value='".$product["quantity"] . "' min='1'>
+                                        <input type='hidden' value='".$product["StockItemID"] . "' name='id' />
+                                        <input type='number' id='quantity".$product["StockItemID"]."' name='quantity' class='form-control input-number text-center quantity' value='".$product["quantity"] . "' min='1'>
                                     <span class='input-group-btn'>
-                                        <button id='plusQuantity".$product["StockItemId"]."' onclick='changeNumber($(\"#quantity".$product["StockItemId"]."\"), true)' type='button' class='btn btn-success'>
+                                        <button id='plusQuantity".$product["StockItemID"]."' onclick='changeNumber($(\"#quantity".$product["StockItemID"]."\"), true)' type='button' class='btn btn-success'>
                                             <i class='fas fa-plus'></i>
                                         </button>
                                     </span>
@@ -61,13 +61,13 @@
                             </form>
                         </div>
                         <div class='col-md-4 col-xs-4 col-sm-6'>
-                            <form method='post' name='deleteItem" . $product["StockItemId"] . "'>
+                            <form method='post' name='deleteItem" . $product["StockItemID"] . "'>
                                 <span class='input-group-btn'>
-                                    <button id='deleteItem".$product["StockItemId"]."' name='deleteItem' type='submit' class='btn btn-danger'>
+                                    <button id='deleteItem".$product["StockItemID"]."' name='deleteItem' type='submit' class='btn btn-danger'>
                                         <i class='fas fa-trash-alt'></i>
                                     </button>
                                 </span>
-                                <input type='hidden' value='".$product["StockItemId"] . "' name='itemId' />
+                                <input type='hidden' value='".$product["StockItemID"] . "' name='itemId' />
 
                             </form>
                         </div>
@@ -90,7 +90,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <th scope="col">Totaal artikelen(<?php echo number_format($totalProducts, 2, ',', '.') ?>): </th>
+                                <th scope="col">Totaal artikelen(<?php echo $totalProducts; ?>): </th>
                                 <td></td>
                                 <td><?php echo count($products) ?></td>
                             </tr>

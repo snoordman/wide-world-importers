@@ -50,10 +50,10 @@
         $filters = $ids;
 
         $query = $conn->prepare( "
-            SELECT  StockItemId, StockItemName, UnitPrice, UnitPackageID, TaxRate
+            SELECT  StockItemID, StockItemName, UnitPrice, UnitPackageID, TaxRate, MarketingComments  
             FROM    stockitems
             WHERE   Active = 1
-            AND     StockItemId IN ($clause)
+            AND     StockItemID IN ($clause)
         ");
 
         $query->bind_param($types, ...$filters);
@@ -184,7 +184,7 @@
         $types = "";
 
         $categoriesFilter = "";
-        if($stockGroupId !== null){
+        if ($stockGroupId !== null) {
             $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
             $types = str_repeat('i', count($stockGroupId));
             $filters = $stockGroupId;
@@ -199,7 +199,7 @@
         }
 
         $priceFilter = "";
-        if($price !== null){
+        if ($price !== null) {
             array_push($filters, $price);
             $priceFilter = " 
                 AND UnitPrice <= ?
@@ -215,7 +215,7 @@
             $priceFilter
         ");
 
-        if(count($filters) !== 0){
+        if (count($filters) !== 0) {
             $query->bind_param($types, ...$filters);
         }
 
@@ -224,32 +224,34 @@
 
         $conn->close();
 
-        if($products->num_rows > 0){
+        if ($products->num_rows > 0) {
             return $products->fetch_all(MYSQLI_ASSOC);
-        }else{
+        } else {
             return "Geen resultaten";
         }
+    }
 
     // PRODUCTS //
 
 
-    }    // CATEGORIES //
-function getCategories(){
-    $conn = createConn();
+    // CATEGORIES //
+    function getCategories(){
+        $conn = createConn();
 
-    $query = $conn->prepare("
-            SELECT StockGroupId, StockGroupName
-            FROM stockgroups
-        ");
-    $query->execute();
-    $categories = $query->get_result();
+        $query = $conn->prepare("
+                SELECT StockGroupId, StockGroupName
+                FROM stockgroups
+            ");
+        $query->execute();
+        $categories = $query->get_result();
 
-    $conn->close();
+        $conn->close();
 
-    if($categories->num_rows > 0){
-        return $categories->fetch_all(MYSQLI_ASSOC);
-    }else{
-        return "Geen resultaten";
+        if ($categories->num_rows > 0) {
+            return $categories->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return "Geen resultaten";
+        }
     }
     // CATEGORIES //
 
@@ -633,7 +635,7 @@ function getCategories(){
         if($products->num_rows > 0){
             return $products->fetch_assoc()["CustomerID"];
         }else{
-            return false;
+            return null;
         }
     }
     // customers //
@@ -648,10 +650,10 @@ function getCategories(){
         $filters = $products;
 
         $query = $conn->prepare( "
-            SELECT  max(LeadTimeDays)
+            SELECT  max(LeadTimeDays) as MaxLeadTimeDays
             FROM    stockitems
             WHERE   Active = 1
-            AND     StockItemId IN ($clause)
+            AND     StockItemID IN ($clause)
         ");
 
         $query->bind_param($types, ...$filters);
@@ -661,7 +663,7 @@ function getCategories(){
         $conn->close();
 
         if($products->num_rows > 0){
-            return $products->fetch_all(MYSQLI_ASSOC)[0];
+            return $products->fetch_assoc()["MaxLeadTimeDays"];
         }else{
             return null;
         }
@@ -673,42 +675,47 @@ function getCategories(){
         $peopleId = $_SESSION["account"]["id"];
         $customerId = getCustomerId($peopleId);
 
-        $productIds = array_keys($products);
-
+        $productIds = [];
+        foreach ($products as $product){
+            array_push($productIds, $product["StockItemID"]);
+        }
         $deliveryTime = getMaxExpectedDelivery($productIds);
-
+        if($deliveryTime !== null){
+            $deliveryTime = strtotime("+" . $deliveryTime . " days");
+            $deliveryTime = "'" . date("Y-m-d", $deliveryTime) . "'";
+        }
         $getMaxOrderId = "
             SELECT  MAX(OrderID) 
-            FROM    orders
+            FROM    orders o
         ";
 
         $getMaxOrderLineId = "
-            SELECT MAX(OrderLineID
-            FROM orderlines
+            SELECT MAX(OrderLineID)
+            FROM orderlines ol
         ";
 
         $query1 = $conn->prepare("
-            INSERT INTO orders(OrderID, CustomerID, SalesPersonID, PickedByPersonID, ContactPersonID, BackOrderID, OrderDate, 
-            ExpectedDeliverDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, PickingCompletedWhen)
-            VALUES(($getMaxOrderId) + 1, $customerId , 0, 0, $peopleId , 0, " . date('Y-m-d') . " , " . $deliveryTime . " , 0, 1, ?, " . date('Y-m-d H:i:s') . " )
+            INSERT INTO orders(OrderID, CustomerID, SalespersonPersonID, PickedByPersonID, ContactPersonID, OrderDate, 
+            ExpectedDeliveryDate, PickingCompletedWhen, LastEditedWhen, LastEditedBy)
+            VALUES(($getMaxOrderId) + 1, $customerId , 1, 1, $peopleId , '" . date('Y-m-d') . "' , " . $deliveryTime . " , '" . date('Y-m-d H:i:s') . "' , '" . date('Y-m-d H:i:s') . "' , 1 )
         ");
-        $query1->execute();
 
-        $success = $query1;
+        $success = $query1->execute();
+
         foreach ($products as $product){
             if($success == true){
                 $queryProduct = $conn->prepare("
                 INSERT INTO orderlines
-                VALUES(($getMaxOrderLineId) + 1, " . $product['descripion'] . " , " . $product["packageTypeId"] . " , " . $product["quantity"] .
-                    " , " . $product["unitPrice"] . " , " . $products["taxRate"] . " , NULL , " . $product["PickedCompletedWhen"] .
-                    " , " . $product["LastEditedBy"] . " , " . date('Y-m-d H:i:s')
+                VALUES(($getMaxOrderLineId) + 1, ($getMaxOrderId) , " . $product['StockItemID'] . " , '" . $product['MarketingComments'] . "' , " . $product["UnitPackageID"] . " , " . $product["quantity"] .
+                    " , " . $product["UnitPrice"] . " , " . $product["TaxRate"] . " , " . $product["quantity"] . " , '" . $product["pickCompletedWhen"] .
+                    "' , 1 , '" . date('Y-m-d H:i:s')."')"
                 );
-                $queryProduct->execute();
-                $success = $queryProduct;
+                $success = $queryProduct->execute();
             }else{
                 break;
             }
         }
+
         if($success == true){
             $conn->commit();
         }
@@ -740,7 +747,7 @@ function getCategories(){
             return "Geen resultaten";
         }
     }
-}    // Pagination //
+    // Pagination //
     function getAmountProducts(){
         $conn = createConn();
 
@@ -755,6 +762,29 @@ function getCategories(){
 
         if($result->num_rows > 0){
             return $result->fetch_assoc()["StockItemID"];
+        }else{
+            return false;
+        }
+    }
+
+    function getOrders(){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT o.OrderID, OrderDate, ExpectedDeliveryDate, Description, StockItemName, PickedQuantity, ol.UnitPrice 
+            FROM orders o
+            JOIN orderlines ol ON o.OrderID = ol.OrderID 
+            JOIN stockitems si ON ol.StockItemID = si.StockItemID 
+            WHERE ContactPersonID = " . $_SESSION["account"]["id"]
+        );
+
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows > 0){
+            return $result->fetch_all(MYSQLI_ASSOC);
         }else{
             return false;
         }

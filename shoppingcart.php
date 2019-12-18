@@ -6,6 +6,7 @@
     $viewFile = "viewFile/shoppingcart.php";
 
     $productsShoppingCart = [];
+    $wentToPurchase = false;
 
     if(isset($_POST["quantity"])){
         if(isset($_POST["id"])){
@@ -17,6 +18,7 @@
                     unset($_SESSION["shoppingCart"][$id]);
                 }else{
                     $_SESSION["shoppingCart"][$id]["quantity"] = $quantity;
+                    $_SESSION["shoppingCart"][$id]["pickCompletedWhen"] = date('Y-m-d H:i:s');
                 }
             }else{
                 alert_msg_push("alert-danger", "Er is iets mis gegaan, probeer alsublieft opnieuw");
@@ -47,68 +49,55 @@
             $products = getMultipleProducts(array_keys($_SESSION["shoppingCart"]));
             if(!is_string($products)){
                 for($i = 0; $i < count($products); $i++){
-                    $id = $products[$i]["StockItemId"];
-                    $products[$i]["subtoal"] = $products[$i]["UnitPrice"] ;
+                    $id = $products[$i]["StockItemID"];
                     $products[$i]["quantity"] = $_SESSION["shoppingCart"][$id]["quantity"];
-                    $photo = getPhotosProduct($id, true);
-                    if($photo !== "Geen resultaten"){
-                        $products[$i]["photo"] = $photo[0]["Photo"];
-                    }else{
-                        $products[$i]["photo"] = null;
-                    }
+                    $products[$i]["pickCompletedWhen"] = $_SESSION["shoppingCart"][$id]["pickCompletedWhen"];
 
                     $subTotal = $products[$i]["UnitPrice"] * $products[$i]["quantity"];
                     $products[$i]["subTotal"] = $subTotal;
                     $total += $subTotal;
                     $totalProducts = $totalProducts + $products[$i]["quantity"];
                 }
-            }
-        }
+                $total += 3.95;
 
-        if(isset($_POST["submitPurchase"])){
-            if(checkLoggedIn()){
-                $products = getMultipleProducts(array_keys($_SESSION["shoppingCart"]));
+                if(isset($_POST["submitPurchase"])){
+                    $wentToPurchase = true;
+                    if(checkLoggedIn()){
 
-//            $viewFile = "viewFile/checkout.php";
-//
-//            $countries = getCountries();
-//
-//            if ($countries !== false) {
-//                $provinces = getProvincesByCountry($countries[0]["CountryID"]);
-//
-//                if ($provinces !== false) {
-//                    $cities = getCitiesByProvince($provinces[0]["StateProvinceID"]);
-//                    if ($cities == false) {
-//                        $cities = [];
-//                        $cityPlaceHolder = "Geen opties beschikbaar";
-//                    }
-//                } else {
-//                    $provinces = [];
-//                    $cities = [];
-//                    $cityPlaceHolder = "Geen opties beschikbaar";
-//                    $provincePlaceHolder = "Geen opties beschikbaar";
-//                }
-//            } else {
-//                $countryPlaceHolder = "Geen opties beschikbaar";
-//                $provincePlaceHolder = "Geen opties beschikbaar";
-//                $cityPlaceHolder = "Geen opties beschikbaar";
-//                $countries = [];
-//            }
-              $checkout = insertOrder($products);
-              if($checkout == false){
-                  alert_msg_push("alert-success", "Er is iets mis gegaan, probeer alstublieft onpieuw");
-              }else{
-                  alert_msg_push("alert-success", "Betaling succesvol, uw producten/producten zullen zo wnel mogelijk worden geleverd");
-              }
+                        $checkout = insertOrder($products);
+                        if($checkout !== true){
+                            alert_msg_push("alert-danger", "Er is iets mis gegaan, probeer alstublieft onpieuw");
+                        }else{
+                            alert_msg_push("alert-success", "Bestelling succesvol geplaatst, er wordt zo snel mogelijk contact met u opgenomen");
+                            unset($_SESSION["shoppingCart"]);
+                            header("location: browseproduct.php");
+                            exit;
+                        }
 
-            }else{
-                alert_msg_push("alert-danger", "U moet ingelogd zijn om producten te kunnen bestellen");
-                header("location: loginpagina.php?checkout=true");
-                exit;
+                    }else{
+                        alert_msg_push("alert-danger", "U moet ingelogd zijn om producten te kunnen bestellen");
+                        header("location: loginpagina.php?checkout=true");
+                        exit;
+                    }
+                }
+
+                for($i = 0; $i < count($products); $i++) {
+                    $id = $products[$i]["StockItemID"];
+                    $photo = getPhotosProduct($id, true);
+                    if ($photo !== "Geen resultaten") {
+                        $products[$i]["photo"] = $photo[0]["Photo"];
+                    } else {
+                        $products[$i]["photo"] = null;
+                    }
+                }
+
             }
         }
     }
 
+    if(isset($_POST["submitPurchase"]) && $wentToPurchase == false){
+        alert_msg_push("Alert-danger", "Er is iets mis gegaan, probeer alstublieft opnieuw");
+    }
     // remove product from shopping cart
 
 

@@ -72,17 +72,17 @@
 //                    displayProduct("Beschrijving: ", $product["MarketingComments"]);
 //                }
 
-                displayProduct("Adviesprijs:&nbsp<strike>€", $product["RecommendedRetailPrice"] . "</strike>");
-                displayProduct("Onze prijs: €", $product["UnitPrice"]);
+                displayProduct("Adviesprijs:&nbsp<span style=\"text-decoration: line-through;\">€", number_format($product["RecommendedRetailPrice"], 2, ',', '.') . "</strike>");
+                displayProduct("Onze prijs: €", number_format($product["UnitPrice"], 2, ',', '.'));
                 echo "<div class='row'><b>" . "Je bespaart " . amountSaved()."<br><br></b></div>";
 
 //              displayProduct("Voorraad: ", $product["QuantityOnHand"]);
                 if($product["QuantityOnHand"] > 1000){
-                    echo "<div class='row'><font color='green'><b>Product op voorraad</b></font></div>";
+                    echo "<div class='row'><span style=\"color: green; \"><b>Product op voorraad</b></span></div>";
                 } elseif($product["QuantityOnHand"] > 0 && $product["QuantityOnHand"] < 1000){
-                    echo "<div class='row'><font color='#FFC300'><b>Product bijna uitverkocht</b></font></div>";
+                    echo "<div class='row'><span style=\"color: #FFC300; \"><b>Product bijna uitverkocht</b></span></div>";
                 } else {
-                    echo "<div class='row'><font color='red'><b>Product is helaas uitverkocht</b></font></div>";
+                    echo "<div class='row'><span style=\"color: red; \"><b>Product is helaas uitverkocht</b></span></div>";
                 }
 
                 $amountLeft = $product["QuantityOnHand"];
@@ -115,10 +115,9 @@
                     if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){displayProduct("Gewicht: ", $product["TypicalWeightPerUnit"]. "kg");}
                 }
 
-//                if(isset($product["Size"]) && $product["Size"] !== ""){displayProduct("Groote: ", $product["Size"]);}
+
                 if(isset($product["ColorName"])){displayProduct("Kleur: ", $product["ColorName"]);}
                 if(isset($product["Brand"]) && $product["Brand"] !== ""){displayProduct("Merk: ", $product["Brand"]);}
-//                if(isset($product["Brand"]) && $product["Brand"] !== ""){displayProduct("Merk: ", $product["Brand"]);}
             ?>
             <div class="row">
                 <form method="POST">
@@ -127,17 +126,17 @@
                 </form>
             </div>
             <div class="row">
-                <h10><br><?php
+                <br><?php
                     $randomPeople = rand(1,10);
                     if($randomPeople == 1){
                         echo "Momenteel is $randomPeople persoon dit product aan het bekijken!";
                     } else {
                         echo "Momenteel zijn $randomPeople personen dit product aan het bekijken!";
                     }
-                    ?></h10>
+                    ?>
             </div>
             <div class="row">
-                <h10 class="red"><br>LET OP: Bestellingen zijn exclusief 3,95 verzendkosten</h10>
+                <div class="red"><br>LET OP: Bestellingen zijn exclusief 3,95 verzendkosten</div>
             </div>
         </div>
     </div>

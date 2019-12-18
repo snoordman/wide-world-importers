@@ -17,9 +17,10 @@
                     $quantity = (int)$_POST["amountProduct"];
                     if(isset($_SESSION["shoppingCart"][$productId])){
                         $_SESSION["shoppingCart"][$productId]["quantity"] += $quantity;
+                        $_SESSION["shoppingCart"][$productId]["pickCompletedWhen"] = date('Y-m-d H:i:s');
                     }else{
-                        $_SESSION["shoppingCart"][$productId] = ["quantity" => $quantity, "description" => $product["MarketingComments"],
-                            "packageTypeId" => $product["PackageTypeID"], "unitPrice" => $product["UnitPrice"], "taxRate" => $product["TaxRate"], date("Y-m-d H-m-s"), "lastEditedBy" => $product[""]];
+                        $_SESSION["shoppingCart"][$productId] = ["quantity" => $quantity,
+                             "unitPrice" => $product["UnitPrice"], "taxRate" => $product["TaxRate"], date("Y-m-d H-m-s"), "pickCompletedWhen" => date('Y-m-d H:i:s')];
                     }
                     alert_msg_push("alert-success", "Succesvol toegevoegd");
                     header("Location: " . $_SERVER['REQUEST_URI']);

@@ -54,7 +54,7 @@ function login($email, $password){
     if($login !== false){
         $_SESSION["loggedIn"] = true;
         $_SESSION["permissions"] = ["isSystemUser" => $login["IsSystemUser"], "isEmployee" => $login["IsEmployee"], "isSalesPerson" => $login["IsSalesPerson"]];
-        $_SESSION["account"] = ["id" => "PersonID", "name" => $login["PreferredName"], "loginName" => $login["LogonName"]];
+        $_SESSION["account"] = ["id" => $login["PersonID"], "name" => $login["PreferredName"], "loginName" => $login["LogonName"]];
         $alertMessage = "U bent succesvol ingelogd";
         alert_msg_push("alert-success", $alertMessage);
         header("Location: index.php");
