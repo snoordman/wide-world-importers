@@ -195,7 +195,35 @@ body {
     padding: 2rem 1rem;
 }
 
-.checkout{
+
+.checkout {
     width: 50%;
     margin: 0 auto;
+}
+
+.homepagina
+{
+
+    width:565px;
+    padding: 2px;
+    border:5px solid #33BDFF;
+}
+
+.homepagina1
+{
+    background-color: #efefef;
+    width:520px;
+    height: 550px;
+    padding: 2px;
+    border:5px solid #33BDFF;
+}
+.homepagina1 h1
+{
+    text-align: center;
+}
+
+.homepagina1 div
+{
+    /*text-align: center ;*/
+    color: #7F96A1;
 }
