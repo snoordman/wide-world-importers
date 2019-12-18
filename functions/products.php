@@ -53,9 +53,11 @@
         $populairItems = fetchMostPopulairItems();
 
         if(is_array($populairItems)){
+            echo "<div class='row'>";
             foreach($populairItems AS $naam){
-                echo ("<a href='product.php?product_id=".$naam["StockItemID"]."' style='color:black' >".$naam["StockItemName"]."</a><br>");
+                echo ("<a href='product.php?product_id=".$naam["StockItemID"]."' style='color:black'><div class='col-12'>".$naam["StockItemName"]."</div></a>");
             }
+            echo "</div>";
         }else{
             echo $populairItems;
         }
