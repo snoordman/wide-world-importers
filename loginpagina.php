@@ -24,14 +24,19 @@
 
         }
     }else if(isset($_GET["logout"]) && $_GET["logout"] == true){
-        unset($_SESSION["loggedIn"]);
-        unset($_SESSION["permissions"]);
+        if(isset($_SESSION["loggedIn"])){unset($_SESSION["loggedIn"]);};
+        if(isset($_SESSION["permissions"])){unset($_SESSION["permissions"]);};
+        if(isset($_SESSION["account"])){unset($_SESSION["account"]);};
         alert_msg_push("alert-success", "Succesvol uitgelogd");
         header("location: loginpagina.php");
         exit;
     }else{
         alert_msg_push("alert-warning", "U bent al ingelogd");
-        header("location: index.php");
+        if(isset($_GET["checkout"]) && $_GET["checkout"] == 'true'){
+            header("location: shoppingcart.php");
+        }else{
+            header("location: index.php");
+        }
         exit;
     }
 
