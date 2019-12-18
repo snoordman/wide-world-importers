@@ -313,6 +313,27 @@
         }
     }
 
+    function checkNameExists($fullName){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT  CustomerId
+            FROM    customers
+            WHERE   CustomerName = ?
+        ");
+
+        $query->bind_param("s", $fullName);
+        $query->execute();
+        $result = $query->get_result();
+
+        $conn->close();
+
+        if($result->num_rows == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     function addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $deliveryMethod, $deliveryLocation, $permissions = null){
         $conn = createConn();
@@ -399,10 +420,11 @@
         $result1 = $query->execute();
         $result2 = $query2->execute();
 
-        if($result2 == true && $result2 == true){
+        if($result1 == true && $result2 == true){
             $conn->commit();
         }
 
+        var_dump($conn->error);
         $conn->close();
 
         if($result1 == false){
@@ -434,6 +456,47 @@
             return false;
         }
     }
+
+    function getUserInfo($userID){
+        $conn = createConn();
+
+        $query = $conn->prepare("
+            SELECT p.PhoneNumber , c.DeliveryCity, c.PostalCity, c.DeliveryAddressLine2, c.DeliveryPostalCode
+            FROM stockgroups
+        ");
+
+        $query->execute();
+        $categories = $query->get_result();
+
+        $conn->close();
+
+        if($categories->num_rows > 0){
+            return $categories->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return "Geen resultaten";
+        }
+    }
+
+    function updateUser($peopleID, $phoneNumber, $deliveryCity, $postalCity, $address, $zip){
+        $conn = createConn();
+        $conn->autocommit(FALSE);
+
+        $query1 = $conn->prepare("
+           SELECT   CustomerID
+           FROM     customers
+           WHERE    PrimaryContactPersonID = ?
+        ");
+
+        $query1->execute();
+        $customerID = $query1->get_result();
+        if($customerID->num_rows !== 0){
+            $customerID = $customerID->fetch_assoc()["CustomerID"];
+        }else{
+            $customerID = null;
+        }
+
+
+    }
     // USERS //
 
     // LOCATION //
@@ -462,7 +525,7 @@
         $conn = createConn();
 
         $query = $conn->prepare("
-            SELECT  StateProvinceId, StateProvinceName
+            SELECT  StateProvinceID, StateProvinceName
             FROM    stateprovinces
             WHERE   countryID = ?
         ");
@@ -649,6 +712,9 @@
         if($success == true){
             $conn->commit();
         }
+        $conn->close();
+
+        return $success;
         //$query->bind_param("i", );
     }
     // ORDERS //

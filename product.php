@@ -18,10 +18,6 @@
                     if(isset($_SESSION["shoppingCart"][$productId])){
                         $_SESSION["shoppingCart"][$productId]["quantity"] += $quantity;
                     }else{
-//                        VALUES(($getMaxOrderLineId) + 1, " . $product['descripion'] . " , " . $product["packageTypeId"] . " , " . $product["quantity"] .
-//                    " , " . $product["unitPrice"] . " , " . $products["taxRate"] . " , " . $product["PickedQuantity"] . " , " . $product["PickedCompletedWhen"] .
-//                    " , " . $product["LastEditedBy"] . " , " . date('Y-m-d H:i:s')
-//                );
                         $_SESSION["shoppingCart"][$productId] = ["quantity" => $quantity, "description" => $product["MarketingComments"],
                             "packageTypeId" => $product["PackageTypeID"], "unitPrice" => $product["UnitPrice"], "taxRate" => $product["TaxRate"], date("Y-m-d H-m-s"), "lastEditedBy" => $product[""]];
                     }

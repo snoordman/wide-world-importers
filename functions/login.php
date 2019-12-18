@@ -25,15 +25,21 @@ function validateValuesRegister($password, $email, $phoneNumber){
 }
 
 function register($firstName, $lastName, $password, $email, $phoneNumber, $userId, $deliveryMethod, $deliveryLocation, $permissions){
-    if(checkUserExists($email) == false){
-        $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $deliveryMethod, $deliveryLocation, $permissions);
-        if($addUser == true){
-            $alertMessage = "Account succesvol aangemaakt";
-            alert_msg_push("alert-success", $alertMessage);
-            header("location: loginpagina.php");
-            exit;
+    if(!checkUserExists($email)){
+        $fullName = $firstName . " " . $lastName;
+        if(!checkNameExists($fullName)){
+            $addUser = addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $deliveryMethod, $deliveryLocation, $permissions);
+            if($addUser == true){
+                $alertMessage = "Account succesvol aangemaakt";
+                alert_msg_push("alert-success", $alertMessage);
+                header("location: loginpagina.php");
+                exit;
+            }else{
+                $alertMessage = "Er is iets mis gegaan, propbeer alstublieft opnieuw";
+                alert_msg_push("alert-danger", $alertMessage);
+            }
         }else{
-            $alertMessage = "Er is iets mis gegaan, propbeer alstublieft opnieuw";
+            $alertMessage = "Naam en achternaam zijn al in gebruik";
             alert_msg_push("alert-danger", $alertMessage);
         }
     }else{

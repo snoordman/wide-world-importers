@@ -79,6 +79,40 @@
             </div>
             ";
         }
+        ?>
+            <br />
+            <div class="jumbotron shoppingCart">
+                <div class="row">
+                    <div class="col-auto mr-auto"></div>
+                    <div class="col-auto">
+                        <table class="table">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="col">Totaal artikelen(<?php echo number_format($totalProducts, 2, ',', '.') ?>): </th>
+                                <td></td>
+                                <td><?php echo count($products) ?></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Verzendkosten:</th>
+                                <td></td>
+                                <td>€3,95</td>
+                            </tr>
+                            <tr>
+                                <th>Totaal</th>
+                                <td></td>
+                                <td>€<?php echo number_format($total, 2, ',', '.') ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <form method='post' class='ml-auto' name='purchaseShoppingCart'>
+                            <input type="submit" class="btn btn-primary ml-auto" value='Verder naar bestellen' name='submitPurchase' />
+                        </form>
+                    </div>
+                </div>
+            </div>
+    <?php
     }else{
         echo "
             <div class='row'>
@@ -86,6 +120,4 @@
             </div>
         ";
     }
-
-
 ?>

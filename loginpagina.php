@@ -31,7 +31,12 @@
         exit;
     }else{
         alert_msg_push("alert-warning", "U bent al ingelogd");
-        header("location: index.php");
+        if(isset($_GET["checkout"]) && $_GET["checkout"] == 'true'){
+            header("location: shoppingcart.php");
+        }else{
+            header("location: index.php");
+        }
+
         exit;
     }
 

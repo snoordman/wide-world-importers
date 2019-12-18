@@ -2,6 +2,7 @@
     require_once "config.php";
     require_once "functions/sql.php";
     require_once "functions/image.php";
+    require_once "functions/permissions.php";
     $viewFile = "viewFile/shoppingcart.php";
 
     $productsShoppingCart = [];
@@ -23,8 +24,7 @@
         }else{
             alert_msg_push("alert-danger", "Er is iets mis gegaan, probeer alsublieft opnieuw");
         }
-    }
-    if(isset($_POST["deleteItem"])){
+    }else if(isset($_POST["deleteItem"])){
         if(isset($_POST["itemId"])) {
             $id = $_POST["itemId"];
             if (isset($_SESSION["shoppingCart"][$id])){
@@ -39,6 +39,7 @@
 
     if(isset($_SESSION["shoppingCart"])){
         $products = [];
+        $totalProducts = 0;
         $total = 0;
         if(count($_SESSION["shoppingCart"]) == 0){
             unset($_SESSION["shoppingCart"]);
@@ -59,26 +60,57 @@
                     $subTotal = $products[$i]["UnitPrice"] * $products[$i]["quantity"];
                     $products[$i]["subTotal"] = $subTotal;
                     $total += $subTotal;
+                    $totalProducts = $totalProducts + $products[$i]["quantity"];
                 }
+            }
+        }
+
+        if(isset($_POST["submitPurchase"])){
+            if(checkLoggedIn()){
+                $products = getMultipleProducts(array_keys($_SESSION["shoppingCart"]));
+
+//            $viewFile = "viewFile/checkout.php";
+//
+//            $countries = getCountries();
+//
+//            if ($countries !== false) {
+//                $provinces = getProvincesByCountry($countries[0]["CountryID"]);
+//
+//                if ($provinces !== false) {
+//                    $cities = getCitiesByProvince($provinces[0]["StateProvinceID"]);
+//                    if ($cities == false) {
+//                        $cities = [];
+//                        $cityPlaceHolder = "Geen opties beschikbaar";
+//                    }
+//                } else {
+//                    $provinces = [];
+//                    $cities = [];
+//                    $cityPlaceHolder = "Geen opties beschikbaar";
+//                    $provincePlaceHolder = "Geen opties beschikbaar";
+//                }
+//            } else {
+//                $countryPlaceHolder = "Geen opties beschikbaar";
+//                $provincePlaceHolder = "Geen opties beschikbaar";
+//                $cityPlaceHolder = "Geen opties beschikbaar";
+//                $countries = [];
+//            }
+              $checkout = insertOrder($products);
+              if($checkout == false){
+                  alert_msg_push("alert-success", "Er is iets mis gegaan, probeer alstublieft onpieuw");
+              }else{
+                  alert_msg_push("alert-success", "Betaling succesvol, uw producten/producten zullen zo wnel mogelijk worden geleverd");
+              }
+
+            }else{
+                alert_msg_push("alert-danger", "U moet ingelogd zijn om producten te kunnen bestellen");
+                header("location: loginpagina.php?checkout=true");
+                exit;
             }
         }
     }
 
     // remove product from shopping cart
 
-    // remove 1 item for product in shopping cart
-    // if picked quantity is 1 remove product from shopping cart
-    if(isset($_GET["removeSingle"])){
-        if(isset($_SESSION["shoppingCart"][$_GET["removeSingle"]])){
-            if($_SESSION["shoppingCart"][$_GET["removeSingle"]]["quantity"] == 1){
-                unset($_SESSION["shoppingCart"][$_GET["removeSingle"]]);
-            }else{
-                $_SESSION["shoppingCart"][$_GET["removeSingle"]]["quantity"] -= 1;
-            }
-        }else{
-            alert_msg_push("alert-warning", "Product zit niet in de winkelwagen");
-        }
-    }
 
     require_once "template.php";
 ?>

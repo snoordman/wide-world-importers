@@ -194,3 +194,8 @@ body {
     background-color: #fffae5;
     padding: 2rem 1rem;
 }
+
+.checkout{
+    width: 50%;
+    margin: 0 auto;
+}
