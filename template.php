@@ -6,8 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Wide World Importers</title>
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="fontawesome/css/all.css" crossorigin="anonymous">
         <link type="text/css" rel="stylesheet" href="css/chosen.css">
 
         <link type="text/css" rel="stylesheet" href="css/main.css">
@@ -15,10 +15,10 @@
 
         <link rel="icon" href="afbeeldingen/WWI-logo-links.png"/>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="javascript/jquery.js" crossorigin="anonymous"></script>
 <!--    bootstrap   -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="javascript/popper.min.js" crossorigin="anonymous"></script>
+        <script src="javascript/bootstrap.min.js" crossorigin="anonymous"></script>
 <!--    bootstrap   -->
         <script src="javascript/chosen.jquery.min.js"></script>
 
@@ -59,11 +59,11 @@
                 </ul>
                     <form class="form-inline my-2 my-lg-0" method="get" action="browseproduct.php">
                         <input class="form-control mr-sm-2" type="search" name="searchValue" placeholder="Zoeken..">
-                        <input type="submit" class="searchbutton" value="Zoek!" name="search">
+                        <input type="submit" class="btn btn-primary" value="Zoek!" name="search">
                     </form>
 <?php
                     echo '
-                        <li class="nav-item">
+                        <li class="nav-item shoppingCartButton">
                             <a class="nav-link" href="shoppingcart.php">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
@@ -96,13 +96,15 @@
                 require_once $viewFile;
             }
         ?>
-            <footer class="footer">
-                <div class="row">
-                    <div class="col-4">
-                        <img class="img-fluid" src="afbeeldingen/WWI-logo.png">
-                    </div>
-                    <div class="col-8">
-                        <br />
+        </div>
+        <footer class="footer">
+            <div class="row mr-0">
+                <div class="col-4 footer-column">
+                    <img class="img-fluid" src="afbeeldingen/WWI-logo.png">
+                </div>
+                <div class="col-8">
+                    <br />
+                    <div class="row">
                         <div class="col-12">
                             <b>Wide world importers</b><br>
                             Campus 2<br>
@@ -113,16 +115,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        2019 WideWorldImporters - Alle rechten voorbehouden
-                    </div>
-
+            </div>
+            <div class="row mr-0">
+                <div class="col-12 footer-column">
+                    2019 WideWorldImporters - Alle rechten voorbehouden
                 </div>
-            </footer>
-
-
-
+            </div>
+        </footer>
     </body>
 </html>
 <?php

@@ -29,11 +29,16 @@
     </div>
     <ol class="carousel-indicators carousel-outer">
 <?php
-            for ($i = 0; $i < count($photos); $i++) {
-?>
-            <li data-target="#carouselExampleControls" data-slide-to="<?php echo $i ?>" class="active" onclick="changeActive($(this))"> <img class="d-block w-100 img-fluid" src="data:image/jpeg;base64, <?php echo base64_encode($photos[$i]["Photo"]) ?>"></li>
-<?php
-            }
+    if(count($photos) !== 1) {
+        for ($i = 0; $i < count($photos); $i++) {
+            ?>
+            <li data-target="#carouselExampleControls" data-slide-to="<?php echo $i ?>" class="active"
+                onclick="changeActive($(this))"><img class="d-block w-100 img-fluid"
+                                                     src="data:image/jpeg;base64, <?php echo base64_encode($photos[$i]["Photo"]) ?>">
+            </li>
+            <?php
+        }
+    }
 ?>
     </ol>
 <?php
@@ -122,7 +127,7 @@
             <div class="row">
                 <form method="POST">
                     <input type="number" min="1" max="<?php echo $product["QuantityOnHand"] ?>" name="amountProduct" id="amountProduct" pattern="\d+" value="1">
-                    <input type="submit" name="submitProduct" class="addbutton" value="Toevoegen">
+                    <input type="submit" name="submitProduct" class="btn btn-primary addbutton" value="Toevoegen">
                 </form>
             </div>
             <div class="row">

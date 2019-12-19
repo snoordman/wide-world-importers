@@ -1,6 +1,6 @@
 <?php
     require_once "sql.php";
-
+    require_once "image.php";
 
     function displayProducts(){
         $products = getProducts();
@@ -53,9 +53,36 @@
         $populairItems = fetchMostPopulairItems();
 
         if(is_array($populairItems)){
-            echo "<div class='row'>";
-            foreach($populairItems AS $naam){
-                echo ("<a href='product.php?product_id=".$naam["StockItemID"]."' style='color:black'><div class='col-12'>".$naam["StockItemName"]."</div></a>");
+            echo "
+                <div class='row'>
+            ";
+            foreach($populairItems AS $item){
+                $photo = getPhotosProduct($item["StockItemID"], true);
+                if($photo !== false){
+                    $photo = $photo[0]["Photo"];
+                }
+                echo "
+                    <div class='col-4'>
+                        <a href='product.php?product_id=".$item["StockItemID"]."' style='color:black'>
+                            <div class='col-8'>
+                ";
+            if(!($image = loadDefault($photo, true))){
+                echo "
+                                <img class='img-fluid' src='data:image/jpeg;base64, " . base64_encode($photo) . " ' />
+                ";
+            }else{
+                echo "  
+                                <img class='img-fluid' src='" . $image . "' alt='geen afbeelding aanwezig' />
+                ";
+            }
+            echo "
+                            </div>
+                            <div class='col-4'>
+                                ".$item["StockItemName"]."</a>        
+                            </div>
+                        </a>
+                    </div>
+            ";
             }
             echo "</div>";
         }else{

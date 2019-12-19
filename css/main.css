@@ -10,14 +10,12 @@
     display: inline-block;
     font-size: 4rem;
     color: #33BDFF;
-    font-family: Verdana;
 }
 
 .titlewwikleur2 {
     display: inline-block;
     font-size: 4rem;
     color: #7F96A1;
-    font-family: Verdana;
 }
 
 .topnav {
@@ -48,11 +46,14 @@
 .topnav li {
     display: inline;
 }
-.formuliernaam{
-display: inline-block;
-font-size: 35px;
-text-align: left;
+
+.formuliernaam {
+    display: inline-block;
+    font-size: 35px;
+    text-align: left;
 }
+
+
 .gegevensnaam{
     display: inline-block;
     text-align: right;
@@ -63,16 +64,6 @@ text-align: left;
     margin-top: 3%;
 }
 
-.searchbutton {
-    width: 22%;
-    height: 36px;
-    border: 1px solid #33BDFF;
-    background-color: #33BDFF;
-    text-align: center;
-    color: white;
-    border-radius: 5px 5px 5px 5px;
-    font-size: 20px;
-}
 
 .instagram{
    width: 95px;
@@ -155,33 +146,19 @@ text-align: left;
 }
 
 .addbutton {
-    background-color: #33BDFF;
     font-size: 24px;
-    width: 250px;
-    border-radius: 8px;
-    text-align: center;
 }
 
-html {
+html, body {
     height: 100%;
-    box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
-
-body {
-    position: relative;
-    margin: 0;
-    padding-bottom: 8rem;
     min-height: 100%;
+    margin: 0;
 }
 
-
-
+body{
+    display:flex;
+    flex-direction:column;
+}
 
 .shoppingCart{
     background-color: #33BDFF;
@@ -192,21 +169,6 @@ body {
 .checkout {
     width: 50%;
     margin: 0 auto;
-}
-
-.homepagina {
-    width: 560px;
-    padding: 2px;
-    border: 3px solid #33BDFF;
-    background-color: #efefef;
-}
-
-.homepagina1 {
-    width: 520px;
-    height: 500px;
-    padding: 2px;
-    border: 3px solid #33BDFF;
-    background-color: #efefef;
 }
 
 .homepagina1 h1 {
@@ -244,13 +206,19 @@ body {
 }
 
 .footer{
-
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
+    margin-top:auto;
     background-color: slategray ;
-    text-align: left;
+}
 
+.carousel-indicators{
+    position: relative;
+}
+
+.carousel-indicators > li{
+    width: 100%;
+    height: 100%;
+}
+
+.shoppingCartButton{
+    margin-left: 1%;
 }

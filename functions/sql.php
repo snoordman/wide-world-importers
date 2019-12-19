@@ -775,7 +775,6 @@
             SELECT o.OrderID, OrderDate, ExpectedDeliveryDate, Description, StockItemName, PickedQuantity, ol.UnitPrice 
             FROM orders o
             JOIN orderlines ol ON o.OrderID = ol.OrderID 
-            JOIN orderlines ol ON o.OrderID = ol.OrderID 
             JOIN stockitems si ON ol.StockItemID = si.StockItemID 
             WHERE ContactPersonID = " . $_SESSION["account"]["id"]
         );
