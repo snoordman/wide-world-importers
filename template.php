@@ -96,26 +96,31 @@
                 require_once $viewFile;
             }
         ?>
-        </div>
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-4">
+                        <img class="img-fluid" src="afbeeldingen/WWI-logo.png">
+                    </div>
+                    <div class="col-8">
+                        <br />
+                        <div class="col-12">
+                            <b>Wide world importers</b><br>
+                            Campus 2<br>
+                            8017CA Zwolle<br>
+                            Tel: 088-4699911<br>
+                            E-mail: info@WWI.nl<br>
+                            KVK: 85739857398
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        2019 WideWorldImporters - Alle rechten voorbehouden
+                    </div>
 
-       <div class="footer">
-           <div class="footer-content"
-           <div class="footer-section foto">
-            <img src="afbeeldingen/WWI-logo.png">
-           </div>
-           <div class="footer-section links">
+                </div>
+            </footer>
 
-
-           </div>
-           <div class="footer-section social media">
-
-       </div>
-        <div class="footer-bottom">
-        &copy; WideWorldImporters.com<br>
-
-        </div>
-
-       </div>
 
 
     </body>
