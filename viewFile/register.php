@@ -7,19 +7,19 @@
 
         <div class="form-group">
             <span class="red">*</span> <label for="firstName">Voornaam: </label>
-            <input id="firstName" type="text" class="form-control" placeholder="Voornaam" name="firstName" required="required">
+            <input id="firstName" type="text" class="form-control" placeholder="Voornaam" name="firstName" required="required" <?php if(isset($_POST["firstName"])){ echo "value='".$_POST["firstName"] . "' ";}?>>
         </div>
         <div class="form-group">
             <span class="red">*</span> <label for="lastName">Achternaam: </label>
-            <input id="lastName" type="text" class="form-control" placeholder="Achternaam" name="lastName" required="required">
+            <input id="lastName" type="text" class="form-control" placeholder="Achternaam" name="lastName" required="required" <?php if(isset($_POST["lastName"])){ echo "value='".$_POST["lastName"] . "' ";}?>>
         </div>
         <div class="form-group">
             <span class="red">*</span> <label for="email">Email: </label>
-            <input id="email" type="text" class="form-control" placeholder="E-mailadres" name="email" required="required">
+            <input id="email" type="text" class="form-control" placeholder="E-mailadres" name="email" required="required" <?php if(isset($_POST["email"])){ echo "value='".$_POST["email"] . "' ";}?>>
         </div>
         <div class="form-group">
             <span class="red">*</span> <label for="phoneNumber">Telefoon nummer: </label>
-            <input id="phoneNumber" type="text" class="form-control" placeholder="Telefoonnummer" name="phoneNumber">
+            <input id="phoneNumber" type="text" class="form-control" placeholder="Telefoonnummer" name="phoneNumber" <?php if(isset($_POST["phoneNumber"])){ echo "value='".$_POST["phoneNumber"] . "' ";}?>>
         </div>
         <div class="form-group">
             <span class="red">*</span> <label for="password">Wachtwoord: </label>
@@ -33,7 +33,15 @@
             <select name="country" data-placeholder="<?php  echo $countryPlaceHolder ?>" id="country" class="chosen form-control">
                 <?php
                 foreach ($countries as $country){
-                    echo "<option value='".htmlentities($country["CountryID"])."'>".htmlentities($country["CountryName"])."</option>";
+                    if(isset($_POST["country"])){
+                        echo "<option value='".htmlentities($country["CountryID"])."' ";
+                        if($country["CountryID"] == $_POST["country"]){
+                            echo "selected ";
+                        }
+                        echo ">".htmlentities($country["CountryName"])."</option>";
+                    }else {
+                        echo "<option value='" . htmlentities($country["CountryID"]) . "'>" . htmlentities($country["CountryName"]) . "</option>";
+                    }
                 }
                 ?>
             </select>
@@ -42,7 +50,15 @@
             <select data-placeholder="<?php echo $provincePlaceHolder ?>" name="province" id="province" class="chosen">
                 <?php
                 foreach ($provinces as $province){
-                    echo "<option value='".htmlentities($province["StateProvinceID"])."'>".htmlentities($province["StateProvinceName"])."</option>";
+                    if(isset($_POST["province"])){
+                        echo "<option value='".htmlentities($province["StateProvinceID"])."' ";
+                        if($province["StateProvinceID"] == $_POST["province"]){
+                            echo "selected ";
+                        }
+                        echo ">".htmlentities($province["StateProvinceName"])."</option>";
+                    }else {
+                        echo "<option value='" . htmlentities($province["StateProvinceID"]) . "'>" . htmlentities($province["StateProvinceName"]) . "</option>";
+                    }
                 }
                 ?>
             </select>
@@ -52,7 +68,15 @@
             <select name="city" data-placeholder="<?php echo $cityPlaceHolder ?>" id="city" class="chosen">
                 <?php
                 foreach ($cities as $city){
-                    echo "<option value='".htmlentities($province["CityID"])."'>".htmlentities($province["CityName"])."</option>";
+                    if(isset($_POST["city"])){
+                        echo "<option value='".htmlentities($city["CityID"])."' ";
+                        if($city["CityID"] == $_POST["city"]){
+                            echo "selected ";
+                        }
+                        echo ">".htmlentities($city["CityName"])."</option>";
+                    }else {
+                        echo "<option value='" . htmlentities($city["CityID"]) . "'>" . htmlentities($city["CityName"]) . "</option>";
+                    }
                 }
                 ?>
             </select>
@@ -60,11 +84,11 @@
 
         <div class="form-group">
             <span class="red">*</span> <label for="address">Adres: </label>
-            <input type="text" class="form-control" name="address" id="address" value="">
+            <input type="text" class="form-control" name="address" id="address" <?php if(isset($_POST["address"])){ echo "value='".$_POST["address"] . "' ";}?>>
         </div>
         <div class="form-group">
             <span class="red">*</span> <label for="zip">Postcoce: </label>
-            <input class="form-control" type="text" name="zip" id="zip" value="">
+            <input class="form-control" type="text" name="zip" id="zip" <?php if(isset($_POST["zip"])){ echo "value='".$_POST["zip"] . "' ";}?>>
         </div>
 <!--        <div class="form-group">-->
 <!--            <label for="deliveryMethod">Bezorg methode: </label>-->

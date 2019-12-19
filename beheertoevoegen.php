@@ -97,6 +97,9 @@
             }
 
             $conn->close();
+
+            $addsuccessful = "Product is succesvol toegevoegd";
+            alert_msg_push("alert-success", $addsuccessful);
         }
 
         require_once "template.php";

@@ -5,8 +5,25 @@
     require_once "functions/image.php";
     $viewFile = "viewFile/browseproduct.php";
 
+    $records = getAmountProducts();
 
-    $products = getProducts();
+    $amountPageValues = [10, 25, 50, 100];
+
+    if(isset($_GET["amountProducts"])){
+        $amountPerPage = $_GET["amountProducts"];
+    }else{
+        $amountPerPage = 10;
+    }
+    if(isset($_GET["page"])){
+        $page = $_GET["page"];
+    }else{
+        $page = 0;
+    }
+
+    $pages =  $records / $amountPerPage;
+
+    $page = $page * $amountPerPage;
+    $products = getProducts($amountPerPage, $page);
 
     $price = getMinMaxPrice();
 
@@ -43,5 +60,6 @@
             }
         }
     }
+
 
     require_once ("template.php");

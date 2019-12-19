@@ -44,6 +44,11 @@
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
 
 <?php
+                    if(checkLoggedIn()){
+                        echo '
+                            <li class="nav-item"><a class="nav-link" href="orders.php">Bestellingen</a></li>
+                        ';
+                    }
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
 ?>
                     <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Toevoegen product</a></li>
@@ -52,11 +57,23 @@
                     }
  ?>
                 </ul>
-                        <form class="form-inline my-2 my-lg-0" method="get" action="browseproduct.php">
-                            <input class="form-control mr-sm-2" type="search" name="searchValue" placeholder="Zoeken..">
-                            <input type="submit" class="searchbutton" value="Zoek!" name="search">
-                        </form>
+                    <form class="form-inline my-2 my-lg-0" method="get" action="browseproduct.php">
+                        <input class="form-control mr-sm-2" type="search" name="searchValue" placeholder="Zoeken..">
+                        <input type="submit" class="searchbutton" value="Zoek!" name="search">
+                    </form>
 <?php
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link" href="shoppingcart.php">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                    ';
+                    if(isset($_SESSION["shoppingCart"])){
+                        echo '<span class="shoppingCartAmount">' . count($_SESSION["shoppingCart"]) . '</span>';
+                    }
+                    echo '
+                        </li>
+                    ';
                     if(checkLoggedIn() == false) {
                         echo '
                             <li class="nav-item"><a class="nav-link" href="loginpagina.php">Login <i class="fas fa-sign-in-alt"></i></a></li>

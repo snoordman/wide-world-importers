@@ -7,7 +7,7 @@
     $provincePlaceHolder = "";
     $cityPlaceHolder = "";
     $deliveryPlaceHodler = "";
-    $countries = false;
+    $countries = [];
     $provinces = [];
     $cities = [];
     if(checkLoggedIn() == false || checkPermissions("isSystemUser") == true) {
@@ -19,10 +19,18 @@
         //    }
 
         if ($countries !== false) {
-            $provinces = getProvincesByCountry($countries[0]["CountryID"]);
+            if(isset($_POST["country"])){
+                $provinces = getProvincesByCountry($_POST["country"]);
+            }else{
+                $provinces = getProvincesByCountry($countries[0]["CountryID"]);
+            }
 
             if ($provinces !== false) {
-                $cities = getCitiesByProvince($provinces[0]["StateProvinceID"]);
+                if(isset($_POST["province"])){
+                    $cities = getCitiesByProvince($_POST["province"]);
+                }else{
+                    $cities = getCitiesByProvince($provinces[0]["StateProvinceID"]);
+                }
                 if ($cities == false) {
                     $cities = [];
                     $cityPlaceHolder = "Geen opties beschikbaar";
