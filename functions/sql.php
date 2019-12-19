@@ -24,6 +24,7 @@
             FROM    stockitems AS si 
             LEFT JOIN    stockitemholdings AS sh ON sh.StockItemId = si.StockItemId
             WHERE   Active = 1
+            ORDER BY si.StockItemId
             LIMIT   ?
             OFFSET  ?
         ");
@@ -773,6 +774,7 @@
         $query = $conn->prepare("
             SELECT o.OrderID, OrderDate, ExpectedDeliveryDate, Description, StockItemName, PickedQuantity, ol.UnitPrice 
             FROM orders o
+            JOIN orderlines ol ON o.OrderID = ol.OrderID 
             JOIN orderlines ol ON o.OrderID = ol.OrderID 
             JOIN stockitems si ON ol.StockItemID = si.StockItemID 
             WHERE ContactPersonID = " . $_SESSION["account"]["id"]

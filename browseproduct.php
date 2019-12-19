@@ -5,9 +5,7 @@
     require_once "functions/image.php";
     $viewFile = "viewFile/browseproduct.php";
 
-    var_dump($_GET);
-
-    $pages = getAmountProducts();
+    $records = getAmountProducts();
 
     $amountPageValues = [10, 25, 50, 100];
 
@@ -22,8 +20,9 @@
         $page = 0;
     }
 
-    $pages =  $pages / $amountPerPage;
+    $pages =  $records / $amountPerPage;
 
+    $page = $page * $amountPerPage;
     $products = getProducts($amountPerPage, $page);
 
     $price = getMinMaxPrice();
