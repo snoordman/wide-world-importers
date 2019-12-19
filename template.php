@@ -47,7 +47,7 @@
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
 ?>
                     <li class="nav-item"><a class="nav-link" href="beheertoevoegen.php">Toevoegen product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="beheerverwijderen.php">Verwijderen product</a></li>
+
 <?php
                     }
  ?>
@@ -81,20 +81,26 @@
         ?>
         </div>
 
-        <footer class="footer">
-            <div class="row">
-                <div class="col-4">
-                </div>
-                <div class="col-4">
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-12">
-                    2019 WideWorldImporters - Alle rechten voorbehouden
-                </div>
-            </div>
-        </footer>
+       <div class="footer">
+           <div class="footer-content"
+           <div class="footer-section foto">
+            <img src="afbeeldingen/WWI-logo.png">
+           </div>
+           <div class="footer-section links">
+
+
+           </div>
+           <div class="footer-section social media">
+
+       </div>
+        <div class="footer-bottom">
+        &copy; WideWorldImporters.com<br>
+
+        </div>
+
+       </div>
+
+
     </body>
 </html>
 <?php

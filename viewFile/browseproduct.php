@@ -98,6 +98,8 @@
                     if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
                         echo "
                             <a href='AanpassenProduct.php?id=" . $product["StockItemId"] . "'> <i class=\"fas fa-edit\"></i> Aanpassen</a>
+                            <a href='beheerverwijderen.php?id=" . $product["StockItemId"] . "'><i class=\"fas fa-edit\"></i>Verwijderen</a>
+                        
                         ";
                     }
                     echo "
