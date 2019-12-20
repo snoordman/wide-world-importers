@@ -22,7 +22,7 @@
             <input id="phoneNumber" type="text" class="form-control" placeholder="Telefoonnummer" name="phoneNumber" <?php if(isset($_POST["phoneNumber"])){ echo "value='".$_POST["phoneNumber"] . "' ";}?>>
         </div>
         <div class="form-group">
-            <span class="red">*</span> <label for="password">Wachtwoord: </label>
+            <span class="red">*</span> <label for="password">Wachtwoord: </label><br /><label>Moet bestaan uit: 1 klijne letter, 1 hoofletter, 1 cijfer en minimaal 6 karakters lang zijn</label>
             <input id="password" type="password" class="form-control" placeholder="Wachtwoord" name="password">
         </div>
         <div class="form-group">

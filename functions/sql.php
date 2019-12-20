@@ -576,12 +576,14 @@
         if($result->num_rows !== 0 ){
             if($returnJson == true){
                 echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+                return true;
             }else{
                 return $result->fetch_all(MYSQLI_ASSOC);
             }
         }else{
             if($returnJson == true){
                 echo json_encode(array());
+                return false;
             }else{
                 return false;
             }

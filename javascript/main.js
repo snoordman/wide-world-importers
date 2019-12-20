@@ -42,7 +42,6 @@ function changeNumber(field, increase){
     field.trigger("change");
 }
 
-
 $(function() {
     $(".chosen").chosen({
         width: "100%"
@@ -89,7 +88,7 @@ $(function() {
                 if (data.length !== 0) {
                     console.log(data);
                     for(var i = 0; i < data.length; i++){
-                        $("#province").append('<option value="' + data[i].StateProvinceId + '">' + data[i].StateProvinceName + '</option>');
+                        $("#province").append('<option value="' + data[i].StateProvinceID + '">' + data[i].StateProvinceName + '</option>');
                     }
                     $("#province").attr("data-placeholder", "Selecteer een optie")
                     $("#city").attr("data-placeholder", "Selecteer een optie")
@@ -113,6 +112,7 @@ $(function() {
             data: "ProvinceID=" + $("#province").val() + "&getCities=true", //you can insert url argumnets here to    pass to api.php
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 clearSelect($("#city"));
                 if (data.length !== 0) {
                     console.log(data);
@@ -145,3 +145,4 @@ $(function() {
         this.form.submit();
     });
 });
+

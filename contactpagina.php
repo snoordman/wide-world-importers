@@ -1,12 +1,9 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-require_once "config.php";
+    require_once "config.php";
     $viewFile = "viewFile/contactpagina.php";
-
-
-
 
     $result="";
     $resultfail="";
@@ -16,21 +13,25 @@ require_once "config.php";
         require 'PHPMailer/PHPMailer/SMTP.php';
 
 
-        $mail = new PHPMailer(true);
+        $mail = new PHPMailer();
 
         $mail->isSMTP();
-        $mail->SMTPDebug = 2;
 
-        $mail->Host = gethostbyname('smtp.gmail.com');
-        $mail->SMTPAuth   = true;
+        $mail->SMTPAuth = true;// Enable SMTP authentication
+        $mail->SMTPSecure = 'tls';// Enable TLS encryption, `ssl` also accepted
+
+        $mail->Host = 'smtp.gmail.com';// Specify main and backup SMTP servers
+        $mail->Port = 587;// TCP port to connect to
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
 
         $mail->Username = "erendemirhan66@gmail.com";
         $mail->Password = "TestTest123";
-
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-
-        $mail->Port = 587;
-
 
         try {
             $mail->setFrom($_POST["email"], $_POST["naam"], $_POST["typevraag"]);
@@ -58,12 +59,13 @@ require_once "config.php";
             $sendMail = false;
         }
         if ($sendMail) {
-            $result = "Bedankt! " . $_POST["naam"] . " We zullen uw vraag zo spoedig mogelijk beantwoorden";
-
+            alert_msg_push("alert-success", "Bedankt! " . $_POST["naam"] . " We zullen uw vraag zo spoedig mogelijk beantwoorden");
+            header("location: contactpagina.php");
+            exit;
         } else {
-            $resultfail = "Er is iets fout gegaan, probeer het opnieuw.";
-
+            alert_msg_push("alert-danger", "Er is iets fout gegaan, probeer het opnieuw.");
+            header("location: contactpagina.php");
+            exit;
         }
-
     }
-        require_once "template.php";
+    require_once "template.php";

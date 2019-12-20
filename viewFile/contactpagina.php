@@ -30,13 +30,6 @@
                 <br><textarea id="vraag" name="message" rows="3" class="message form-control" required></textarea><br>
 
                 <input type="submit" name="submit" class="form-control btn-primary" value="Verzenden"><br><br>
-                <div class="resultaat">
-
-                <h5><?php echo $result;  ?></h5>
-                </div>
-                <div class="resultaatfail">
-                    <h5><?php echo $resultfail; ?></h5>
-                </div>
             </form>
         </div>
         <div class="col-2"></div>

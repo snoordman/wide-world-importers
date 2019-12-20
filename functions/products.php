@@ -58,7 +58,7 @@
             ";
             foreach($populairItems AS $item){
                 $photo = getPhotosProduct($item["StockItemID"], true);
-                if($photo !== false){
+                if($photo !== "Geen resultaten"){
                     $photo = $photo[0]["Photo"];
                 }
                 echo "

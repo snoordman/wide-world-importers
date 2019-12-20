@@ -59,8 +59,9 @@ if($orders !== false){
             echo '
                 <div class="row orderTotal">
                     <div class="col-9"></div>
-                    <div class="col-1 total">Totaal:</div>
-                    <div class="col-2">€'.number_format($subtotal, 2, ',', '.').'</div>
+                    
+                    <div class="col-1 total">Totaal: (inclusief verzendkosten)</div>
+                    <div class="col-2">€'.(number_format($subtotal, 2, ',', '.') + 3.95).'</div>
                 </div>
                 <br />
             '
