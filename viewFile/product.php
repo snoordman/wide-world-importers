@@ -99,25 +99,15 @@
 
                 echo "<div class='row'><b>Productspecificaties:</b></div>";
 
-                if($product["TypicalWeightPerUnit"] == 0.000 || $product["TypicalWeightPerUnit"] == NULL){
-                    echo "";
-                } elseif(isset($product["Size"]) && $product["Size"] !== ""){
-                    if(checkWeightProduct($product["Size"])){
-                        displayProduct("Grootte: ", $product["Size"]);
-                        if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){
-                            $weight = $product["TypicalWeightPerUnit"];
-                            if($weight < 1){
-                                $weight = $weight * 100;
-                                displayProduct("Gewicht: ", $weight. "g");
-                            }else{
-                                displayProduct("Gewicht: ", $weight. "kg");
-                            }
-                        }
+                if(isset($product["Size"]) && $product["Size"] !== "" && !checkWeightProduct($product["Size"])){
+                    displayProduct("Grootte: ", $product["Size"]);
+                }
+                if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){
+                    if($product["TypicalWeightPerUnit"] < 1){
+                        displayProduct("Gewicht: ", $product["TypicalWeightPerUnit"] * 1000 . "g");
                     }else{
-                        displayProduct("Grootte: ", $product["Size"]);
+                        displayProduct("Gewicht: ", $product["TypicalWeightPerUnit"] . "kg");
                     }
-                }else{
-                    if(isset($product["TypicalWeightPerUnit"]) && $product["TypicalWeightPerUnit"] !== ""){displayProduct("Gewicht: ", $product["TypicalWeightPerUnit"]. "kg");}
                 }
 
 

@@ -1,4 +1,5 @@
 <?php
+    // Functie voor het maken van de database connectie
     function createConn(){
         $servername = "localhost";
         $username = "root";
@@ -16,9 +17,13 @@
     }
 
     // PRODUCTS //
+    // functie voor het ophalen van de producten per pagina
     function getProducts($amountResults = 10, $offset = 0){
+        // open de connectie met de database
         $conn = createConn();
 
+        // prepare de query die moet worden uitgevoerd
+        // aan de vraagtekens worden de parameters gebind
         $query = $conn->prepare( "
             SELECT  si.StockItemId, si.StockItemName, si.UnitPrice, sh.QuantityOnHand
             FROM    stockitems AS si 
@@ -29,13 +34,17 @@
             OFFSET  ?
         ");
 
+        // bind de parameters voor de query
         $query->bind_param("ii", $amountResults, $offset);
 
+        // voer de query uit, haal de resultaten op en sluit de connectie met de database
         $query->execute();
         $products = $query->get_result();
-
         $conn->close();
 
+        // kijk of de opgehaalde resultaten meer dan 1 zijn.
+        // zo ja stuur dan een assocative array terug met de resultaten
+        // zo niet stuur geen resultaten terug
         if($products->num_rows > 0){
             return $products->fetch_all(MYSQLI_ASSOC);
         }else{
@@ -43,12 +52,13 @@
         }
     }
 
-    function getMultipleProducts($ids){
+    function getMultipleProducts($filters){
         $conn = createConn();
 
-        $clause = implode(',', array_fill(0, count($ids), '?'));
-        $types = str_repeat('i', count($ids));
-        $filters = $ids;
+        // maak een string met voor iedere key in de array $filters een vraagteken en seperate die met een ,
+        $clause = implode(',', array_fill(0, count($filters), '?'));
+        // maak een string die de letter i er inzet. De hoeveelhijd i is de lengte van de array filters
+        $types = str_repeat('i', count($filters));
 
         $query = $conn->prepare( "
             SELECT  StockItemID, StockItemName, UnitPrice, UnitPackageID, TaxRate, MarketingComments  
@@ -57,6 +67,10 @@
             AND     StockItemID IN ($clause)
         ");
 
+        // Bind de parameters
+        // Door de ... voor de variable filters te gebruiken wordt de call_user_function_array toegepast voor de variable
+        // Deze functie geeft de array door als apparte argumenten
+        // Dit wordt gedaan omdat je niet een array mee kan sturen met de bind_param maar wel individuele argumenten
         $query->bind_param($types, ...$filters);
         $query->execute();
         $products = $query->get_result();
@@ -120,6 +134,7 @@
     function getPhotosProduct($stockItemId, $onlyOne = false){
         $conn = createConn();
 
+        // zet of er 1 of meer fotos opgehaald moeten worden
         if($onlyOne == true){
             $limit = " LIMIT 1";
         }else{
@@ -150,6 +165,9 @@
     function getProductBySearch($search){
         $conn = createConn();
 
+        // zet de search
+        // voor de id hoeven er geen procent tekens voor maar voor de naam en
+        // beschrijving wel omdat daar er karakters voor mogen komen
         $search1 = $search;
         $search = "%".$search."%";
 
@@ -184,7 +202,9 @@
         $filters = [];
         $types = "";
 
+        // standaard is de categoriefilter leeg omdat deze niet geselecteerd hoeft te zijn
         $categoriesFilter = "";
+        // maak de string die in de query komt om te kijken of de categorieid in de array stockGroupID zit
         if ($stockGroupId !== null) {
             $clause = implode(',', array_fill(0, count($stockGroupId), '?'));
             $types = str_repeat('i', count($stockGroupId));
@@ -199,7 +219,9 @@
             ";
         }
 
+        // standaard is de priceFilter leeg omdat deze niet geselecteerd hoeft te zijn
         $priceFilter = "";
+        // maak de string die in de query komt om te kijken of de prijs onder of gelijk is aan de megegeven prijs
         if ($price !== null) {
             array_push($filters, $price);
             $priceFilter = " 
@@ -216,6 +238,7 @@
             $priceFilter
         ");
 
+        // kijk of de filters niet leeg zijn en als dat niet zo is bind die dan
         if (count($filters) !== 0) {
             $query->bind_param($types, ...$filters);
         }
@@ -269,16 +292,6 @@
                 GROUP BY o.StockItemID
                 ORDER BY meest_verkocht DESC LIMIT 3
             ");
-
-        //Met onderstaande query worden de MEEST verkochte items gedisplayed (LET OP: dit zijn dus de items waarvan de grootste hoeveelheid verkocht
-        //is. Echter duurt deze query veelste lang om steeds aan te roepen bij het laden van de pagina.
-//        $query = $conn->prepare("
-//                SELECT st.StockItemID, st.StockItemName, SUM(quantity) AS totaal_verkocht
-//                FROM stockitems AS st
-//                JOIN orderlines AS o ON st.StockItemID = o.StockItemID
-//                GROUP BY o.StockItemID
-//                ORDER BY totaal_verkocht DESC LIMIT 3
-//                ");
 
         $query->execute();
         $products = $query->get_result();
@@ -341,12 +354,18 @@
     function addUser($firstName, $lastName, $password, $email, $phoneNumber, $userId, $deliveryMethod, $deliveryLocation, $permissions = null){
         $conn = createConn();
 
+        // zorg dat wanneer je een query uitvoert die niet automatisch gecommit wordt
+        // zo kun je handmatig de weizigingen opslaan zodat je 2 querys uit kunt voeren
+        // en pas kunt opslaan wanneer ze alle 2 goed gaan
         $conn->autocommit(FALSE);
 
+        // maak de fullname, searchname van de firstname en lastname
         $fullName = $firstName . " " . $lastName;
         $searchName = $firstName . " " . $fullName;
+
         $logonName = $email;
 
+        // zet de locatie array in variable
         $deliveryCityId = $deliveryLocation[0];
         $deliveryAddressLine2 = $deliveryLocation[1];
         $deliveryPostalCode = $deliveryLocation[2];
@@ -355,6 +374,7 @@
         $postalAddressLine2 = $deliveryLocation[1];
         $postalPostalCode = $deliveryLocation[2];
 
+        // zet de standaard rechten en als die permissions variable niet null is zet dan de meegestuurde permission als rechten
         $isSystemUser = 0;
         $isEmployee = 0;
         $isSalesperson = 0;
@@ -365,6 +385,7 @@
             $isSalesperson = $permissions[2];
         }
 
+        // maak een string met een query die de max person id selecteerd
         $maxIdPeople = "
             SELECT max(PersonId) maxId 
             FROM people p
@@ -375,6 +396,7 @@
             LIMIT 1
         ";
 
+        // maak een string met een query die de max customer id selecteerd
         $maxIdCustomer = "
             SELECT max(CustomerId) maxIdCustomer
             FROM customers c
@@ -385,6 +407,7 @@
             LIMIT 1
         ";
 
+        // maak een query die de CustomerCategoryID ophaalt waar de naam customer is
         $customerCategory = $conn->prepare("
             SELECT  CustomerCategoryID
             FROM    customercategories
@@ -399,12 +422,14 @@
             $customerCategory = null;
         }
 
+        // maak een query voor het toevoegen van een people record
         $query = $conn->prepare("
             INSERT INTO people(PersonID, FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, 
             HashedPassword, IsSystemUser, IsEmployee, IsSalesperson, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
             VALUES(($maxIdPeople) + 1, ?, ?, ?, 1, ?, 0, ?, ?, ?, ?, ?, ?, ?, '".date('Y-m-d H:i:s')."' , '9999-12-31 23:59:59');
         ");
 
+        // maak een query voor het toevoegen van een customer record
         $query2 = $conn->prepare("
             INSERT INTO customers(CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, 
             DeliveryCityID, PostalCityID, AccountOpenedDate, StandardDiscountPercentage, PhoneNumber, 
@@ -423,6 +448,7 @@
         $result1 = $query->execute();
         $result2 = $query2->execute();
 
+        // als bijde querys goed zijn gegaan sla de weizigingen dan op
         if($result1 == true && $result2 == true){
             $conn->commit();
         }
@@ -437,6 +463,7 @@
         }
     }
 
+    // functie om te kijken voor een geldige login
     function checkValidLogin($logonName, $password){
         $conn = createConn();
 
@@ -453,6 +480,8 @@
         $conn->close();
 
         $account = $result->fetch_all(MYSQLI_ASSOC);
+        // kijk of de resultaten groter zijn dan 0 en met de
+        // functie password_verify het verstuurde wachtwoord klopt met het opgehaalde wachtwoord
         if($result->num_rows !== 0 && password_verify($password, $account[0]["HashedPassword"])){
             return $account[0];
         }else{
@@ -480,6 +509,8 @@
         }
     }
 
+    // functie begin updaten user
+    // werkt nog niet en wordt ook neit gebruikt
     function updateUser($peopleID, $phoneNumber, $deliveryCity, $postalCity, $address, $zip){
         $conn = createConn();
         $conn->autocommit(FALSE);
@@ -497,12 +528,11 @@
         }else{
             $customerID = null;
         }
-
-
     }
     // USERS //
 
     // LOCATION //
+    // functie voor het ophalen van de landen
     function getCountries(){
         $conn = createConn();
 
@@ -523,6 +553,7 @@
         }
     }
 
+    // functie voor het ophalen van de provincies
     function getProvincesByCountry($countryId, $returnJson = false)
     {
         $conn = createConn();
@@ -541,23 +572,31 @@
 
         if($result->num_rows !== 0 ){
             if($returnJson == true){
+                // stuur json terug als de variable returnJson true is
                 echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+                return true;
             }else{
                 return $result->fetch_all(MYSQLI_ASSOC);
             }
         }else{
             if($returnJson == true){
+                // stuur json terug als de variable returnJson true is
                 echo json_encode(array());
+                return false;
             }else{
                 return false;
             }
         }
     }
+
     // ajax call
+    // deze wordt aangeroepen als de getProvinces gezet is in de GET
+    // dit wordt gedaan in de javascript file bij de ajax call
     if(isset($_GET["getProvinces"])){
         getProvincesByCountry($_GET["CountryID"], true);
     }
 
+    // functie voor het ophalen van de provincies
     function getCitiesByProvince($provinceId, $returnJson = false){
         $conn = createConn();
 
@@ -589,13 +628,18 @@
             }
         }
     }
+
     // ajax call
+    // deze wordt aangeroepen als de getCities gezet is in de GET
+    // dit wordt gedaan in de javascript file bij de ajax call
     if(isset($_GET["getCities"])){
         getCitiesByProvince($_GET["ProvinceID"], true);
     }
     // LOCATION //
 
     // DELIVERY METHODS //
+    // functie om de delivery methodes op te halen
+    // wordt niet gebruikt
     function getDeliveryMethods(){
         $conn = createConn();
 
@@ -619,6 +663,7 @@
     // DELIVERY METHODS //
 
     // customers //
+    // functie op customerId op te halen op basis van een peopleId
     function getCustomerId($peopleId){
         $conn = createConn();
 
@@ -645,6 +690,7 @@
 
 
     // ORDERS //
+    // functie om de maximale verwachte lervertijd op te halen op basis van meerdere meegestuurde StockItemID
     function getMaxExpectedDelivery($products){
         $conn = createConn();
 
@@ -672,31 +718,42 @@
         }
     }
 
+    // functie om producten toe te voegen
     function insertOrder($products){
         $conn = createConn();
         $conn->autocommit(FALSE);
+
+        // haal het peopleID op van de ingelogde gebruiker
         $peopleId = $_SESSION["account"]["id"];
+        // haal het customerID op voor de ingelogde gebruiker
         $customerId = getCustomerId($peopleId);
 
         $productIds = [];
+        // voor ieder product stop het StockItemID in een array
         foreach ($products as $product){
             array_push($productIds, $product["StockItemID"]);
         }
+        // haal de maximale levertijd op voor de meegestuurde producten
         $deliveryTime = getMaxExpectedDelivery($productIds);
+        // maak van de maximale levertijd een leverdatum als de levertijd niet null is
         if($deliveryTime !== null){
             $deliveryTime = strtotime("+" . $deliveryTime . " days");
             $deliveryTime = "'" . date("Y-m-d", $deliveryTime) . "'";
         }
+
+        // string met een query voor de maximale orderID
         $getMaxOrderId = "
             SELECT  MAX(OrderID) 
             FROM    orders o
         ";
 
+        // string met een query voor de maximale orderLineID
         $getMaxOrderLineId = "
             SELECT MAX(OrderLineID)
             FROM orderlines ol
         ";
 
+        // query voor het toevoegen van orders
         $query1 = $conn->prepare("
             INSERT INTO orders(OrderID, CustomerID, SalespersonPersonID, PickedByPersonID, ContactPersonID, OrderDate, 
             ExpectedDeliveryDate, PickingCompletedWhen, LastEditedWhen, LastEditedBy)
@@ -705,11 +762,13 @@
 
         $success = $query1->execute();
 
+        // voor ieder product insert een record in orderlines als de eerste query goed is gegaan
+        // zo niet jump dan uit de foreach
         foreach ($products as $product){
             if($success == true){
                 $queryProduct = $conn->prepare("
-                INSERT INTO orderlines
-                VALUES(($getMaxOrderLineId) + 1, ($getMaxOrderId) , " . $product['StockItemID'] . " , '" . $product['MarketingComments'] . "' , " . $product["UnitPackageID"] . " , " . $product["quantity"] .
+                    INSERT INTO orderlines
+                    VALUES(($getMaxOrderLineId) + 1, ($getMaxOrderId) , " . $product['StockItemID'] . " , '" . $product['MarketingComments'] . "' , " . $product["UnitPackageID"] . " , " . $product["quantity"] .
                     " , " . $product["UnitPrice"] . " , " . $product["TaxRate"] . " , " . $product["quantity"] . " , '" . $product["pickCompletedWhen"] .
                     "' , 1 , '" . date('Y-m-d H:i:s')."')"
                 );
@@ -719,18 +778,19 @@
             }
         }
 
+        // als alle querys goed zijn gegaan sla de weizigingen dan op
         if($success == true){
             $conn->commit();
         }
         $conn->close();
 
         return $success;
-        //$query->bind_param("i", );
     }
     // ORDERS //
 
 
-    //Fetch the stockitem prices from the database
+    // functie voor het ophalen van de prijzen voor producten
+    // wordt niet gebruikt
     function getPriceForDiscount(){
         $conn = createConn();
 
@@ -750,7 +810,9 @@
             return "Geen resultaten";
         }
     }
+
     // Pagination //
+    // query voor het ophalen van de hoeveelheid records
     function getAmountProducts(){
         $conn = createConn();
 
@@ -764,12 +826,14 @@
         $conn->close();
 
         if($result->num_rows > 0){
+            // stuur de hoeveelheid stockItemIDs terug
             return $result->fetch_assoc()["StockItemID"];
         }else{
             return false;
         }
     }
 
+    // functie voor het ophalen van alle orders
     function getOrders(){
         $conn = createConn();
 
