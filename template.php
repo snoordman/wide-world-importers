@@ -43,6 +43,7 @@
                     <li class="nav-item"><a class="nav-link" href="contactpagina.php">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="faqpagina.php">FAQ</a></li>
 
+
 <?php
                     if(checkLoggedIn()){
                         echo '

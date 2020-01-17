@@ -43,6 +43,14 @@
         try {
             $mail->addAddress("erendemirhan66@gmail.com");
         } catch (Exception $e) {
+
+
+
+
+
+
+
+
             $sendMail = false;
         }
 

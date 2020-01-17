@@ -8,11 +8,6 @@
         if(isset($_GET["id"])){
             $StockItemID=$_GET["id"];
 
-
-
-
-
-
             $conn = createConn();
             $query= $conn ->prepare("UPDATE stockitems SET Active=0 WHERE StockItemID= ?");
             $query->bind_param("s", $StockItemID);

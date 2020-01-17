@@ -1,3 +1,8 @@
+<?php
+require_once "functions/sql.php";
+$viewFile = "viewFile/contactpagina.php";
+?>
+
 <div class="contact">
     <div class="row">
         <div class="col-5">
@@ -35,14 +40,40 @@
         <div class="col-2"></div>
         <div class="col-2">
             <br>
-            <b>Adres</b><br>
-            Wide World Importers<br>
-            Campus 2<br>
-            8017 CA Zwolle<br>
-            Tel: 088-4699911<br>
-            E-mail: info@WWI.nl
+            <?php
 
-            KVK: 85739857398
+
+            $conn = createConn();
+            $query = $conn->prepare("SELECT KVK, Naam, Adres, Postcode, Telefoon, Email, Plaats FROM Contactinformatie");
+            $query->execute();
+            $query = $query->get_result();
+
+           while ($rows = $query->fetch_assoc()){
+               $KVK = $rows['KVK'];
+               $Naam = $rows['Naam'];
+               $Adres = $rows['Adres'];
+               $Postcode = $rows['Postcode'];
+               $Telefoon = $rows['Telefoon'];
+               $Email = $rows['Email'];
+               $Plaats = $rows['Plaats'];
+
+               echo "KVK: " . $KVK . "<br>";
+           echo "Bedrijfsnaam: " . $Naam . "<br>";
+           echo "Adres: " . $Adres . "<br>";
+           echo "Postcode: " . $Postcode . "<br>";
+           echo "Telefoon: ". $Telefoon . "<br>";
+           echo "Email: " . $Email . "<br>";
+           echo "Plaats: " . $Plaats;
+           }
+           $conn->close();
+
+            if(checkPermissions("isSystemUser") || checkPermissions("isSalesPerson")) {
+              echo "<br>";
+                echo  "<a href='beheerwijzigen.php." . $rows . "' ><i class=\"fas fa-edit\"></i>Wijzigen</a>";
+            }
+
+           ?>
+
             <br>
             <br>
             <b>Social media</b>
@@ -62,6 +93,9 @@
         </div>
     </div>
 </div>
+<?php
+require_once "template.php";
+?>
 
 
 
