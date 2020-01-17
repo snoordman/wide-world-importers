@@ -2,36 +2,7 @@
     require_once "sql.php";
     require_once "image.php";
 
-    function displayProducts(){
-        $products = getProducts();
-
-        foreach($products AS $naam){
-            print($naam["StockItemName"]. " ");
-            print($naam["UnitPrice"] . "<br>");
-        }
-    }
-
-    function minMaxPrice($products){
-        $min = 0;
-        $max = 0;
-        for($i = 0; $i < count($products); $i++){
-            $price = $products[$i]["UnitPrice"];
-            if($min == 0){
-                $min = $price;
-            }else{
-                if($price < $min){
-                    $min = $price;
-                }
-
-                if($price > $max){
-                    $max = $price;
-                }
-            }
-        }
-
-        return ["min" => $min, "max" => $max];
-    }
-
+    // functie voor het weergeven van een product
     function displayProduct($text, $field){
         echo "
             <div class='row'>
@@ -40,13 +11,16 @@
         ";
     }
 
+    // functie voor het kijken of de size van een product een gewicht is of niet
     function checkWeightProduct($size){
-        $weightArray = ["g", "kg", "mg"];
-        if(in_array(substr($size, -1), $weightArray)){
-            return false;
+        // zet de eenheden voor gewicht in een array die 2 le
+        $weightArray = ["kg", "mg"];
+        // check of de eerste letter van de size g is of dat de letter in de array weightArray zit
+        if(substr($size, -1) == "g" || in_array(substr($size, -2), $weightArray)){
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     function displayMostPopulairItems(){
